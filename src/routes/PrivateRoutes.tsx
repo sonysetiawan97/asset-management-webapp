@@ -1,0 +1,50 @@
+import { type FC, Suspense, lazy } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { MasterLayout } from "../layout/MasterLayout";
+
+import { LoadingAuthPage } from "@/components/loadings/LoadingAuthPage";
+import { PaginationProvider } from "@/contexts/PaginationProvider";
+import { SearchProvider } from "@/contexts/SearchProvider";
+import { AuthMiddleware } from "@components/auth/AuthMiddleware";
+
+const ErrorRoutes = lazy(() => import("@modules/errors/ErrorRoutes"));
+const Dashboard = lazy(() => import("@modules/dashboard/dashboard"));
+const UserRoutes = lazy(() => import("@modules/users/PrivateRoutes"));
+const PrivilegeRoutes = lazy(() => import("@modules/privileges/PrivateRoutes"));
+const RoleRoutes = lazy(() => import("@modules/roles/PrivateRoutes"));
+const ProductRoutes = lazy(() => import("@modules/products/PrivateRoutes"));
+const ExampleRoutes = lazy(() => import("@modules/examples/PrivateRoutes"));
+const SupplierRoutes = lazy(() => import("@modules/suppliers/PrivateRoutes"));
+const OrderRoutes = lazy(() => import("@modules/orders/PrivateRoutes"));
+const TrashRoutes = lazy(() => import("@modules/trash/PrivateRoutes"));
+const ProfileRoutes = lazy(() => import("@modules/profile/ProfileRoutes"));
+const SysparamRoutes = lazy(() => import("@modules/sysparam/PrivateRoutes"));
+  return (
+    <Suspense fallback={<LoadingAuthPage />}>
+      <PaginationProvider>
+        <SearchProvider>
+          <AuthMiddleware>
+            <Routes>
+                <Route path='auth/*' element={<Navigate to='/dashboard' />} />
+                <Route element={<MasterLayout />}>
+                  <Route path="/users/*" element={<UserRoutes />} />
+                  <Route path="/privileges/*" element={<PrivilegeRoutes />} />
+                  <Route path="/roles/*" element={<RoleRoutes />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/products/*" element={<ProductRoutes />} />
+                  <Route path="/suppliers/*" element={<SupplierRoutes />} />
+                  <Route path="/examples/*" element={<ExampleRoutes />} />
+                  <Route path="/orders/*" element={<OrderRoutes />} />
+                  <Route path="/profile/*" element={<ProfileRoutes />} />
+                  <Route path="/sysparams/*" element={<SysparamRoutes />} />
+                </Route>
+                <Route path="*" element={<ErrorRoutes />} />
+            </Routes>
+          </AuthMiddleware>
+        </SearchProvider>
+      </PaginationProvider>
+    </Suspense>
+  );
+};
+
+export default PrivateRoutes;

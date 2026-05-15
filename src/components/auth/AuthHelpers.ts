@@ -1,0 +1,100 @@
+import { AuthModel } from "@modules/auth/types/AuthModel";
+import { PrivilegeItem } from '@modules/roles/types/Model';
+
+const AUTH_LOCAL_STORAGE_KEY = "user";
+const getAuth = (): AuthModel | undefined => {
+  if (!localStorage) {
+    return;
+  }
+
+  const lsValue: string | null = localStorage.getItem(AUTH_LOCAL_STORAGE_KEY);
+
+  if (!lsValue) {
+    return;
+  }
+
+  try {
+    const auth: AuthModel = JSON.parse(lsValue) as AuthModel;
+    if (auth) {
+      // You can easily check auth_token expiration also
+      return auth;
+    }
+  } catch (error) {
+    console.error("AUTH LOCAL STORAGE PARSE ERROR", error);
+  }
+};
+
+type roleprops = {
+  path: string;
+  auth?: AuthModel;
+  method?: string;
+};
+
+const matchDynamicUri = (pattern: string, path: string): boolean => {
+  // 1. Escape karakter regex spesial
+  let regexPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  // 2. Ganti :param jadi ([^/]+) agar cocok semua segmen path kecuali "/"
+  regexPattern = regexPattern.replace(/\\:([^/]+)/g, "([^/]+)");
+
+  const regex = new RegExp(`^${regexPattern}/?$`, "i");
+  return regex.test(path.toLowerCase());
+};
+
+const hasPrivilege = (
+  privileges: PrivilegeItem[],
+  path: string,
+  method?: string
+): boolean => {
+  if (!privileges || privileges.length === 0) {
+    return false;
+  }
+
+  const lowerPath = path.toLowerCase();
+
+  // Iterate through all roles
+  for (const privilege of privileges) {
+    const lowerUri = privilege.uri.toLowerCase();
+    const lowerAction = privilege.action.toLowerCase();
+    const lowerMethod = (privilege.method || "*").toLowerCase();
+
+    // 1. Wildcard - all access
+    if (lowerUri === "*" && (lowerAction === "*" || lowerMethod === "*")) {
+      return true;
+    }
+
+    // 2. Check method if provided
+    if (method && lowerMethod !== "*" && lowerMethod !== method.toLowerCase()) {
+      continue;
+    }
+
+    // 3. Exact match
+    if (lowerUri === lowerPath) {
+      return true;
+    }
+
+    // 4. Dynamic match with :param
+    if (lowerUri.includes(":") && matchDynamicUri(privilege.uri, lowerPath)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const PrivilegesValidation = ({ path, auth, method }: roleprops): boolean => {
+  if (!auth) return false;
+
+  const { role: rolePrivileges } = auth;
+  const { privileges } = rolePrivileges
+
+  if (!privileges || privileges.length == 0) return false
+
+  return hasPrivilege(privileges, path, method);
+};
+
+export {
+  getAuth,
+  AUTH_LOCAL_STORAGE_KEY,
+  PrivilegesValidation,
+};

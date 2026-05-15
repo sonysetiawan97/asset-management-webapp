@@ -1,0 +1,32 @@
+import { setPageTitle } from "@stores/PageHeaderStore";
+import { FC, lazy, Suspense, useEffect } from "react";
+import { moduleName } from "./types/ProfileTypes";
+import { LoadingPage } from "@components/loadings/LoadingPage";
+import { Outlet, Route, Routes } from "react-router-dom";
+
+const ErrorRoutes = lazy(() => import("@modules/errors/ErrorRoutes"));
+const DetailProfileWrapper = lazy(
+  () => import("./pages/detail/DetailProfileWrapper")
+);
+const UpdateWrapper = lazy(() => import("./pages/update/UpdateWrapper"));
+
+const ProfileRoutes: FC = () => {
+  useEffect(() => {
+    setPageTitle(moduleName);
+  }, []);
+
+  return (
+    <Suspense fallback={<LoadingPage />}>
+      <Routes>
+        <Route element={<Outlet />}>
+          <Route index element={<DetailProfileWrapper />} />
+          <Route path="" element={<DetailProfileWrapper />} />
+          <Route path="/:id/update" index element={<UpdateWrapper />} />
+        </Route>
+        <Route path="*" element={<ErrorRoutes />} />
+      </Routes>
+    </Suspense>
+  );
+};
+
+export default ProfileRoutes;

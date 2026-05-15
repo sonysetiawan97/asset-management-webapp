@@ -1,0 +1,369 @@
+{
+  "language": "Bahasa",
+  "signin": {
+    "title": "Cepat, Efisien, dan Produktif",
+    "description": "Alur kerja yang cepat, efisien, dan produktif sangat penting dalam lanskap bisnis yang kompetitif saat ini, memungkinkan tim untuk memenuhi tenggat waktu yang ketat, meminimalkan biaya, dan memaksimalkan hasil tanpa mengorbankan kualitas, sambil tetap mempertahankan fokus pada inovasi dan kepuasan pelanggan untuk mendorong kesuksesan jangka panjang.",
+    "form": {
+      "title": "Signin",
+      "username": "Username",
+      "password": "Password",
+      "button": "Signin"
+    },
+    "notification": {
+      "success": "Signin Berhasil",
+      "failed": "username atau password salah"
+    }
+  },
+  "header": {
+    "navbar": {
+      "user_profile": {
+        "greeting": "Hi, ",
+        "profile": "Profile",
+        "logout": "Logout"
+      }
+    }
+  },
+  "button": {
+    "action": "Aksi",
+    "read": "Baca",
+    "edit": "Ubah",
+    "delete": "Hapus",
+    "create": "Buat",
+    "submit": "Kirim",
+    "cancel": "Batal",
+    "back": "Kembali",
+    "update": "Ubah",
+    "reset": "Reset",
+    "to-list": "Kembali ke list",
+    "restore": "Pulihkan",
+    "remove": "Menghapus",
+    "change_password": "Ubah password",
+    "edit_profile" : "Ubah profil"
+  },
+  "modal": {
+    "confirmation": {
+      "delete": "Konfirmasi hapus",
+      "restore": "Konfirmasi pemulihan",
+      "remove": "Konfirmasi menghapus"
+    },
+    "notification": {
+      "success": "Item berhasil dihapus"
+    }
+  },
+  "error": {
+    "404_not_found": {
+      "title": "Oops!",
+      "sub_title": "Halaman Tidak Ditemukan",
+      "button": "Kembali"
+    },
+    "unauthenticated": {
+      "title": "Unauthenticated",
+      "message": "Anda perlu masuk",
+      "button": "Kembali ke halaman signin"
+    }
+  },
+  "sidebar": {
+    "master": {
+      "title": "MASTER",
+      "menu": {
+        "dashboard": "dashboard",
+        "products": "Produk",
+        "examples": "Contoh",
+        "sysparams": "sysparams",
+        "roles": "Peran",
+        "privileges": "Hak Akses",
+        "trash": "Sampah",
+        "users": "Pengguna"
+      }
+    },
+    "base": {
+      "title": "BASE",
+      "menu": {
+        "setting": "Pengaturan",
+        "themes": "Temas"
+      }
+    },
+    "user-management": {
+      "title": "PENGATURAN PENGGUNA",
+      "menu": {
+        "user": "Pengguna",
+        "themes": "Tema",
+        "privilege": "Hak Akses",
+        "role": "Peran"
+      }
+    },
+    "system": {
+      "title": "SISTEM",
+      "menu": {
+        "sysparams": "Sysparams"
+      }
+    }
+  },
+  "pagination": {
+    "first": "awal",
+    "prev": "sebelum",
+    "next": "sesudah",
+    "last": "akhir"
+  },
+  "request": {
+    "error": {
+      "no_id": "Tidak ada ID tersedia."
+    }
+  },
+  "list": {
+    "title": "Daftar",
+    "search": "Cari..."
+  },
+  "modules": {
+    "products": {
+      "title": "Produk",
+      "list": {
+        "title": "List Produk"
+      },
+      "create": {
+        "title": "Create Produk",
+        "form": {
+          "name": "Nama",
+          "email": "Email",
+          "password": "Password",
+          "old_password": "Password lama",
+          "new_password": "Password baru",
+          "confirm_password": "Konfirmasi password",
+          "single_image": "Single image",
+          "multiple_image": "Multiple image",
+          "status": "status",
+          "multiple_file": "Multiple file",
+          "multiple_select": "Multiple select",
+          "input_date": "Input tanggal",
+          "input_time": "Input jam",
+          "input_month": "Input bulan",
+          "input_year": "Input tahun",
+          "identity_number": "NIK",
+          "taxpayer_number": "Nomor wajib pajak",
+          "gender": "Jenis kelamin",
+          "address": "Alamat",
+          "checkbox": "Kotak Centang",
+          "radio": "Radio"
+        },
+        "notification": {
+          "success": "Produk berhasil dibuat.",
+          "error": "Oops, gagal menyimpan."
+        }
+      },
+      "read": {
+        "title": "Detil Produk",
+        "form": {
+          "name": "nama"
+        }
+      },
+      "update": {
+        "title": "Edit Produk",
+        "form": {
+          "name": "Nama"
+        },
+        "notification": {
+          "success": "Produk berhasil diperbaharui.",
+          "error": "Oops, gagal menyimpan."
+        }
+      }
+    },
+   "examples": {
+      "list": {
+        "title": "List Examples"
+      },
+      "create": {
+        "title": "Create Examples"
+      },
+      "read": {
+        "title": "Read Examples"
+      },
+      "update": {
+        "title": "Update Examples",
+        "notification": {
+          "success": "Example updated"
+        }
+      },
+      "form": {
+        "name": "Name",
+        "nik": "Identity Number",
+        "hobbies": "Hobbies",
+        "citizen": "Citizenship",
+        "phone": "Phone Number",
+        "age": "Age",
+        "taxpayer_number": "Tax Number",
+        "dob": "Date of Birth",
+        "married_status": "Married Status",
+        "gender": "Gender",
+        "address": "Address",
+        "checkbox": "Checkbox",
+        "profile_picture": "Profile picture",
+        "multiple_image": "Multiple Image",
+        "supporting_document": "Supporting document",
+        "multiple_file": "Multiple file",
+        "input_date_year": "Input Date Year",
+        "input_time": "Input Time"
+      }
+    },
+    "users": {
+      "list": {
+        "title": "List Users",
+        "trash": "Daftar Arsip Pengguna"
+      },
+      "create": {
+        "title": "Create Users",
+        "notification": {
+          "success": "User success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "role": "Role",
+          "username": "Username",
+          "email": "Email",
+          "password": "Password",
+          "confirm_password": "Confirm Password",
+          "first_name": "First Name",
+          "last_name": "Last Name"
+        }
+      },
+      "update": {
+        "title": "Update Users",
+        "notification": {
+          "success": "User success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "role": "Role",
+          "username": "Username",
+          "email": "Email",
+          "first_name": "First Name",
+          "last_name": "Last Name",
+          "photo_profile": "Photo profile"
+        }
+      },
+      "read": {
+        "title": "Read User"
+      }
+    },
+    "privileges": {
+      "list": {
+        "title": "List Privileges",
+        "trash": "List Trash Privilege"
+      },
+      "create": {
+        "title": "Create Privilege",
+        "notification": {
+          "success": "Privilege success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "module": "Module",
+          "sub_module": "Sub Module",
+          "ordering": "Ordering",
+          "action": "Action",
+          "method": "Method",
+          "uri": "URI"
+        }
+      },
+      "read": {
+        "title": "Detail Privilege"
+      },
+      "update": {
+        "title": "Edit Privilege",
+        "form": {
+          "module": "Module",
+          "sub_module": "Sub Module",
+          "ordering": "Ordering",
+          "action": "Action",
+          "method": "Method",
+          "uri": "URI"
+        },
+        "notification": {
+          "success": "Privilege success updated.",
+          "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "roles": {
+      "list": {
+        "title": "List Role",
+        "trash": "List Trash Role"
+      },
+      "create": {
+        "title": "Create Role",
+        "notification": {
+          "success": "Role success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "name": "Name"
+        }
+      },
+      "read": {
+        "title": "Detail Role"
+      },
+      "update": {
+        "title": "Edit Role",
+        "notification": {
+          "success": "Role success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "name": "Name"
+        }
+      }
+    },
+    "sysparam": {
+      "list": {
+        "title": "List Sysparam",
+        "trash": "List Trash Sysparam"
+      },
+      "create": {
+        "title": "Create sysparam",
+        "notification": {
+          "success": "Sysparam success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "group": "Group",
+          "key": "Key",
+          "value": "Value",
+          "long_value": "Long Value"
+        }
+      },
+      "update": {
+        "title": "Update Sysparam",
+        "notification": {
+          "success": "Sysparam success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "group": "Group",
+          "key": "Key",
+          "value": "Value",
+          "long_value": "Long Value"
+        }
+      },
+      "read": {
+        "title": "Read Sysparam"
+      }
+    },
+    "profile": {
+      "update": {
+        "title": "Profile update",
+        "notification": {
+          "success": "Profile success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "username": "Username",
+          "email": "Email",
+          "first_name": "First Name",
+          "last_name": "Last Name"
+        }
+      },
+      "detail": {
+        "title": "Detail Profile"
+      }
+    }
+  }
+}

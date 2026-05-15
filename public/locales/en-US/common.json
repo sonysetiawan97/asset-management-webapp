@@ -1,0 +1,419 @@
+{
+  "language": "Language",
+  "signin": {
+    "title": "Fast, Efficient and Productive",
+    "description": "Fast, Efficient, and Productive workflows are essential in today’s competitive business landscape, enabling teams to meet tight deadlines, minimize costs, and maximize output without sacrificing quality, all while maintaining a focus on innovation and customer satisfaction to drive long-term success.",
+    "form": {
+      "title": "Signin",
+      "username": "Username",
+      "password": "Password",
+      "button": "Signin"
+    },
+    "notification": {
+      "success": "Signin Success",
+      "failed": "Invalid username or password"
+    }
+  },
+  "header": {
+    "navbar": {
+      "user_profile": {
+        "greeting": "Hi, ",
+        "profile": "Profile",
+        "logout": "Logout"
+      }
+    }
+  },
+  "button": {
+    "action": "Action",
+    "read": "Read",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "back": "Back",
+    "update": "Update",
+    "reset": "Reset",
+    "to-list": "Go to List",
+    "restore": "Restore",
+    "remove": "Remove",
+    "change_password": "Change password",
+    "edit_profile" : "Edit profile"
+  },
+  "modal": {
+    "confirmation": {
+      "delete": "Delete Confirmation",
+      "restore": "Restore Confirmation",
+      "remove": "Remove Confirmation"
+    },
+    "notification": {
+      "success": "Item success deleted."
+    }
+  },
+  "errors": {
+    "404_not_found": {
+      "title": "Oops!",
+      "sub_title": "Page Not Found",
+      "button": "Back"
+    },
+    "unauthenticated": {
+      "title": "Unauthenticated",
+      "message": "You are need signin",
+      "button": "Go to signin page"
+    }
+  },
+  "sidebar": {
+    "master": {
+      "title": "MASTER",
+      "menu": {
+        "dashboard": "dashboard",
+        "products": "products",
+        "examples": "examples",
+        "sysparams": "sysparams",
+        "roles": "roles",
+        "privileges": "privileges",
+        "trash": "trash",
+        "users": "user"
+      }
+    },
+    "base": {
+      "title": "BASE",
+      "menu": {
+        "setting": "Setting",
+        "themes": "Themes"
+      }
+    },
+    "user-management": {
+      "title": "USER MANAGEMENT",
+      "menu": {
+        "user": "User",
+        "themes": "Themes",
+        "privilege": "Privilege",
+        "role": "Role"
+      }
+    },
+    "system": {
+      "title": "SYSTEM",
+      "menu": {
+        "sysparams": "Sysparams"
+      }
+    }
+  },
+  "pagination": {
+    "first": "first",
+    "prev": "prev",
+    "next": "next",
+    "last": "last"
+  },
+  "request": {
+    "error": {
+      "no_id": "No ID Provided."
+    }
+  },
+  "list": {
+    "title": "List",
+    "search": "Search..."
+  },
+  "modules": {
+    "products": {
+      "list": {
+        "title": "List Products"
+      },
+      "create": {
+        "title": "Create Products",
+        "form": {
+          "name": "Name",
+          "description": "Description",
+          "price": "Price",
+          "stock": "Stock"
+        },
+        "notification": {
+          "success": "Product success created.",
+          "error": "Oops, failed to saved."
+        }
+      },
+      "read": {
+        "title": "Read Products",
+        "form": {
+          "name": "Name",
+          "description": "Description",
+          "price": "Price",
+          "stock": "Stock"
+        }
+      },
+      "update": {
+        "title": "Update Products",
+        "form": {
+          "name": "Name",
+          "description": "Description",
+          "price": "Price",
+          "stock": "Stock"
+        },
+        "notification": {
+          "success": "Product success updated.",
+          "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "examples": {
+      "list": {
+        "title": "List Examples"
+      },
+      "create": {
+        "title": "Create Examples"
+      },
+      "read": {
+        "title": "Read Examples"
+      },
+      "update": {
+        "title": "Update Examples",
+        "notification": {
+          "success": "Example updated"
+        }
+      },
+      "form": {
+        "name": "Name",
+        "nik": "Identity Number",
+        "hobbies": "Hobbies",
+        "citizen": "Citizenship",
+        "phone": "Phone Number",
+        "age": "Age",
+        "taxpayer_number": "Tax Number",
+        "dob": "Date of Birth",
+        "married_status": "Married Status",
+        "gender": "Gender",
+        "address": "Address",
+        "checkbox": "Checkbox",
+        "profile_picture": "Profile picture",
+        "multiple_image": "Multiple Image",
+        "supporting_document": "Supporting document",
+        "multiple_file": "Multiple file",
+        "input_date_year": "Input Date Year",
+        "input_time": "Input Time"
+      }
+    },
+    "users": {
+      "list": {
+        "title": "List Users",
+        "trash": "List Trash User"
+      },
+      "create": {
+        "title": "Create Users",
+        "notification": {
+          "success": "User success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "role": "Role",
+          "username": "Username",
+          "email": "Email",
+          "password": "Password",
+          "confirm_password": "Confirm Password",
+          "first_name": "First Name",
+          "last_name": "Last Name"
+        }
+      },
+      "update": {
+        "title": "Update Users",
+        "notification": {
+          "success": "User success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "role": "Role",
+          "username": "Username",
+          "email": "Email",
+          "first_name": "First Name",
+          "last_name": "Last Name",
+          "photo_profile": "Photo profile"
+        }
+      },
+      "read": {
+        "title": "Read User"
+      }
+    },
+    "privileges": {
+      "list": {
+        "title": "List Privileges",
+        "trash": "List Trash Privilege"
+      },
+      "create": {
+        "title": "Create Privilege",
+        "notification": {
+          "success": "Privilege success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "module": "Module",
+          "sub_module": "Sub Module",
+          "ordering": "Ordering",
+          "action": "Action",
+          "method": "Method",
+          "uri": "URI"
+        }
+      },
+      "read": {
+        "title": "Detail Privilege"
+      },
+      "update": {
+        "title": "Edit Privilege",
+        "form": {
+          "module": "Module",
+          "sub_module": "Sub Module",
+          "ordering": "Ordering",
+          "action": "Action",
+          "method": "Method",
+          "uri": "URI"
+        },
+        "notification": {
+          "success": "Privilege success updated.",
+          "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "roles": {
+      "list": {
+        "title": "List Role",
+        "trash": "List Trash Role"
+      },
+      "create": {
+        "title": "Create Role",
+        "notification": {
+          "success": "Role success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "name": "Name"
+        }
+      },
+      "read": {
+        "title": "Detail Role"
+      },
+      "update": {
+        "title": "Edit Role",
+        "notification": {
+          "success": "Role success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "name": "Name"
+        }
+      }
+    },
+    "sysparam": {
+      "list": {
+        "title": "List Sysparam",
+        "trash": "List Trash Sysparam"
+      },
+      "create": {
+        "title": "Create sysparam",
+        "notification": {
+          "success": "Sysparam success created.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "group": "Group",
+          "key": "Key",
+          "value": "Value",
+          "long_value": "Long Value"
+        }
+      },
+      "update": {
+        "title": "Update Sysparam",
+        "notification": {
+          "success": "Sysparam success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "group": "Group",
+          "key": "Key",
+          "value": "Value",
+          "long_value": "Long Value"
+        }
+      },
+      "read": {
+        "title": "Read Sysparam"
+      }
+    },
+    "profile": {
+      "update": {
+        "title": "Profile update",
+        "notification": {
+          "success": "Profile success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "username": "Username",
+          "email": "Email",
+          "first_name": "First Name",
+          "last_name": "Last Name"
+        }
+      },
+      "detail": {
+        "title": "Detail Profile"
+      }
+    },
+    "suppliers": {
+      "list": {
+        "title": "List Suppliers"
+      },
+      "create": {
+        "title": "Create Supplier",
+        "form": {
+          "code": "Code",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email"
+        },
+        "notification": {
+          "success": "Supplier success created.",
+          "error": "Oops, failed to saved."
+        }
+      },
+      "read": {
+        "title": "Supplier Detail"
+      },
+      "update": {
+        "title": "Update Supplier",
+        "notification": {
+          "success": "Supplier success updated.",
+          "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "orders": {
+      "list": {
+        "title": "List Orders"
+      },
+      "create": {
+        "title": "Create Order",
+        "form": {
+          "order_number": "Order Number",
+          "customer": "Customer",
+          "total": "Total",
+          "status": "Status"
+        },
+        "notification": {
+          "success": "Order success created.",
+          "error": "Oops, failed to saved."
+        }
+      },
+      "read": {
+        "title": "Order Detail"
+      },
+      "update": {
+        "title": "Update Order",
+        "notification": {
+          "success": "Order success updated.",
+          "error": "Oops, failed to saved."
+        },
+        "form": {
+          "order_number": "Order Number",
+          "customer": "Customer",
+          "total": "Total",
+          "status": "Status"
+        }
+      }
+    }
+  }
+}

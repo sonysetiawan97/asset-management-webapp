@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  web:
+    build:
+      context: .
+      args:
+        VITE_APP_ENV: ${VITE_APP_ENV:-production}
+        VITE_APP_MODE_MOCK: ${VITE_APP_MODE_MOCK:-false}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+        VITE_API_AUTH_URL: ${VITE_API_AUTH_URL}
+        VITE_APP_LIMIT_PAGE: ${VITE_APP_LIMIT_PAGE:-10}
+        VITE_API_TIMEOUT: ${VITE_API_TIMEOUT:-10000}
+        VITE_APP_PORT: ${VITE_APP_PORT:-5173}
+    networks:
+      - sagara
+
+networks:
+  sagara:
+    external: true
