@@ -71,10 +71,9 @@ export const CheckoutFormFields = ({ readOnly = false, assets, users }: FormFiel
   <FormFields readOnly={readOnly} assets={assets} users={users} />
 );
 
-export const CheckinFormFields = ({ readOnly = false, assets, users }: FormFieldsProps) => {
+export const CheckinFormFields = ({ readOnly = false, assets: _assets, users: _users }: FormFieldsProps) => {
   const { t } = useTranslation();
   const conditionOptions = CONDITION_OPTIONS.map((c) => ({ value: c.value, label: c.label }));
-  const userOptions = users.map((u) => ({ value: u.id, label: u.name }));
 
   return (
     <>

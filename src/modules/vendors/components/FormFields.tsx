@@ -81,6 +81,7 @@ export const FormFields = ({ readOnly = false }: FormFieldsProps) => {
           <CheckBoxInput
             name="is_active"
             label={t("modules.vendors.create.form.is_active")}
+            data={[{ value: true, label: "Active" }]}
           />
         </div>
       </div>

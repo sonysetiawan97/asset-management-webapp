@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { moduleName, type Model, LOCATION_TYPES } from "@modules/locations/types/Model";
+import { moduleName, type Model, LOCATION_TYPES, type LocationType } from "@modules/locations/types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 

@@ -6,7 +6,7 @@ export const findAll = http.get("/api/v1/products", ({ request }) => {
   const skip = Number(url.searchParams.get("skip") || 0);
   const limit = Number(url.searchParams.get("limit") || 10);
 
-  const entries = mockProducts.filter((entry) => entry.status === 1);
+  const entries = mockProducts;
 
   const data = entries.slice(skip, skip + limit);
   const body = {

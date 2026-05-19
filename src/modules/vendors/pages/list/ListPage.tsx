@@ -15,7 +15,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   manufacturer: "M200-60q-33 0-56.5-23.5T120-140v-560h40v-80h560v80h40v560q0 33-23.5 56.5T760-60H200Z",
 };
 
-export const List = ({ data, count, isLoading }: ListProps) => {
+export const List = ({ data, count, isLoading: _isLoading }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 

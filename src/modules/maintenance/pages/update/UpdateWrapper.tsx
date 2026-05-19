@@ -39,7 +39,7 @@ const UpdateWrapper: FC = () => {
 
   const onSubmit = async (formData: CompleteMaintenanceModel) => {
     try {
-      await updateAsync({ id: id!, url: moduleName, body: { ...formData, id: id! } });
+      await updateAsync({ id: id!, url: moduleName, body: formData });
       enqueueSnackbar(t("modules.maintenance.update.notification.success"), { variant: "success" });
       navigate(`/${moduleName}`);
     } catch (error: unknown) {

@@ -3,7 +3,6 @@ import Logo from "../../../assets/images/logo-blue.png";
 import { useTranslation } from "react-i18next";
 import { SidebarMenuItem } from "@components/menu/SidebarMenuItem";
 import { SidebarMenuTitle } from "@components/menu/SidebarMenuTitle";
-import { SidebarParentMenu } from "@components/menu/SidebarParentMenu";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 type ToggleMenuSidebar = {

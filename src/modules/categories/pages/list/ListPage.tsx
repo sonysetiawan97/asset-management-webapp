@@ -10,12 +10,6 @@ interface ListProps {
   categories: Model[];
 }
 
-// Determine if a category is a root (no parent)
-const isRoot = (categoryId: string, allCategories: Model[]): boolean => {
-  const category = allCategories.find((c) => c.id === categoryId);
-  return !category?.parent_id;
-};
-
 // Get children of a category
 const getChildren = (categoryId: string, allCategories: Model[]): Model[] => {
   return allCategories.filter((c) => c.parent_id === categoryId);

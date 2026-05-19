@@ -1,4 +1,4 @@
-import { moduleName, type CreateModel } from "../../types/Model";
+import { moduleName, type CreateModel, type Model } from "../../types/Model";
 import { useFormContext } from "react-hook-form";
 import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
@@ -15,7 +15,7 @@ const CreatePage = () => {
   const { handleSubmit } = useFormContext<CreateModel>();
   const { isLoading } = useCreate<CreateModel>(moduleName);
 
-  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<{ id: string; name: string; parent_id: string | null; useful_life_years: number; salvage_value_pct: number }>("categories", "/api/v1/categories");
+  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<Model>("categories", "/api/v1/categories");
 
   if (loadingCategories) return <LoadingPage />;
 

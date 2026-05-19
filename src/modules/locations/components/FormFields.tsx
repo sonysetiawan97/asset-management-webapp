@@ -55,7 +55,7 @@ export const FormFields = ({ readOnly = false, locations, defaultValue }: FormFi
           <RadioInput
             name="type"
             label={t("modules.locations.create.form.type")}
-            options={LOCATION_TYPES}
+            data={LOCATION_TYPES}
             readOnly={readOnly}
             required={true}
           />
