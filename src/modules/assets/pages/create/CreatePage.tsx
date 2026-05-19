@@ -1,19 +1,23 @@
 import { moduleName, type CreateModel } from "../../types/Model";
 import { useFormContext } from "react-hook-form";
-import { useCreate } from "@hooks/request/useCreate";
-import { useSnackbar } from "notistack";
-import type { AxiosError } from "axios";
-import { FormFields } from "../../components/FormFields";
+import { useTranslation } from "react-i18next";
 import { CancelButton } from "@components/buttons/CancelButton";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { ResetButton } from "@components/buttons/ResetButton";
+import { useCreate } from "@hooks/request/useCreate";
+import { useSnackbar } from "notistack";
+import type { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { LoadingPage } from "@/components/loadings/LoadingPage";
 
 const CreatePage = () => {
+  const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit } = useFormContext<CreateModel>();
-  const { isLoading } = useCreate<CreateModel>(moduleName);
+  const { handleSubmit, reset } = useFormContext<CreateModel>();
+  const { createAsync, isLoading } = useCreate<CreateModel>(moduleName);
+  const navigate = useNavigate();
 
   const { data: categoriesData, isLoading: loadingCategories } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
   const { data: locationsData, isLoading: loadingLocations } = useFindAll<{ id: string; name: string }>("locations", "locations");
@@ -32,7 +36,10 @@ const CreatePage = () => {
 
   const onSubmit = async (data: CreateModel) => {
     try {
-      console.log("Submitting data:", data);
+      await createAsync({ url: moduleName, body: data });
+      enqueueSnackbar(t("modules.assets.create.notification.success"), { variant: "success" });
+      reset();
+      navigate(`/${moduleName}`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
       enqueueSnackbar(message, { variant: "error" });

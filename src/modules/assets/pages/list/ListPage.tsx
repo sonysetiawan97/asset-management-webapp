@@ -44,12 +44,12 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations }: Lis
   // Count by status
   const statusStats = ASSET_STATUSES.map((s) => ({
     ...s,
-    count: data.filter((a) => a.status === s.value).length,
+    count: data.filter((a) => a.asset_status === s.value).length,
   }));
 
   const totalValue = data.reduce((acc, a) => acc + (a.purchase_price || 0), 0);
-  const availableCount = data.filter((a) => a.status === "available").length;
-  const inUseCount = data.filter((a) => a.status === "in_use").length;
+  const availableCount = data.filter((a) => a.asset_status === "available").length;
+  const inUseCount = data.filter((a) => a.asset_status === "in_use").length;
 
   return (
     <div className="module-list-container">
@@ -80,7 +80,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations }: Lis
         <span className="status-filter-bar__label">{t("modules.assets.list.filter_by_status")}</span>
         <div className="status-filter-bar__chips">
           {statusStats.map((s) => {
-            const colors = STATUS_COLORS[s.value];
+            const colors = STATUS_COLORS[s.value] ?? { dot: "#6b7280" };
             return (
               <button key={s.value} className="status-chip" data-status={s.value}>
                 <span
@@ -127,8 +127,8 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations }: Lis
           </div>
         ) : (
           data.map((asset, index) => {
-            const statusColors = STATUS_COLORS[asset.status];
-            const conditionColors = CONDITION_COLORS[asset.condition];
+            const statusColors = STATUS_COLORS[asset.asset_status] ?? { bg: "#f3f4f6", text: "#374151", dot: "#6b7280" };
+            const conditionColors = CONDITION_COLORS[asset.condition] ?? { bg: "#f3f4f6", text: "#374151" };
             const categoryName = categories.find((c) => c.id === asset.category_id)?.name ?? "—";
             const locationName = locations.find((l) => l.id === asset.location_id)?.name ?? "—";
 
@@ -145,7 +145,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations }: Lis
                       className="asset-status__badge"
                       style={{ background: statusColors.bg, color: statusColors.text }}
                     >
-                      {ASSET_STATUSES.find((s) => s.value === asset.status)?.label}
+                      {ASSET_STATUSES.find((s) => s.value === asset.asset_status)?.label}
                     </span>
                     <span
                       className="asset-condition__badge"

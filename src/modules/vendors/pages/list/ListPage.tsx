@@ -85,7 +85,7 @@ export const List = ({ data, count, isLoading: _isLoading }: ListProps) => {
           </div>
         ) : (
           data.map((vendor, index) => {
-            const meta = VENDOR_CATEGORY_COLORS[vendor.category];
+            const meta = VENDOR_CATEGORY_COLORS[vendor.category] ?? { bg: "#f3f4f6", text: "#374151", shadow: "inset 0 -2px 0 rgba(0,0,0,0.1)" };
             const iconPath = CATEGORY_ICONS[vendor.category] || CATEGORY_ICONS.supplier;
             return (
               <div

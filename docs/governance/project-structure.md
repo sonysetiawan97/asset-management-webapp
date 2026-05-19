@@ -28,11 +28,13 @@ sagara-vite-react-ts/
 │   │   │   └── UpdateButton.tsx
 │   │   ├── errors/                     # Error / empty state components
 │   │   │   ├── EmptyData.tsx           # Shown when list is empty
-│   │   │   └── ...
+│   │   │   └── ErrorRoutes.tsx         # Catches unmatched routes (404/500)
 │   │   ├── form/                       # Form input components
 │   │   │   ├── inputs/                 # Text, Number, Date, Switch, etc.
 │   │   │   ├── select/                 # SingleSelectInput, MultipleSelectInput
 │   │   │   └── fileupload/             # Single/Multiple upload for images/files
+│   │   ├── icons/                      # Named SVG icon components
+│   │   │   └── Icons.tsx             # DashboardIcon, AssetsIcon, etc. (fill="currentColor")
 │   │   ├── list/                       # List/table components
 │   │   │   ├── Action.tsx              # Row actions (read/edit/delete)
 │   │   │   ├── ActionBar.tsx           # Action buttons above table
@@ -49,7 +51,10 @@ sagara-vite-react-ts/
 │   │   │   ├── SidebarMenuItem.tsx
 │   │   │   ├── SidebarParentMenu.tsx   # Collapsible menu group
 │   │   │   ├── SidebarMenuTitle.tsx    # Section divider
-│   │   │   └── SidebarMenuItem.tsx
+│   │   │   └── SideBarMenuIcon.tsx     # Icon wrapper (<span>, CSS color via currentColor)
+│   │   ├── misc/                       # Misc utilities
+│   │   │   ├── UnderConstruction.tsx   # Under-construction placeholder
+│   │   │   └── UnderConstructionListWrapper.tsx  # With breadcrumbs auto-set
 │   │   └── Modal.tsx                   # Generic modal wrapper
 │   │
 │   ├── contexts/                       # React contexts (providers)

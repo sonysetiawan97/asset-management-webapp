@@ -26,7 +26,7 @@ export interface Model {
   salvage_value: number;
   useful_life_years: number;
   book_value: number;
-  status: AssetStatus;
+  asset_status: AssetStatus;
   condition: AssetCondition;
   warranty_start: string;
   warranty_end: string;
@@ -39,10 +39,11 @@ export interface Model {
 
 export interface CreateModel {
   name: string;
+  asset_code: string;
   serial_number?: string;
   category_id: string;
   location_id?: string;
-  department_id: string;
+  department_id?: string;
   vendor_id?: string;
   custodian_id?: string;
   purchase_price: number;
@@ -62,6 +63,7 @@ export interface ReadModel extends Model {}
 export interface UpdateModel {
   id: string;
   name: string;
+  asset_code: string;
   serial_number?: string;
   category_id: string;
   location_id?: string;
@@ -72,7 +74,7 @@ export interface UpdateModel {
   purchase_date: string;
   salvage_value?: number;
   useful_life_years?: number;
-  status?: AssetStatus;
+  asset_status?: AssetStatus;
   condition?: AssetCondition;
   warranty_start?: string;
   warranty_end?: string;

@@ -327,13 +327,17 @@ const NameRoutes = lazy(() => import("@modules/<name>/PrivateRoutes"));
 
 ### 8. Add Sidebar Menu Item
 
-In `src/layout/partials/sidebar/Sidebar.tsx`:
+In `src/layout/partials/sidebar/Sidebar.tsx`. **Always use named icon components from `src/components/icons/Icons.tsx`** — never inline SVGs:
 
 ```tsx
+import { DashboardIcon } from "@components/icons/Icons";
+
 <AuthPrivilegesChecker link="/<name>">
-  <SidebarMenuItem url="/<name>" title={t("sidebar.<section>.menu.<name>")} icon={<Icon />} />
+  <SidebarMenuItem url="/<name>" title={t("sidebar.<section>.menu.<name>")} icon={<DashboardIcon />} />
 </AuthPrivilegesChecker>
 ```
+
+Available icons: `DashboardIcon`, `CategoriesIcon`, `LocationsIcon`, `VendorsIcon`, `AssetsIcon`, `CheckoutsIcon`, `TransfersIcon`, `MaintenanceIcon`, `ReportsIcon`, `DisposalsIcon`, `AuditTrailIcon`, `NotificationsIcon`, `UsersIcon`, `PrivilegesIcon`, `RolesIcon`, `SysparamsIcon`, `PlusIcon`, `EditIcon`, `ViewIcon`.
 
 ### 9. Add Backend Privileges
 

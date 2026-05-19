@@ -1,9 +1,9 @@
 import type { FC, ReactNode } from "react";
 
 interface SideBarMenuIconProps {
-  children: ReactNode;
+  icon?: ReactNode;
 }
 
-export const SideBarMenuIcon: FC<SideBarMenuIconProps> = ({ children }) => {
-  return <div>{children}</div>;
+export const SideBarMenuIcon: FC<SideBarMenuIconProps> = ({ icon }) => {
+  return <span className="sidebar-menu-icon">{icon}</span>;
 };

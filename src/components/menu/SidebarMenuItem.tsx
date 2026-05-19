@@ -29,7 +29,7 @@ export const SidebarMenuItem: FC<SidebarMenuItemProps> = ({
       to={fullUrl}
       className="list-group-item"
     >
-      <SideBarMenuIcon>{icon}</SideBarMenuIcon>
+      <SideBarMenuIcon icon={icon} />
       <span>{title}</span>
     </Link>
   );
