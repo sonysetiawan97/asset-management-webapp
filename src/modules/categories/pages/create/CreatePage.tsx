@@ -1,4 +1,4 @@
-import { moduleName, type CreateModel, type Model } from "../../types/Model";
+import { moduleName, type CreateModel } from "@modules/categories/types/Model";
 import { useFormContext } from "react-hook-form";
 import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
@@ -9,11 +9,16 @@ import { SubmitButton } from "@components/buttons/SubmitButton";
 import { ResetButton } from "@components/buttons/ResetButton";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { type Model } from "@modules/categories/types/Model";
 
 const CreatePage = () => {
+  const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const { handleSubmit } = useFormContext<CreateModel>();
-  const { isLoading } = useCreate<CreateModel>(moduleName);
+  const { createAsync, isLoading } = useCreate<CreateModel>(moduleName);
+  const navigate = useNavigate();
 
   const { data: categoriesData, isLoading: loadingCategories } = useFindAll<Model>("categories", "categories");
 
@@ -23,8 +28,9 @@ const CreatePage = () => {
 
   const onSubmit = async (data: CreateModel) => {
     try {
-      console.log("Submitting data:", data);
-      enqueueSnackbar("Category created successfully", { variant: "success" });
+      await createAsync({ url: moduleName, body: data });
+      enqueueSnackbar(t("modules.categories.create.notification.success"), { variant: "success" });
+      navigate(`/${moduleName}`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
       enqueueSnackbar(message, { variant: "error" });
