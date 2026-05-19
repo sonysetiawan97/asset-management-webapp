@@ -21,7 +21,7 @@ export const ListWrapper: FC = () => {
       status: 1,
     },
   });
-  const { data: categoriesData } = useFindAll<Model>("categories", "/api/v1/categories");
+  const { data: categoriesData } = useFindAll<Model>("categories", "categories");
 
   useEffect(() => {
     setBreadcrumbs([

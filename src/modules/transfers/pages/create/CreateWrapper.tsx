@@ -18,9 +18,9 @@ const CreateWrapper: FC = () => {
   const methods = useForm<CreateTransferModel>({ mode: "onBlur" });
   const { t } = useTranslation();
   const { isLoading } = useCreate<CreateTransferModel>(moduleName);
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "/api/v1/assets");
-  const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "/api/v1/locations");
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "/api/v1/users");
+  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
+  const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "locations");
+  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
 
   const assets = assetsData?.result ?? [];
   const locations = locationsData?.result ?? [];

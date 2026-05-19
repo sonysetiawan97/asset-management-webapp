@@ -21,8 +21,8 @@ export const ListWrapper: FC = () => {
     },
   });
 
-  const { data: categoryData } = useFindAll<{ id: string; name: string }>("categories", "/api/v1/categories");
-  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "/api/v1/locations");
+  const { data: categoryData } = useFindAll<{ id: string; name: string }>("categories", "categories");
+  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const categories = categoryData?.result ?? [];
   const locations = locationData?.result ?? [];
 

@@ -19,7 +19,7 @@ const CreateWrapper: FC = () => {
   const { t } = useTranslation();
   const { isLoading } = useCreate<CreateDisposalModel>(moduleName);
   const { enqueueSnackbar } = useSnackbar();
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "/api/v1/assets");
+  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
 
   const assets = assetsData?.result ?? [];
 

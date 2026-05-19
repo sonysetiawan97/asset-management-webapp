@@ -15,11 +15,11 @@ const CreatePage = () => {
   const { handleSubmit } = useFormContext<CreateModel>();
   const { isLoading } = useCreate<CreateModel>(moduleName);
 
-  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "/api/v1/categories");
-  const { data: locationsData, isLoading: loadingLocations } = useFindAll<{ id: string; name: string }>("locations", "/api/v1/locations");
-  const { data: departmentsData, isLoading: loadingDepartments } = useFindAll<{ id: string; name: string }>("departments", "/api/v1/departments");
-  const { data: vendorsData, isLoading: loadingVendors } = useFindAll<{ id: string; name: string }>("vendors", "/api/v1/vendors");
-  const { data: usersData, isLoading: loadingUsers } = useFindAll<{ id: string; name: string }>("users", "/api/v1/users");
+  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
+  const { data: locationsData, isLoading: loadingLocations } = useFindAll<{ id: string; name: string }>("locations", "locations");
+  const { data: departmentsData, isLoading: loadingDepartments } = useFindAll<{ id: string; name: string }>("departments", "departments");
+  const { data: vendorsData, isLoading: loadingVendors } = useFindAll<{ id: string; name: string }>("vendors", "vendors");
+  const { data: usersData, isLoading: loadingUsers } = useFindAll<{ id: string; name: string }>("users", "users");
 
   const isLoadingAny = loadingCategories || loadingLocations || loadingDepartments || loadingVendors || loadingUsers;
   if (isLoadingAny) return <LoadingPage />;

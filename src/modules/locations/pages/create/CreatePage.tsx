@@ -15,7 +15,7 @@ const CreatePage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { handleSubmit } = useFormContext<CreateModel>();
   const { isLoading } = useCreate<CreateModel>(moduleName);
-  const { data: locationsData, isLoading: isLoadingLocations } = useFindAll<Model>("locations", "/api/v1/locations");
+  const { data: locationsData, isLoading: isLoadingLocations } = useFindAll<Model>("locations", "locations");
 
   const onSubmit = async (data: CreateModel) => {
     try {

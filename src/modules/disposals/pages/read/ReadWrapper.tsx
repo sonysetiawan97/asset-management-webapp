@@ -14,7 +14,7 @@ import NotFound from "@modules/errors/pages/404NotFound";
 import { useFindAll } from "@hooks/request/useFindAll";
 
 const ReadPage: FC = () => {
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "/api/v1/assets");
+  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
 
   const assets = assetsData?.result ?? [];
 

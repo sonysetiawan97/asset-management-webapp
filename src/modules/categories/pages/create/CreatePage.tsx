@@ -15,7 +15,7 @@ const CreatePage = () => {
   const { handleSubmit } = useFormContext<CreateModel>();
   const { isLoading } = useCreate<CreateModel>(moduleName);
 
-  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<Model>("categories", "/api/v1/categories");
+  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<Model>("categories", "categories");
 
   if (loadingCategories) return <LoadingPage />;
 

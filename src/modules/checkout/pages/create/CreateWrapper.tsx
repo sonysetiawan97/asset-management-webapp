@@ -18,8 +18,8 @@ const CreateWrapper: FC = () => {
   const methods = useForm<CreateCheckoutModel>({ mode: "onBlur" });
   const { t } = useTranslation();
   const { isLoading } = useCreate<CreateCheckoutModel>(moduleName);
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "/api/v1/assets");
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "/api/v1/users");
+  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
+  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
 
   const assets = assetsData?.result ?? [];
   const users = usersData?.result ?? [];

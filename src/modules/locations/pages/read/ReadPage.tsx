@@ -10,7 +10,7 @@ interface ReadPageProps {
 }
 
 const ReadPage = ({ defaultValue }: ReadPageProps) => {
-  const { data: locationsData, isLoading } = useFindAll<Model>("locations", "/api/v1/locations");
+  const { data: locationsData, isLoading } = useFindAll<Model>("locations", "locations");
 
   if (isLoading) return <LoadingPage />;
 

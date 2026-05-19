@@ -18,7 +18,7 @@ const UpdatePage = () => {
   const { handleSubmit, getValues } = useFormContext<UpdateModel>();
   const { updateAsync, isLoading } = useUpdate<UpdateModel>();
   const navigate = useNavigate();
-  const { data: categoriesData, isLoading: isLoadingCategories } = useFindAll<Model>("categories", "/api/v1/categories");
+  const { data: categoriesData, isLoading: isLoadingCategories } = useFindAll<Model>("categories", "categories");
 
   const onSubmit = async (data: UpdateModel) => {
     try {

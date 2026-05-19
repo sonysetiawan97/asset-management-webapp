@@ -16,11 +16,11 @@ const ReadPage = (_props: ReadPageProps) => {
   const assetId = watch("id");
   const assetCode = watch("asset_code");
   const assetName = watch("name");
-  const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "/api/v1/categories");
-  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "/api/v1/locations");
-  const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "/api/v1/departments");
-  const { data: vendorData } = useFindAll<{ id: string; name: string }>("vendors", "/api/v1/vendors");
-  const { data: userData } = useFindAll<{ id: string; name: string }>("users", "/api/v1/users");
+  const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
+  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
+  const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
+  const { data: vendorData } = useFindAll<{ id: string; name: string }>("vendors", "vendors");
+  const { data: userData } = useFindAll<{ id: string; name: string }>("users", "users");
 
   const categories = categoryData?.result ?? [];
   const locations = locationData?.result ?? [];
