@@ -105,7 +105,7 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 export const ListWrapper: FC = () => {
   const { skip, limit } = usePagination();
   const { query } = useSearch();
-  const { data, isLoading } = useList<Model>({
+  const { data, isLoading, error } = useList<Model>({
     module: moduleName,
     skip,
     limit,
@@ -123,7 +123,7 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
+  if (error) return <div className="text-center py-5 text-danger">Error: {error.message}</div>;
 
   return (
     <List
@@ -132,6 +132,35 @@ export const ListWrapper: FC = () => {
       isLoading={isLoading}
     />
   );
+};
+```
+
+**Note:** Do NOT add `if (isLoading) return <LoadingPage />` — this blocks the full page on every search/pagination. The `isLoading` state passes through to `Table`, which shows an inline spinner.
+
+#### Adding Field Filters
+
+If the module passes `showFilter` to `ListContainer`, integrate the filter into `useList` params:
+
+```tsx
+import { useFilter } from "@hooks/list/useFilter";
+
+export const ListWrapper: FC = () => {
+  const { skip, limit } = usePagination();
+  const { query } = useSearch();
+  const { group } = useFilter();  // ← read filter from context
+
+  const { data, isLoading, error } = useList<Model>({
+    module: moduleName,
+    skip,
+    limit,
+    params: {
+      "!search": query,
+      status: 1,
+      "!sort[id]": -1,
+      ...(group ? { group } : {}),  // ← only add when filter has value
+    },
+  });
+  // ...
 };
 ```
 

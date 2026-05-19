@@ -75,6 +75,18 @@ const { query, setQuery } = useSearch();
 
 `SearchBar` component writes to this context; list pages read from it.
 
+### `useFilter()` — `src/hooks/list/useFilter.ts`
+
+Reads the field-based filter query from `FilterContext`.
+
+```ts
+const { group, setGroup } = useFilter();
+```
+
+`FilterContext` is provided globally via `FilterProvider` in `App.tsx`. It resets on route change (same behavior as `SearchContext`).
+
+Currently used by `SearchAdvanceBar` for the "Group" filter field. When adding new filter fields, extend `FilterContext` + `FilterProvider` and use the same pattern.
+
 ---
 
 ## Request / CRUD Hooks (`src/hooks/request/`)

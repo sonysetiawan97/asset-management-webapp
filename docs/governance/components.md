@@ -122,15 +122,16 @@ All file upload components accept:
 Generic list page wrapper. Accepts:
 ```tsx
 <ListContainer<Model>
-  title="Users"                              // page title
-  columns={columns}                           // ColumnConfig[]
-  data={data}                                // Model[]
+  title="Users"
+  columns={columns}
+  data={data}
   isLoading={isLoading}
-  count={count}                               // total records
-  skip={skip}                                // current offset
-  limit={limit}                              // page size
-  onPageChange={setSkip}                     // pagination handler
-  createUrl="/users/create"                   // (optional) create button link
+  count={count}
+  skip={skip}
+  limit={limit}
+  onPageChange={setSkip}
+  createUrl="/users/create"
+  showFilter   // ← only add this if the module needs field-based filtering
 />
 ```
 
@@ -183,9 +184,34 @@ const privilegeUrl = {
 
 Each button only renders if the user has the corresponding privilege.
 
+### `ListContainer<T>` (`src/components/list/ListContainer.tsx`)
+
+Generic list page wrapper. Accepts:
+```tsx
+<ListContainer<Model>
+  title="Users"
+  columns={columns}
+  data={data}
+  isLoading={isLoading}
+  count={count}
+  skip={skip}
+  limit={limit}
+  onPageChange={setSkip}
+  createUrl="/users/create"
+  showFilter   // ← only add this if the module needs field-based filtering
+/>
+```
+
 ### `ActionBar` (`src/components/list/ActionBar.tsx`)
 
-Container for the "Create" button above the table. Uses `createUrl` to render a `<CreateButton>`.
+Container for SearchBar + optional Filter + CreateButton.
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `createUrl` | `string` | — | Create button link |
+| `showFilter` | `boolean` | `false` | Show Filter button (uses `SearchAdvanceBar`) |
+
+Only pass `showFilter` when the list page needs field-based filtering beyond text search. `FilterProvider` is already in `App.tsx`.
 
 ### `Title` (`src/components/list/Title.tsx`)
 
@@ -193,11 +219,23 @@ Card header with page title.
 
 ### `Pagination` (`src/components/list/Pagination.tsx`)
 
-Page controls. Uses `PaginationContext` (skip/limit).
+Page controls with Prev/Next and optional First/Last. First/Last only appear when `totalPages > 2`. Disabled states are handled automatically. Uses `PaginationContext` (skip/limit). Does NOT show numbered page buttons.
 
 ### `SearchBar` (`src/components/list/SearchBar.tsx`)
 
 Search input that sets `query` in `SearchContext`. List pages call `useSearch()` to read it.
+
+### `SearchAdvanceBar` (`src/components/list/SearchAdvanceBar.tsx`)
+
+Dropdown filter button. Only rendered when `showFilter=true` on `ActionBar`.
+
+```tsx
+<SearchAdvanceBar />
+```
+
+Uses `FilterContext` (`useFilter` hook) to write filter values. Dropdown stays open while typing (`data-bs-auto-close="outside"`). Debounces 500ms before updating context. Shows a badge indicator when a filter is active.
+
+**Note:** Not included by default — must pass `showFilter` on `ActionBar`.
 
 ---
 
@@ -289,3 +327,81 @@ See [authentication.md](./authentication.md) for full details.
 | `EmptyData` | `EmptyData.tsx` | Empty state illustration (shown in table when no data) |
 
 Error pages (404, Unauthenticated, Unauthorized) are in `src/modules/errors/pages/`.
+
+---
+
+## Table Styling (`src/assets/style/custom.css` + `style.css`)
+
+The list table uses a scoped CSS system to avoid Bootstrap overrides.
+
+### Structure
+
+```tsx
+<div className="table-wrapper border border-secondary-subtle rounded-3">
+  <table className="table table-hover mb-0">
+    <thead>
+      <tr>
+        <th>...</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+- `table-wrapper` — border + rounded corners live here (not on `<table>`)
+- `table` — uses `.table-hover` only; **no `.table-striped`** (conflicts with custom borders)
+- Border is on wrapper + individual `<td>` bottom borders (via CSS)
+
+### CSS Rules (`custom.css`)
+
+```css
+/* Wrapper — border lives here */
+.table-wrapper {
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+/* Header — gray background, uppercase, 1.5px bottom border */
+.table-wrapper .table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 1.5px solid #dee2e6;
+  color: #212529;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 1rem;
+}
+
+/* Rows — hover changes bg, no animation, no ::before tricks */
+.table-wrapper .table tbody tr {
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 150ms ease;
+}
+
+.table-wrapper .table tbody tr:hover td {
+  background-color: #f8f9fa;
+}
+
+/* Last row — no border to avoid double line */
+.table-wrapper .table tbody tr:last-child td {
+  border-bottom: none;
+}
+```
+
+### Key Rules
+
+1. **No `::before` / `::after` on table rows** — causes layout shift on hover
+2. **No `position: relative` on `<tr>`** — was needed for the removed accent bar
+3. **No `table-row-animated` class** — animation removed to prevent column shrinking
+4. **No `overflow-hidden` on table wrapper** — clips `translateY` animations and causes visual bugs
+5. **Border on wrapper, not `<table>`** — avoids "terpotong" (cut) border appearance
+
+### Global table styles (`style.css`)
+
+Bootstrap base `.table` styles use `border-collapse: separate` (default). The `.table-wrapper` overrides this to `border-collapse: collapse` for clean 1px borders. Do not override `border-collapse` on the global `.table` selector — only scope it to `.table-wrapper`.

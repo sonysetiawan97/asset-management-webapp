@@ -101,6 +101,21 @@ const { query, setQuery } = useSearch();
 setQuery("john");  // triggers re-fetch in useList
 ```
 
+### `FilterContext` / `FilterProvider` — `src/contexts/FilterProvider.tsx`
+
+Provides field-based filter state (e.g., group filter). `SearchAdvanceBar` writes to it; modules read via `useFilter()`.
+
+```ts
+import { useFilter } from "@/hooks/list/useFilter";
+
+const { group, setGroup } = useFilter();
+```
+
+- `group` — current group filter string (default `""`)
+- `setGroup(v: string)` — debounced write (500ms, via `SearchAdvanceBar`)
+
+Reset on route change — same behavior as `SearchContext`.
+
 ### `ModalContext` / `ModalProvider` — `src/contexts/ModalProvider.tsx`
 
 Controls modal visibility globally.
@@ -127,5 +142,6 @@ Tracks which collapsible sidebar menus are open/closed.
 | `pageHeaderStore` | nanostore | Global | `src/stores/PageHeaderStore.ts` |
 | `PaginationContext` | React Context | App (PrivateRoutes) | `src/contexts/PaginationProvider.tsx` |
 | `SearchContext` | React Context | App (PrivateRoutes) | `src/contexts/SearchProvider.tsx` |
+| `FilterContext` | React Context | App | `src/contexts/FilterProvider.tsx` |
 | `ModalContext` | React Context | App | `src/contexts/ModalProvider.tsx` |
 | `SidebarParentContext` | React Context | Sidebar | `src/contexts/SidebarParentContext.tsx` |
