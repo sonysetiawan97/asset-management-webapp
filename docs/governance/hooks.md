@@ -160,10 +160,13 @@ Alternative to `useList` with a custom query key.
 ```ts
 const { data, isLoading } = useFindAll<T>(
   queryKey,         // string, used as React Query key
-  url,              // API endpoint
+  url,              // API endpoint (resource name only, e.g. "categories")
   params?           // optional query params
 );
 ```
+
+**Important:** Pass the resource name only (e.g., `"categories"`), NOT the full path (e.g., `"/api/v1/categories"`).
+The axios `baseURL` is prepended automatically.
 
 ---
 

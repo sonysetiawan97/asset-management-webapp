@@ -122,6 +122,10 @@ logout();
 - `moduleName` in each module's `types/Model.ts` must match the API endpoint
 - All service calls use `moduleName` as the base URL
 
+**Important:** Always pass the resource name only (e.g., `"categories"`), NOT the full path with `/api/v1` prefix (e.g., `"/api/v1/categories"`).
+The axios `baseURL` (`VITE_API_BASE_URL`, typically `/api/v1`) is prepended automatically.
+Passing `"/api/v1/categories"` would result in a doubled path like `/api/v1/api/v1/categories`.
+
 ## Param Naming Conventions
 
 These prefixes are recognized by the backend:
