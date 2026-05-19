@@ -46,8 +46,15 @@ export interface RolePrivilegeItem {
 }
 
 export interface PrivilegeItem {
-    code_role: string;
+    id?: number;
+    role?: number;
+    privilege_id?: number | null;
     action: string;
     uri: string;
     method: string;
+    created_by?: number | null;
+    updated_by?: number | null;
+    created_time?: string;
+    updated_time?: string;
+    status?: number;
 }

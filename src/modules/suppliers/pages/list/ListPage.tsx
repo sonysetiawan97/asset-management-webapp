@@ -68,5 +68,4 @@ export const List: FC<ListProps> = ({ data, count, isLoading }) => {
   );
 };
 
-export { List };
 export default List;

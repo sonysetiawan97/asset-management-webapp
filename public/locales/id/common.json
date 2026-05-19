@@ -73,14 +73,25 @@
         "roles": "Peran",
         "privileges": "Hak Akses",
         "trash": "Sampah",
-        "users": "Pengguna"
+        "users": "Pengguna",
+        "categories": "Kategori",
+        "locations": "Lokasi",
+        "vendors": "Vendor",
+        "assets": "Aset",
+        "checkouts": "Check-out",
+        "transfers": "Transfer",
+        "maintenance": "Perawatan",
+        "reports": "Laporan",
+        "disposals": "Pelepasan",
+        "audit_trail": "Riwayat Audit",
+        "notifications": "Notifikasi"
       }
     },
     "base": {
       "title": "BASE",
       "menu": {
         "setting": "Pengaturan",
-        "themes": "Temas"
+        "themes": "Tema"
       }
     },
     "user-management": {
@@ -363,6 +374,318 @@
       },
       "detail": {
         "title": "Detail Profile"
+      }
+    },
+    "categories": {
+      "list": {
+        "title": "Daftar Kategori",
+        "years": "tahun",
+        "total_categories": "Total Kategori",
+        "root_categories": "Kategori Induk",
+        "sub_categories": "Sub Kategori",
+        "empty": "Belum ada kategori. Buat yang pertama.",
+        "create_first": "Buat Kategori Pertama",
+        "has_children": "memiliki anak",
+        "assets": "aset",
+        "avg_life": "rerata umur",
+        "salvage": "sisa %"
+      },
+      "create": {
+        "title": "Buat Kategori",
+        "form": {
+          "name": "Nama Kategori",
+          "parent": "Kategori Induk",
+          "useful_life_years": "Masa Pakai (Tahun)",
+          "salvage_value_pct": "Nilai Sisa (%)"
+        },
+        "notification": {
+          "success": "Kategori berhasil dibuat.",
+          "error": "Oops, gagal menyimpan."
+        }
+      },
+      "read": {
+        "title": "Detail Kategori"
+      },
+      "update": {
+        "title": "Perbarui Kategori",
+        "notification": {
+          "success": "Kategori berhasil diperbarui.",
+          "error": "Oops, gagal menyimpan."
+        }
+      }
+    },
+    "locations": {
+      "list": {
+        "title": "Daftar Lokasi",
+        "total_locations": "Total Lokasi",
+        "root_categories": "Lokasi Induk",
+        "sub_categories": "Sub Lokasi",
+        "empty": "Belum ada lokasi. Buat yang pertama.",
+        "create_first": "Buat Lokasi Pertama",
+        "has_children": "memiliki anak",
+        "assets": "aset",
+        "years": "tahun",
+        "salvage": "sisa %",
+        "avg_life": "rerata umur"
+      },
+      "create": {
+        "title": "Buat Lokasi",
+        "form": {
+          "name": "Nama Lokasi",
+          "code": "Kode",
+          "type": "Tipe",
+          "parent": "Lokasi Induk"
+        },
+        "notification": {
+          "success": "Lokasi berhasil dibuat.",
+          "error": "Oops, gagal menyimpan."
+        }
+      },
+      "read": {
+        "title": "Detail Lokasi"
+      },
+      "update": {
+        "title": "Perbarui Lokasi",
+        "notification": {
+          "success": "Lokasi berhasil diperbarui.",
+          "error": "Oops, gagal menyimpan."
+        }
+      }
+    },
+    "vendors": {
+      "list": {
+        "title": "Daftar Vendor",
+        "total_vendors": "Total Vendor",
+        "active": "Aktif",
+        "inactive": "Nonaktif",
+        "empty": "Belum ada vendor. Tambahkan yang pertama.",
+        "create_first": "Tambah Vendor Pertama",
+        "status_active": "Aktif",
+        "status_inactive": "Nonaktif"
+      },
+      "create": {
+        "title": "Tambah Vendor",
+        "form": {
+          "name": "Nama Vendor",
+          "code": "Kode",
+          "category": "Kategori",
+          "contact_person": "Nama Kontak",
+          "email": "Email",
+          "phone": "Telepon",
+          "address": "Alamat",
+          "notes": "Catatan",
+          "is_active": "Status Aktif"
+        },
+        "notification": {
+          "success": "Vendor berhasil dibuat.",
+          "error": "Oops, gagal menyimpan."
+        }
+      },
+      "read": {
+        "title": "Detail Vendor"
+      },
+      "update": {
+        "title": "Perbarui Vendor",
+        "notification": {
+          "success": "Vendor berhasil diperbarui.",
+          "error": "Oops, gagal menyimpan."
+        }
+      }
+    },
+    "assets": {
+      "list": {
+        "title": "Daftar Aset",
+        "total_assets": "Total Aset",
+        "available": "Tersedia",
+        "in_use": "Dipakai",
+        "total_value": "Nilai Total",
+        "filter_by_status": "Filter berdasarkan status",
+        "empty": "Belum ada aset. Daftarkan yang pertama.",
+        "create_first": "Daftarkan Aset Pertama",
+        "purchase_price": "Pembelian",
+        "book_value": "Nilai Buku",
+        "purchase_date": "Tgl Pembelian",
+        "warranty_expired": "Garansi Habis"
+      },
+      "create": {
+        "title": "Daftarkan Aset",
+        "form": {
+          "name": "Nama Aset",
+          "serial_number": "Nomor Seri",
+          "category": "Kategori",
+          "location": "Lokasi",
+          "department": "Departemen",
+          "vendor": "Vendor",
+          "custodian": "Penanggung Jawab",
+          "condition": "Kondisi",
+          "purchase_price": "Harga Pembelian",
+          "purchase_date": "Tanggal Pembelian",
+          "useful_life_years": "Masa Pakai (Tahun)",
+          "salvage_value": "Nilai Sisa",
+          "warranty_start": "Mulai Garansi",
+          "warranty_end": "Akhir Garansi",
+          "license_key": "Kunci Lisensi",
+          "license_expiry": "Berakhir Lisensi",
+          "notes": "Catatan",
+          "section": {
+            "identity": "Identitas",
+            "classification": "Klasifikasi",
+            "financial": "Keuangan",
+            "warranty_license": "Garansi & Lisensi"
+          }
+        },
+        "notification": {
+          "success": "Aset berhasil didaftarkan.",
+          "error": "Oops, gagal menyimpan."
+        }
+      },
+      "read": {
+        "title": "Detail Aset"
+      },
+      "update": {
+        "title": "Perbarui Aset",
+        "notification": {
+          "success": "Aset berhasil diperbarui.",
+          "error": "Oops, gagal menyimpan."
+        }
+      },
+      "qr": {
+        "title": "Kode QR",
+        "asset_code": "Kode Aset",
+        "asset_name": "Nama Aset",
+        "description": "Pindai untuk melihat detail aset ini di perangkat mana pun.",
+        "download": "Unduh QR"
+      }
+    },
+    "checkout": {
+      "list": {
+        "title": "Check-out / Check-in",
+        "total_checkouts": "Total Check-out",
+        "active": "Aktif",
+        "returned": "Dikembalikan",
+        "overdue": "Terlambat",
+        "empty": "Belum ada catatan check-out.",
+        "assigned_to": "Ditugaskan Ke",
+        "checked_out": "Di-check-out",
+        "expected_return": "Tgl Kembali Rencana",
+        "returned_on": "Dikembalikan Pada"
+      },
+      "create": {
+        "title": "Check Out Aset",
+        "form": {
+          "asset": "Aset",
+          "assignee": "Penerima",
+          "expected_return": "Tgl Kembali Rencana",
+          "condition": "Kondisi Saat Kembali",
+          "return_date": "Tgl Kembali",
+          "notes": "Catatan"
+        },
+        "notification": { "success": "Aset berhasil di-check-out.", "error": "Oops, gagal menyimpan." }
+      },
+      "read": { "title": "Detail Check-out" },
+      "update": {
+        "title": "Check In Aset",
+        "notification": { "success": "Aset berhasil di-check-in.", "error": "Oops, gagal menyimpan." }
+      }
+    },
+    "transfers": {
+      "list": {
+        "title": "Permintaan Transfer",
+        "total_transfers": "Total Transfer",
+        "filter_by_status": "Filter berdasarkan status",
+        "empty": "Belum ada permintaan transfer.",
+        "requested_by": "Diminta Oleh"
+      },
+      "create": {
+        "title": "Mulai Transfer",
+        "form": {
+          "asset": "Aset",
+          "to_location": "Ke Lokasi",
+          "to_custodian": "Ke Penanggung Jawab",
+          "reason": "Alasan"
+        },
+        "notification": { "success": "Permintaan transfer diajukan.", "error": "Oops, gagal menyimpan." }
+      },
+      "read": { "title": "Detail Transfer" }
+    },
+    "maintenance": {
+      "list": {
+        "title": "Catatan Perawatan",
+        "total_logs": "Total Catatan",
+        "open": "Terbuka",
+        "completed": "Selesai",
+        "total_cost": "Total Biaya",
+        "empty": "Belum ada catatan perawatan.",
+        "performed_on": "Dilakukan Pada",
+        "next": "Perawatan Berikutnya"
+      },
+      "create": {
+        "title": "Catat Perawatan",
+        "form": {
+          "asset": "Aset",
+          "type": "Tipe",
+          "date_performed": "Tgl Perawatan",
+          "performed_by": "Teknisi",
+          "description": "Deskripsi",
+          "cost": "Biaya",
+          "next_maintenance": "Tgl Perawatan Berikutnya"
+        },
+        "notification": { "success": "Perawatan berhasil dicatat.", "error": "Oops, gagal menyimpan." }
+      },
+      "read": { "title": "Detail Perawatan" },
+      "update": {
+        "title": "Selesaikan Perawatan",
+        "notification": { "success": "Perawatan selesai.", "error": "Oops, gagal menyimpan." }
+      }
+    },
+    "notifications": {
+      "list": {
+        "title": "Notifikasi",
+        "total": "Total",
+        "unread": "Belum Dibaca",
+        "read": "Dibaca",
+        "empty": "Tidak ada notifikasi.",
+        "mark_all_read": "Tandai Semua Dibaca",
+        "tab_all": "Semua",
+        "tab_unread": "Belum Baca",
+        "tab_read": "Dibaca"
+      }
+    },
+    "reports": {
+      "inventory": { "title": "Laporan Inventaris" },
+      "export_csv": "Ekspor CSV"
+    },
+    "disposals": {
+      "list": {
+        "title": "Permintaan Pelepasan",
+        "total": "Total Pelepasan",
+        "method": "Metode",
+        "sale_price": "Harga Jual",
+        "initiated": "Diajukan",
+        "by": "oleh",
+        "empty": "Belum ada permintaan pelepasan."
+      },
+      "create": {
+        "title": "Ajukan Pelepasan",
+        "form": {
+          "asset": "Aset",
+          "method": "Metode",
+          "reason": "Alasan",
+          "sale_price": "Harga Jual",
+          "buyer": "Pembeli",
+          "transaction_date": "Tgl Transaksi",
+          "certificate_ref": "Ref Sertifikat"
+        },
+        "notification": { "success": "Permintaan pelepasan diajukan.", "error": "Oops, gagal menyimpan." }
+      },
+      "read": { "title": "Detail Pelepasan" }
+    },
+    "audit": {
+      "list": {
+        "title": "Riwayat Audit",
+        "total": "Total Kejadian",
+        "filter": "Filter",
+        "empty": "Belum ada kejadian audit."
       }
     }
   }

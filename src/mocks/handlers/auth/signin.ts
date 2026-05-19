@@ -5,7 +5,7 @@ const mockUser = {
   id: faker.number.int(),
   first_name: faker.person.firstName(),
   last_name: faker.person.lastName(),
-  username: faker.internet.userName(),
+  username: faker.internet.username(),
   email: faker.internet.email(),
   status: 1,
 };

@@ -27,12 +27,20 @@ export default defineConfig(({ mode }) => {
         "@context": path.resolve(__dirname, "./src/contexts"),
         "@types": path.resolve(__dirname, "./src/types"),
       },
+      dedupe: ["react", "react-dom", "react-router-dom"],
     },
 
     server: isDev
       ? {
           port,
           open: true,
+          proxy: {
+            "/api": {
+              target: "http://localhost:8000",
+              changeOrigin: true,
+              secure: false,
+            },
+          },
         }
       : undefined,
 

@@ -6,6 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import "./assets/style/style.css";
 import "./assets/style/custom.css";
+import "./assets/style/modules.css";
 import "./assets/js/custom.js";
 
 import { I18nextProvider } from "react-i18next";

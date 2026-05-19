@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
 import { Text } from "@components/form/inputs/Text";
 import { Email } from "@components/form/inputs/Email";
 import { TextInput } from "@components/form/inputs/TextInput";

@@ -73,7 +73,18 @@
         "roles": "roles",
         "privileges": "privileges",
         "trash": "trash",
-        "users": "user"
+        "users": "user",
+        "categories": "categories",
+        "locations": "locations",
+        "vendors": "vendors",
+        "assets": "assets",
+        "checkouts": "checkouts",
+        "transfers": "transfers",
+        "maintenance": "maintenance",
+        "reports": "reports",
+        "disposals": "disposals",
+        "audit_trail": "audit trail",
+        "notifications": "notifications"
       }
     },
     "base": {
@@ -413,6 +424,320 @@
           "total": "Total",
           "status": "Status"
         }
+      }
+    },
+    "categories": {
+      "list": {
+        "title": "List Categories",
+        "years": "years",
+        "total_categories": "Total Categories",
+        "root_categories": "Root Categories",
+        "sub_categories": "Sub Categories",
+        "empty": "No categories yet. Create your first one.",
+        "create_first": "Create First Category",
+        "has_children": "has children",
+        "assets": "assets",
+        "avg_life": "avg life (yrs)",
+        "salvage": "salvage %"
+      },
+      "create": {
+        "title": "Create Category",
+        "form": {
+          "name": "Category Name",
+          "parent": "Parent Category",
+          "useful_life_years": "Useful Life (Years)",
+          "salvage_value_pct": "Salvage Value (%)"
+        },
+        "notification": {
+          "success": "Category success created.",
+          "error": "Oops, failed to saved."
+        }
+      },
+      "read": {
+        "title": "Category Detail"
+      },
+      "update": {
+        "title": "Update Category",
+        "notification": {
+          "success": "Category success updated.",
+          "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "locations": {
+      "list": {
+        "title": "List Locations",
+        "total_locations": "Total Locations",
+        "root_categories": "Root Locations",
+        "sub_categories": "Sub Locations",
+        "empty": "No locations yet. Create your first one.",
+        "create_first": "Create First Location",
+        "has_children": "has children",
+        "assets": "assets",
+        "years": "years",
+        "salvage": "salvage %",
+        "avg_life": "avg life (yrs)"
+      },
+      "create": {
+        "title": "Create Location",
+        "form": {
+          "name": "Location Name",
+          "code": "Code",
+          "type": "Type",
+          "parent": "Parent Location"
+        },
+        "notification": {
+          "success": "Location success created.",
+          "error": "Oops, failed to saved."
+        }
+      },
+      "read": {
+        "title": "Location Detail"
+      },
+      "update": {
+        "title": "Update Location",
+        "notification": {
+          "success": "Location success updated.",
+          "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "vendors": {
+      "list": {
+        "title": "List Vendors",
+        "total_vendors": "Total Vendors",
+        "active": "Active",
+        "inactive": "Inactive",
+        "empty": "No vendors yet. Add your first one.",
+        "create_first": "Add First Vendor",
+        "status_active": "Active",
+        "status_inactive": "Inactive"
+      },
+      "create": {
+        "title": "Add Vendor",
+        "form": {
+          "name": "Vendor Name",
+          "code": "Code",
+          "category": "Category",
+          "contact_person": "Contact Person",
+          "email": "Email",
+          "phone": "Phone",
+          "address": "Address",
+          "notes": "Notes",
+          "is_active": "Active Status"
+        },
+        "notification": {
+          "success": "Vendor success created.",
+          "error": "Oops, failed to save."
+        }
+      },
+      "read": {
+        "title": "Vendor Detail"
+      },
+      "update": {
+        "title": "Update Vendor",
+        "notification": {
+          "success": "Vendor success updated.",
+          "error": "Oops, failed to save."
+        }
+      }
+    },
+    "assets": {
+      "list": {
+        "title": "List Assets",
+        "total_assets": "Total Assets",
+        "available": "Available",
+        "in_use": "In Use",
+        "total_value": "Total Value",
+        "filter_by_status": "Filter by status",
+        "empty": "No assets yet. Register your first one.",
+        "create_first": "Register First Asset",
+        "purchase_price": "Purchase",
+        "book_value": "Book Value",
+        "purchase_date": "Purchased",
+        "warranty_expired": "Warranty Expired"
+      },
+      "create": {
+        "title": "Register Asset",
+        "form": {
+          "name": "Asset Name",
+          "serial_number": "Serial Number",
+          "category": "Category",
+          "location": "Location",
+          "department": "Department",
+          "vendor": "Vendor",
+          "custodian": "Custodian",
+          "condition": "Condition",
+          "purchase_price": "Purchase Price",
+          "purchase_date": "Purchase Date",
+          "useful_life_years": "Useful Life (Years)",
+          "salvage_value": "Salvage Value",
+          "warranty_start": "Warranty Start",
+          "warranty_end": "Warranty End",
+          "license_key": "License Key",
+          "license_expiry": "License Expiry",
+          "notes": "Notes",
+          "section": {
+            "identity": "Identity",
+            "classification": "Classification",
+            "financial": "Financial",
+            "warranty_license": "Warranty & License"
+          }
+        },
+        "notification": {
+          "success": "Asset registered successfully.",
+          "error": "Oops, failed to save."
+        }
+      },
+      "read": {
+        "title": "Asset Detail"
+      },
+      "update": {
+        "title": "Update Asset",
+        "notification": {
+          "success": "Asset updated successfully.",
+          "error": "Oops, failed to save."
+        }
+      },
+      "qr": {
+        "title": "QR Code",
+        "asset_code": "Asset Code",
+        "asset_name": "Asset Name",
+        "description": "Scan to view this asset's details on any device.",
+        "download": "Download QR"
+      }
+    },
+    "checkout": {
+      "list": {
+        "title": "Check-out / Check-in",
+        "total_checkouts": "Total Checkouts",
+        "active": "Active",
+        "returned": "Returned",
+        "overdue": "Overdue",
+        "empty": "No checkout records yet.",
+        "assigned_to": "Assigned To",
+        "checked_out": "Checked Out",
+        "expected_return": "Expected Return",
+        "returned_on": "Returned On"
+      },
+      "create": {
+        "title": "Check Out Asset",
+        "form": {
+          "asset": "Asset",
+          "assignee": "Assignee",
+          "expected_return": "Expected Return Date",
+          "condition": "Condition on Return",
+          "return_date": "Return Date",
+          "notes": "Notes"
+        },
+        "notification": { "success": "Asset checked out successfully.", "error": "Oops, failed to save." }
+      },
+      "read": { "title": "Checkout Detail" },
+      "update": {
+        "title": "Check In Asset",
+        "notification": { "success": "Asset checked in successfully.", "error": "Oops, failed to save." }
+      }
+    },
+    "transfers": {
+      "list": {
+        "title": "Transfer Requests",
+        "total_transfers": "Total Transfers",
+        "filter_by_status": "Filter by status",
+        "empty": "No transfer requests yet.",
+        "requested_by": "Requested By"
+      },
+      "create": {
+        "title": "Initiate Transfer",
+        "form": {
+          "asset": "Asset",
+          "to_location": "To Location",
+          "to_custodian": "To Custodian",
+          "reason": "Reason"
+        },
+        "notification": { "success": "Transfer request submitted.", "error": "Oops, failed to save." }
+      },
+      "read": { "title": "Transfer Detail" }
+    },
+    "maintenance": {
+      "list": {
+        "title": "Maintenance Logs",
+        "total_logs": "Total Logs",
+        "open": "Open",
+        "completed": "Completed",
+        "total_cost": "Total Cost",
+        "empty": "No maintenance records yet.",
+        "performed_on": "Performed On",
+        "next": "Next Maintenance"
+      },
+      "create": {
+        "title": "Log Maintenance",
+        "form": {
+          "asset": "Asset",
+          "type": "Type",
+          "date_performed": "Date Performed",
+          "performed_by": "Performed By",
+          "description": "Description",
+          "cost": "Cost",
+          "next_maintenance": "Next Maintenance Date"
+        },
+        "notification": { "success": "Maintenance logged.", "error": "Oops, failed to save." }
+      },
+      "read": { "title": "Maintenance Detail" },
+      "update": {
+        "title": "Complete Maintenance",
+        "notification": { "success": "Maintenance completed.", "error": "Oops, failed to save." }
+      }
+    },
+    "notifications": {
+      "list": {
+        "title": "Notifications",
+        "total": "Total",
+        "unread": "Unread",
+        "read": "Read",
+        "empty": "No notifications.",
+        "mark_all_read": "Mark All Read",
+        "tab_all": "All",
+        "tab_unread": "Unread",
+        "tab_read": "Read"
+      }
+    },
+    "reports": {
+      "inventory": {
+        "title": "Inventory Report"
+      },
+      "export_csv": "Export CSV"
+    },
+    "disposals": {
+      "list": {
+        "title": "Disposal Requests",
+        "total": "Total Disposals",
+        "method": "Method",
+        "sale_price": "Sale Price",
+        "initiated": "Initiated",
+        "by": "by",
+        "empty": "No disposal requests yet."
+      },
+      "create": {
+        "title": "Initiate Disposal",
+        "form": {
+          "asset": "Asset",
+          "method": "Method",
+          "reason": "Reason",
+          "sale_price": "Sale Price",
+          "buyer": "Buyer",
+          "transaction_date": "Transaction Date",
+          "certificate_ref": "Certificate Ref"
+        },
+        "notification": { "success": "Disposal request submitted.", "error": "Oops, failed to save." }
+      },
+      "read": { "title": "Disposal Detail" }
+    },
+    "audit": {
+      "list": {
+        "title": "Audit Trail",
+        "total": "Total Events",
+        "filter": "Filter",
+        "empty": "No audit events yet."
       }
     }
   }

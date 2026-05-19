@@ -1,11 +1,10 @@
 import type { FC } from "react";
 import Select, { type SingleValue, type ActionMeta } from "react-select";
-import { Controller, type Control } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import type { SelectOption } from "@/types/SelectOption";
 
 type Props = {
   name: string;
-  control: Control;
   options: SelectOption[];
   placeholder?: string;
   onChange?: (
@@ -19,7 +18,6 @@ type Props = {
 
 const SelectInput: FC<Props> = ({
   name,
-  control,
   options,
   placeholder = "Select...",
   onChange,
@@ -27,6 +25,8 @@ const SelectInput: FC<Props> = ({
   required = false,
   readOnly = false,
 }) => {
+  const { control } = useFormContext();
+
   return (
     <div className="mb-3">
       {label && (

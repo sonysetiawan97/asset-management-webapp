@@ -58,13 +58,13 @@ const hasPrivilege = (
     const lowerAction = privilege.action.toLowerCase();
     const lowerMethod = (privilege.method || "*").toLowerCase();
 
-    // 1. Wildcard - all access
-    if (lowerUri === "*" && (lowerAction === "*" || lowerMethod === "*")) {
+    // 1. Wildcard - all access (supports both "*" and "all" as wildcard values)
+    if (lowerUri === "*" && (lowerAction === "*" || lowerAction === "all" || lowerMethod === "*" || lowerMethod === "all")) {
       return true;
     }
 
     // 2. Check method if provided
-    if (method && lowerMethod !== "*" && lowerMethod !== method.toLowerCase()) {
+    if (method && lowerMethod !== "*" && lowerMethod !== "all" && lowerMethod !== method.toLowerCase()) {
       continue;
     }
 
@@ -86,7 +86,9 @@ const PrivilegesValidation = ({ path, auth, method }: roleprops): boolean => {
   if (!auth) return false;
 
   const { role: rolePrivileges } = auth;
-  const { privileges } = rolePrivileges
+  if (!rolePrivileges?.privileges) return false;
+
+  const { privileges } = rolePrivileges;
 
   if (!privileges || privileges.length == 0) return false
 

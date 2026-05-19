@@ -15,10 +15,23 @@ const RoleRoutes = lazy(() => import("@modules/roles/PrivateRoutes"));
 const ProductRoutes = lazy(() => import("@modules/products/PrivateRoutes"));
 const ExampleRoutes = lazy(() => import("@modules/examples/PrivateRoutes"));
 const SupplierRoutes = lazy(() => import("@modules/suppliers/PrivateRoutes"));
-const OrderRoutes = lazy(() => import("@modules/orders/PrivateRoutes"));
-const TrashRoutes = lazy(() => import("@modules/trash/PrivateRoutes"));
+const CategoryRoutes = lazy(() => import("@modules/categories/PrivateRoutes"));
+const LocationRoutes = lazy(() => import("@modules/locations/PrivateRoutes"));
+const VendorRoutes = lazy(() => import("@modules/vendors/PrivateRoutes"));
+const AssetRoutes = lazy(() => import("@modules/assets/PrivateRoutes"));
+const CheckoutRoutes = lazy(() => import("@modules/checkout/PrivateRoutes"));
+const TransferRoutes = lazy(() => import("@modules/transfers/PrivateRoutes"));
+const MaintenanceRoutes = lazy(() => import("@modules/maintenance/PrivateRoutes"));
+const NotificationRoutes = lazy(() => import("@modules/notifications/PrivateRoutes"));
+const ReportRoutes = lazy(() => import("@modules/reports/PrivateRoutes"));
+const DisposalRoutes = lazy(() => import("@modules/disposals/PrivateRoutes"));
+const AuditTrailRoutes = lazy(() => import("@modules/audit-trail/PrivateRoutes"));
+// const OrderRoutes = lazy(() => import("@modules/orders/PrivateRoutes"));
+// const TrashRoutes = lazy(() => import("@modules/trash/PrivateRoutes"));
 const ProfileRoutes = lazy(() => import("@modules/profile/ProfileRoutes"));
 const SysparamRoutes = lazy(() => import("@modules/sysparam/PrivateRoutes"));
+
+const PrivateRoutes: FC = () => {
   return (
     <Suspense fallback={<LoadingAuthPage />}>
       <PaginationProvider>
@@ -33,8 +46,19 @@ const SysparamRoutes = lazy(() => import("@modules/sysparam/PrivateRoutes"));
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/products/*" element={<ProductRoutes />} />
                   <Route path="/suppliers/*" element={<SupplierRoutes />} />
+                  <Route path="/categories/*" element={<CategoryRoutes />} />
+                  <Route path="/locations/*" element={<LocationRoutes />} />
+                  <Route path="/vendors/*" element={<VendorRoutes />} />
+                  <Route path="/assets/*" element={<AssetRoutes />} />
+                  <Route path="/checkouts/*" element={<CheckoutRoutes />} />
+                  <Route path="/transfers/*" element={<TransferRoutes />} />
+                  <Route path="/maintenance/*" element={<MaintenanceRoutes />} />
+                  <Route path="/notifications/*" element={<NotificationRoutes />} />
+                  <Route path="/reports/*" element={<ReportRoutes />} />
+                  <Route path="/disposals/*" element={<DisposalRoutes />} />
+                  <Route path="/audit-trail/*" element={<AuditTrailRoutes />} />
                   <Route path="/examples/*" element={<ExampleRoutes />} />
-                  <Route path="/orders/*" element={<OrderRoutes />} />
+                  {/* <Route path="/orders/*" element={<OrderRoutes />} /> */}
                   <Route path="/profile/*" element={<ProfileRoutes />} />
                   <Route path="/sysparams/*" element={<SysparamRoutes />} />
                 </Route>

@@ -50,10 +50,10 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
               }
             />
           </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/products/create">
+          <AuthPrivilegesChecker link="/categories">
             <SidebarMenuItem
-              url="/products/create"
-              title={t("sidebar.master.menu.products")}
+              url="/categories"
+              title={t("sidebar.master.menu.categories")}
               icon={
                 <svg
                   height="20px"
@@ -61,73 +61,69 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
                   width="20px"
                   fill="#1f1f1f"
                 >
-                  <path d="M212.31-100q-29.92 0-51.12-21.19Q140-142.39 140-172.31v-447.92q-17.61-9.08-28.81-25.81Q100-662.77 100-684.62v-103.07q0-29.92 21.19-51.12Q142.39-860 172.31-860h615.38q29.92 0 51.12 21.19Q860-817.61 860-787.69v103.07q0 21.85-11.19 38.58-11.2 16.73-28.81 25.81v447.92q0 29.92-21.19 51.12Q777.61-100 747.69-100H212.31ZM200-612.31v438.08q0 6.15 4.42 10.19 4.43 4.04 10.97 4.04h532.3q5.39 0 8.85-3.46t3.46-8.85v-440H200Zm-27.69-60h615.38q5.39 0 8.85-3.46t3.46-8.85v-103.07q0-5.39-3.46-8.85t-8.85-3.46H172.31q-5.39 0-8.85 3.46t-3.46 8.85v103.07q0 5.39 3.46 8.85t8.85 3.46Zm195.38 249.62h224.62V-480H367.69v57.31ZM480-386.15Z" />
-                  <title>menu</title>
+                  <title>categories</title>
+                  <path d="M560-120q-17 0-28.5-11.5T520-160q0-17 11.5-28.5T560-200h320q17 0 28.5 11.5T920-160q0 17-11.5 28.5T880-120H560Zm0-160q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h320q17 0 28.5 11.5T920-320q0 17-11.5 28.5T880-280H560Zm0-160q-17 0-28.5-11.5T520-480q0-17 11.5-28.5T560-520h320q17 0 28.5 11.5T920-480q0 17-11.5 28.5T880-440H560Zm0-160q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h320q17 0 28.5 11.5T920-640q0 17-11.5 28.5T880-600H560Zm0-160q-17 0-28.5-11.5T520-800q0-17 11.5-28.5T560-840h320q17 0 28.5 11.5T920-800q0 17-11.5 28.5T880-760H560Z" />
                 </svg>
               }
             />
           </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/examples">
+          <AuthPrivilegesChecker link="/locations">
             <SidebarMenuItem
-              url="/examples"
-              title={t("sidebar.master.menu.examples")}
+              url="/locations"
+              title={t("sidebar.master.menu.locations")}
               icon={
-                <svg
-                  height="20px"
-                  viewBox="0 -960 960 960"
-                  width="20px"
-                  fill="#1f1f1f"
-                >
-                  <title>example menu</title>
-                  <path d="m480-146.93-44.15-39.69q-99.46-90.23-164.5-155.07-65.04-64.85-103.08-115.43-38.04-50.57-53.15-92.27Q100-591.08 100-634q0-85.15 57.42-142.58Q214.85-834 300-834q52.38 0 99 24.5t81 70.27q34.38-45.77 81-70.27 46.62-24.5 99-24.5 85.15 0 142.58 57.42Q860-719.15 860-634q0 42.92-15.12 84.61-15.11 41.7-53.15 92.27-38.04 50.58-102.89 115.43Q624-276.85 524.15-186.62L480-146.93Zm0-81.07q96-86.38 158-148.08 62-61.69 98-107.19t50-80.81q14-35.3 14-69.92 0-60-40-100t-100-40q-47.38 0-87.58 26.88-40.19 26.89-63.65 74.81h-57.54q-23.85-48.31-63.85-75Q347.38-774 300-774q-59.62 0-99.81 40Q160-694 160-634q0 34.62 14 69.92 14 35.31 50 80.81t98 107q62 61.5 158 148.27Zm0-273Z" />
+                <svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f">
+                  <title>locations</title>
+                  <path d="M280-120q-33 0-56.5-23.5T200-200v-560q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v560q0 33-23.5 56.5T680-120H280Z" />
                 </svg>
               }
             />
           </AuthPrivilegesChecker>
-          <SidebarParentMenu
-            url="/"
-            title={t("sidebar.master.menu.trash")}
-            icon={
-              <svg
-                height="22px"
-                viewBox="0 -960 960 960"
-                width="20px"
-                fill="#1f1f1f"
-              >
-                <title>trash menu</title>
-                <path d="M324.31-164q-26.62 0-45.47-18.84Q260-201.69 260-228.31V-696h-48v-52h172v-43.38h192V-748h172v52h-48v467.26q0 27.74-18.65 46.24Q662.7-164 635.69-164H324.31ZM648-696H312v467.69q0 5.39 3.46 8.85t8.85 3.46h311.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-696ZM400.16-288h51.99v-336h-51.99v336Zm107.69 0h51.99v-336h-51.99v336ZM312-696v480-480Z" />
-              </svg>
-            }
-            collapseTargetId="collapseTrash"
-            links={["/sysparams/trash", "/roles/trash", "/privileges/trash", "/users/trash"]}
-          >
-            <div className="collapse" id="collapseTrash">
-              <AuthPrivilegesChecker link="/sysparams/trash">
-                <SidebarMenuItem
-                  url="sysparams/trash"
-                  title={t("sidebar.master.menu.sysparams")}
-                />
-              </AuthPrivilegesChecker>
-              <AuthPrivilegesChecker link="/roles/trash">
-                <SidebarMenuItem
-                  url="roles/trash"
-                  title={t("sidebar.master.menu.roles")}
-                />
-              </AuthPrivilegesChecker>
-              <AuthPrivilegesChecker link="/privileges/trash">
-                <SidebarMenuItem
-                  url="privileges/trash"
-                  title={t("sidebar.master.menu.privileges")}
-                />
-              </AuthPrivilegesChecker>
-              <AuthPrivilegesChecker link="/users/trash">
-                <SidebarMenuItem
-                  url="users/trash"
-                  title={t("sidebar.master.menu.users")}
-                />
-              </AuthPrivilegesChecker>
-            </div>
-          </SidebarParentMenu>
+          <AuthPrivilegesChecker link="/vendors">
+            <SidebarMenuItem
+              url="/vendors"
+              title={t("sidebar.master.menu.vendors")}
+              icon={
+                <svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f">
+                  <title>vendors</title>
+                  <path d="M520-120q-17 0-28.5-11.5T480-160q0-17 11.5-28.5T520-200h320q17 0 28.5 11.5T880-160q0 17-11.5 28.5T840-120H520Zm0-160q-17 0-28.5-11.5T480-360q0-17 11.5-28.5T520-400h320q17 0 28.5 11.5T880-360q0 17-11.5 28.5T840-320H520Z" />
+                </svg>
+              }
+            />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/assets">
+            <SidebarMenuItem
+              url="/assets"
+              title={t("sidebar.master.menu.assets")}
+              icon={
+                <svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f">
+                  <title>assets</title>
+                  <path d="M520-120q-17 0-28.5-11.5T480-160q0-17 11.5-28.5T520-200h320q17 0 28.5 11.5T880-160q0 17-11.5 28.5T840-120H520Zm0-160q-17 0-28.5-11.5T480-360q0-17 11.5-28.5T520-400h320q17 0 28.5 11.5T880-360q0 17-11.5 28.5T840-320H520Z" />
+                </svg>
+              }
+            />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/checkouts">
+            <SidebarMenuItem url="/checkouts" title={t("sidebar.master.menu.checkouts")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M240-160q-33 0-56.5-23.5T160-240v-560q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v560q0 33-23.5 56.5T720-160H240Z" /></svg>} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/transfers">
+            <SidebarMenuItem url="/transfers" title={t("sidebar.master.menu.transfers")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M520-80q-17 0-28.5-11.5T480-120q0-17 11.5-28.5T520-160h320q17 0 28.5 11.5T880-120q0 17-11.5 28.5T840-80H520Z" /></svg>} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/maintenance">
+            <SidebarMenuItem url="/maintenance" title={t("sidebar.master.menu.maintenance")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M440-280v-80h80v80h-80Zm160 0v-80h80v80h-80Z" /></svg>} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/reports">
+            <SidebarMenuItem url="/reports" title={t("sidebar.master.menu.reports")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M760-160q-33 0-56.5-23.5T680-240v-320h120v-120H240v120h120v320q0 33-23.5 56.5T300-160H760Zm-40-280v-200H280v200H240v-240q0-33 23.5-56.5T300-680h440q33 0 56.5 23.5T820-600v240H720Zm40 40v-80h280v80H760Z" /></svg>} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/disposals">
+            <SidebarMenuItem url="/disposals" title={t("sidebar.master.menu.disposals")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M324.31-164q-26.62 0-45.47-18.84Q260-201.69 260-228.31V-696h-48v-52h172v-43.38h192V-748h172v52h-48v467.26q0 27.74-18.65 46.24Q662.7-164 635.69-164H324.31ZM648-696H312v467.69q0 5.39 3.46 8.85t8.85 3.46h311.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-696ZM400.16-288h51.99v-336h-51.99v336Zm107.69 0h51.99v-336h-51.99v336ZM312-696v480-480Z" /></svg>} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/audit-trail">
+            <SidebarMenuItem url="/audit-trail" title={t("sidebar.master.menu.audit_trail")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M480-192q34 0 59-25t25-59q0-34-25-59t-59-25q-34 0-59 25t-25 59q0 34 25 59t59 25Zm0-216Zm0-216q101 0 171-70t70-171q0-101-70-171T480-934q-101 0-171 70t-70 171q0 101 70 171t171 70Z" /></svg>} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/notifications">
+            <SidebarMenuItem url="/notifications" title={t("sidebar.master.menu.notifications")} icon={<svg height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f"><path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" /></svg>} />
+          </AuthPrivilegesChecker>
 
           <SidebarMenuTitle title={t("sidebar.user-management.title")} />
           <AuthPrivilegesChecker link="/users">
@@ -201,59 +197,6 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
               }
             />
           </AuthPrivilegesChecker>
-
-          <SidebarMenuTitle title={t("sidebar.base.title")} links={["/setting", "/themes"]} />
-          <AuthPrivilegesChecker link="/setting">
-            <SidebarMenuItem
-              url="/setting"
-              title={t("sidebar.base.menu.setting")}
-              icon={
-                <svg
-                  height="20px"
-                  viewBox="0 -960 960 960"
-                  width="20px"
-                  fill="#1f1f1f"
-                >
-                  <title>setting menu</title>
-                  <path d="M450-130v-220h60v80h320v60H510v80h-60Zm-320-80v-60h220v60H130Zm160-160v-80H130v-60h160v-80h60v220h-60Zm160-80v-60h380v60H450Zm160-160v-220h60v80h160v60H670v80h-60Zm-480-80v-60h380v60H130Z" />
-                </svg>
-              }
-            />
-          </AuthPrivilegesChecker>
-
-          {/* use child menu */}
-          <SidebarParentMenu
-            url="/"
-            title={t("sidebar.base.menu.themes")}
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="20px"
-                viewBox="0 -960 960 960"
-                width="20px"
-                fill="#1f1f1f"
-              >
-                <title>theme menu</title>
-                <path d="M480.13-120q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120ZM500-160.69q123.62-8.08 211.81-98.35T800-480q0-130.69-87.42-220.19-87.43-89.5-212.58-99.12v638.62Z" />
-              </svg>
-            }
-            collapseTargetId="collapseExample"
-            links={["/themes"]}
-          />
-          <div className="collapse" id="collapseExample">
-            <AuthPrivilegesChecker link="/themes">
-              <SidebarMenuItem
-                url="/themes"
-                title={t("sidebar.base.menu.themes")}
-              />
-            </AuthPrivilegesChecker>
-            <AuthPrivilegesChecker link="/themes">
-              <SidebarMenuItem
-                url="/themes"
-                title={t("sidebar.base.menu.setting")}
-              />
-            </AuthPrivilegesChecker>
-          </div>
         </div>
       </div>
     );
