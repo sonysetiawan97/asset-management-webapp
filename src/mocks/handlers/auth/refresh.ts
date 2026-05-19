@@ -1,9 +1,10 @@
 import { http, HttpResponse } from "msw";
 
 export const refresh = http.post("/auth/refresh", async ({ request }) => {
-  const body = (await request.json()) as { refresh_token: string };
+  const authHeader = request.headers.get("Authorization") ?? "";
+  const refreshToken = authHeader.replace("Bearer ", "");
 
-  if (!body.refresh_token) {
+  if (!refreshToken) {
     return HttpResponse.json(
       { message: "Refresh token required" },
       { status: 401 }

@@ -20,9 +20,11 @@ const refreshAccessToken = async (): Promise<boolean> => {
         { withCredentials: true, headers: { Authorization: `Bearer ${storedRefreshToken}` } },
       );
       localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("refreshToken", data.refresh_token);
       return true;
     } catch {
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       return false;
     }
   })();
