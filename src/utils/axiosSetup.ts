@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { getRefreshToken } from "../modules/auth/stores/authStores";
 
 const { VITE_API_BASE_URL, VITE_API_AUTH_URL, VITE_API_TIMEOUT } = import.meta.env;
 
@@ -13,7 +14,7 @@ const refreshAccessToken = async (): Promise<boolean> => {
 
   refreshPromise = (async () => {
     try {
-      const storedRefreshToken = localStorage.getItem("refreshToken");
+      const storedRefreshToken = getRefreshToken();
       const { data } = await axios.post(
         `${VITE_API_AUTH_URL}/auth/refresh`,
         {},
@@ -75,7 +76,7 @@ const axiosSetup = (instance: {
 
       const status = error.response?.status;
 
-      // 401 — refresh token, then retry original request once
+      // Only attempt refresh on 401, once per request
       if (status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
@@ -91,7 +92,7 @@ const axiosSetup = (instance: {
         return Promise.reject(error);
       }
 
-      // 5xx — retry up to MAX_RETRIES times
+      // 5xx — retry up to MAX_RETRIES times, but do NOT trigger refresh
       if (status && status >= 500 && !originalRequest._retryCount) {
         originalRequest._retryCount = 1;
         return retryRequest(originalRequest, 1);

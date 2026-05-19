@@ -18,7 +18,6 @@ export const ListWrapper: FC = () => {
     params: {
       "!search": query,
       "!sort[id]": -1,
-      status: 1,
     },
   });
   const { data: categoriesData } = useFindAll<Model>("categories", "categories");
