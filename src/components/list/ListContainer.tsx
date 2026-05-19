@@ -15,6 +15,8 @@ interface ListContainerProps<T> {
   limit: number;
   onPageChange: (newSkip: number) => void;
   createUrl?: string;
+  /** Pass true only when the list page needs field-based filtering beyond text search. */
+  showFilter?: boolean;
 }
 
 export const ListContainer = <T,>({
@@ -27,34 +29,38 @@ export const ListContainer = <T,>({
   limit,
   onPageChange,
   createUrl,
+  showFilter = false,
 }: ListContainerProps<T>) => {
   return (
     <div>
       <div className="animate-fade-slide-up">
-      <div className="card border-0">
-        {/* SECTION: Title Menu */}
-        <Title title={title} />
-        {/* SECTION: Action Menu */}
-        <ActionBar createUrl={createUrl} />
-        {/* SECTION: Table */}
-        <div className="table-responsive">
-          <Table
-            data={data}
-            isLoading={isLoading}
-            columns={columns}
-            renderEmpty={<EmptyData />}
-          />
-
+      <div className="card border-0 shadow-sm rounded-4">
+        <div className="card-body px-4 pt-3 pb-0">
+          {/* SECTION: Title Menu */}
+          <Title title={title} />
+          {/* SECTION: Action Menu */}
+          <ActionBar createUrl={createUrl} showFilter={showFilter} />
+          {/* SECTION: Table */}
+          <div className="mb-0">
+            <Table
+              data={data}
+              isLoading={isLoading}
+              columns={columns}
+              renderEmpty={<EmptyData />}
+            />
+          </div>
         </div>
         {/* SECTION: Pagination */}
-        <div className="d-flex justify-content-center">
-          <Pagination
-            count={count}
-            skip={skip}
-            limit={limit}
-            onPageChange={onPageChange}
-          />
-        </div>
+        {count > limit && (
+          <div className="card-footer border-0 bg-transparent text-center pb-4">
+            <Pagination
+              count={count}
+              skip={skip}
+              limit={limit}
+              onPageChange={onPageChange}
+            />
+          </div>
+        )}
       </div>
       </div>
     </div>

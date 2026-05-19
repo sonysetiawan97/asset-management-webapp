@@ -1,32 +1,81 @@
-import { type FC } from "react";
-
+import { type FC, useState } from "react";
+import { useFilter } from "@hooks/list/useFilter";
+import { useDebounce } from "use-debounce";
 
 export const SearchAdvanceBar: FC = () => {
+  const { group, setGroup } = useFilter();
+  const [localGroup, setLocalGroup] = useState(group);
+  const [debouncedGroup] = useDebounce(localGroup, 500);
 
+  // Sync debounced value to context
+  if (debouncedGroup !== group) {
+    setGroup(debouncedGroup);
+  }
+
+  const handleClear = () => {
+    setLocalGroup("");
+    setGroup("");
+  };
+
+  const hasValue = localGroup.length > 0;
 
   return (
     <div className="position-relative d-flex align-items-center">
-      <div className="dropdown ms-2">
-        <button type="button" className="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M470.77-200q-13.15 0-21.96-8.81T440-230.77v-223.08L224.15-726.77q-8.07-10.77-2.19-22Q227.85-760 240.77-760h478.46q12.92 0 18.81 11.23 5.88 11.23-2.19 22L520-453.85v223.08q0 13.15-8.81 21.96T489.23-200h-18.46ZM480-468l198-252H282l198 252Zm0 0Z"/></svg>
+      <div className="dropdown">
+        <button
+          type="button"
+          className="btn btn-outline-secondary btn-sm dropdown-toggle d-flex align-items-center gap-1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          data-bs-auto-close="outside"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="16px"
+            viewBox="0 -960 960 960"
+            width="16px"
+            fill="currentColor"
+          >
+            <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+          </svg>
+          <span>Filter</span>
+          {hasValue && (
+            <span className="badge bg-primary rounded-pill ms-1" style={{ fontSize: "0.65rem" }}>
+              1
+            </span>
+          )}
         </button>
-        <form className="dropdown-menu p-4" style={{minWidth: '320px'}}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">Name</label>
-            <input type="email" className="form-control" id="name" placeholder="Name"/>
+
+        <div className="dropdown-menu p-3" style={{ minWidth: "280px", zIndex: 1050 }}>
+          <div className="d-flex align-items-center justify-content-between mb-2">
+            <span className="fw-semibold" style={{ fontSize: "0.8125rem" }}>Filter</span>
+            {hasValue && (
+              <button
+                type="button"
+                className="btn btn-link p-0 text-decoration-none"
+                style={{ fontSize: "0.75rem" }}
+                onClick={handleClear}
+              >
+                Clear
+              </button>
+            )}
           </div>
-          <div className="mb-3">
-            <label htmlFor="tlp" className="form-label">Tlp</label>
-            <input type="password" className="form-control" id="tlp" placeholder="TLP"/>
+
+          <div className="mb-0">
+            <label htmlFor="filter-group" className="form-label" style={{ fontSize: "0.75rem", fontWeight: 500, color: "#6c757d", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+              Group
+            </label>
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              id="filter-group"
+              placeholder="e.g. general, email, payment..."
+              value={localGroup}
+              onChange={(e) => setLocalGroup(e.target.value)}
+            />
           </div>
-          <button type="submit" className="btn btn-dark d-flex align-items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M470.77-200q-13.15 0-21.96-8.81T440-230.77v-223.08L224.15-726.77q-8.07-10.77-2.19-22Q227.85-760 240.77-760h478.46q12.92 0 18.81 11.23 5.88 11.23-2.19 22L520-453.85v223.08q0 13.15-8.81 21.96T489.23-200h-18.46ZM480-468l198-252H282l198 252Zm0 0Z"/></svg>
-            Filter
-          </button>
-        </form>
+        </div>
       </div>
     </div>
-
-
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, type FC } from "react";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { useSearch } from "@hooks/list/useSearch";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { useFilter } from "@hooks/list/useFilter";
 import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { Model, moduleName } from "@modules/sysparam/types/Model";
@@ -10,6 +10,7 @@ import { Model, moduleName } from "@modules/sysparam/types/Model";
 export const ListWrapper: FC = () => {
   const { skip, limit } = usePagination();
   const { query } = useSearch();
+  const { group } = useFilter();
   const { data, isLoading, error } = useList<Model>({
     module: moduleName,
     skip,
@@ -18,6 +19,7 @@ export const ListWrapper: FC = () => {
       "!search": query,
       "!sort[id]": -1,
       status: 1,
+      ...(group ? { group } : {}),
     },
   });
 
@@ -28,8 +30,7 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div className="text-center py-5 text-danger">Error: {error.message}</div>;
 
   return (
     <List

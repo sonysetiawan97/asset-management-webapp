@@ -73,6 +73,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading }) => {
       limit={limit}
       onPageChange={setSkip}
       createUrl="/sysparams/create"
+      showFilter
     />
   );
 };

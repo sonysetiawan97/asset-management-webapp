@@ -51,7 +51,7 @@ const MasterLayout: FC = () => {
             <div className="d-flex flex-column flex-column-fluid">
               <div
                 id="kt_app_content"
-                className="app-content flex-column-fluid"
+                className="app-content flex-column-fluid pt-4"
               >
                 <div
                   id="kt_app_content_container"
