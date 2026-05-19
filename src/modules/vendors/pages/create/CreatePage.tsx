@@ -1,3 +1,4 @@
+import { FormFields } from "../../components/FormFields";
 import { moduleName, type CreateModel } from "../../types/Model";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";

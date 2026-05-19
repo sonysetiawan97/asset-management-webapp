@@ -40,7 +40,7 @@ export const SidebarParentMenu: FC<SidebarParentMenuProps> = ({
         aria-expanded="false"
         aria-controls={collapseTargetId}
       >
-        <SideBarMenuIcon>{icon}</SideBarMenuIcon>
+        <SideBarMenuIcon icon={icon} />
         <span>{title}</span>
       </Link>
 
