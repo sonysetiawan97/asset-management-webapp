@@ -1,4 +1,4 @@
-import { moduleName, type CreateModel } from "@modules/categories/types/Model";
+import { moduleName, type CreateModel, type Model } from "@modules/categories/types/Model";
 import { useFormContext } from "react-hook-form";
 import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
@@ -11,7 +11,6 @@ import { useFindAll } from "@hooks/request/useFindAll";
 import { LoadingPage } from "@/components/loadings/LoadingPage";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { type Model } from "@modules/categories/types/Model";
 
 const CreatePage = () => {
   const { t } = useTranslation();
