@@ -27,7 +27,7 @@ export interface ActivityLog {
   old_value?: string;
   new_value?: string;
   ip_address?: string;
-  created_at: string;
+  created_time: string;
 }
 
 export const AUDIT_ACTION_LABELS: Record<AuditAction, string> = {

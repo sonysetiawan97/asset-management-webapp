@@ -17,7 +17,7 @@ export interface MaintenanceLog {
   status: "open" | "completed";
   created_by: string;
   created_by_name?: string;
-  created_at: string;
+  created_time: string;
 }
 
 export interface CreateMaintenanceModel {

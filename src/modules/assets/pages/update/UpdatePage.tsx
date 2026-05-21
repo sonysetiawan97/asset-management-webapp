@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "@components/buttons/BackButton";
 import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "../../components/FormFields";
@@ -14,9 +14,10 @@ import { LoadingPage } from "@/components/loadings/LoadingPage";
 const UpdatePage = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, getValues } = useFormContext<UpdateModel>();
+  const { handleSubmit } = useFormContext<UpdateModel>();
   const { updateAsync, isLoading } = useUpdate<UpdateModel>();
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
 
   const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
   const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
@@ -35,7 +36,6 @@ const UpdatePage = () => {
 
   const onSubmit = async (data: UpdateModel) => {
     try {
-      const id = getValues("id");
       await updateAsync({ id, url: moduleName, body: data });
       enqueueSnackbar(t("modules.assets.update.notification.success"), { variant: "success" });
       navigate(`/${moduleName}`);

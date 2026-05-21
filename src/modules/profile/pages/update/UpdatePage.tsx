@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUpdate } from "@hooks/request/useUpdate";
 import {
   moduleName,
@@ -19,11 +19,12 @@ import { setUser } from "@modules/users/stores/userStores";
 const UpdatePage = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, reset, getValues } =
+  const { handleSubmit, reset } =
     useFormContext<UpdateUserProfileModel>();
   const { updateAsync, isLoading } = useUpdate<SubmitUpdateUserModel>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { id } = useParams<{ id: string }>();
 
   const onSubmit = async (data: UpdateUserProfileModel) => {
     const roleCode = data.role;
@@ -39,8 +40,7 @@ const UpdatePage = () => {
         status: user?.status,
       };
       try {
-        const id = getValues("id");
-        await updateAsync({ id: String(id), url: moduleName, body: payload });
+        await updateAsync({ id, url: moduleName, body: payload });
         enqueueSnackbar(t("modules.profile.update.notification.success"), {
           variant: "success",
         });

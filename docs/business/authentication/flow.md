@@ -2,7 +2,7 @@
 
 ## Overview
 
-The system uses cookie-based session authentication for the SPA frontend.
+The system uses **JWT-based authentication** for the React SPA frontend. All authenticated requests include a Bearer token in the `Authorization` header.
 
 **PRD Reference:** Section 4.6.3
 
@@ -12,31 +12,36 @@ The system uses cookie-based session authentication for the SPA frontend.
 
 ```
 ┌─────────────────┐
-│  User Opens    │  React SPA loads
-│  Application   │
+│  User Opens     │  React SPA loads
+│  Application    │
 └───────┬─────────┘
         │
         ▼
 ┌─────────────────┐
-│  Login Form    │  POST /api/v1/auth/login
+│  Login Form     │  POST /api/v1/auth/signin
 └───────┬─────────┘
         │
         ▼
 ┌─────────────────┐
-│  Validate      │  Check email + password
-│  Credentials   │
+│  Validate       │  Check username + password, status = 1
+│  Credentials    │
 └───────┬─────────┘
         │
         ▼
 ┌─────────────────┐
-│  Create Session │  Set session cookie
-│  + Set Cookie   │  Set SameSite=Strict cookie
+│  Return Tokens  │  access_token (15 min) + refresh_token
 └───────┬─────────┘
         │
         ▼
 ┌─────────────────┐
-│  Authenticated │  Subsequent requests use cookie
-│  State         │
+│  Store Tokens   │  accessToken in localStorage
+│                 │  refreshToken in localStorage + HttpOnly cookie
+└───────┬─────────┘
+        │
+        ▼
+┌─────────────────┐
+│  Authenticated  │  Include Bearer <access_token> header
+│  Requests       │  on all subsequent API calls
 └─────────────────┘
 ```
 
@@ -46,19 +51,21 @@ The system uses cookie-based session authentication for the SPA frontend.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/auth/login` | User login |
-| POST | `/api/v1/auth/logout` | User logout |
-| GET | `/api/v1/auth/me` | Get current user |
-| POST | `/api/v1/auth/refresh` | Refresh token |
+| POST | `/api/v1/auth/signin` | User login |
+| POST | `/api/v1/auth/register` | User registration |
+| POST | `/api/v1/auth/refresh` | Refresh tokens |
+| POST | `/api/v1/auth/logout` | Invalidate token |
+| GET | `/api/v1/me` | Get current user |
+| PUT | `/api/v1/me` | Update current user |
 
 ---
 
 ## Login Request
 
 ```json
-POST /api/v1/auth/login
+POST /api/v1/auth/signin
 {
-  "email": "admin@company.com",
+  "username": "admin",
   "password": "securepassword"
 }
 ```
@@ -66,14 +73,19 @@ POST /api/v1/auth/login
 **Success Response (200):**
 ```json
 {
-  "status": "success",
+  "status": true,
   "data": {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "token_type": "bearer",
+    "expires_in": 900,
     "user": {
       "id": "uuid",
       "name": "Administrator",
       "email": "admin@company.com",
       "role": "administrator",
-      "department_id": null
+      "roles": [...],
+      "privileges": [...]
     }
   },
   "message": "Login successful"
@@ -82,27 +94,80 @@ POST /api/v1/auth/login
 
 ---
 
-## Session Configuration
+## Token Storage
 
-### Cookie Settings
+Tokens are stored in two places:
 
-| Setting | Value | Description |
-|---------|-------|-------------|
-| SameSite | Strict | Cookie not sent cross-origin |
-| HttpOnly | true | Not accessible via JavaScript |
-| Secure | true (production) | HTTPS only |
-| Path | / | Available on all paths |
-| Expires | Session | Expires when browser closes |
+| Token | Storage | Purpose |
+|-------|---------|---------|
+| `accessToken` | `localStorage` | Sent in `Authorization: Bearer` header on every request |
+| `refreshToken` | `localStorage` + HttpOnly cookie | Used to obtain new access tokens; cookie enables server-side invalidation |
 
-### CORS Configuration
+### Axios Configuration (`src/utils/axiosSetup.ts`)
 
 ```ts
-// axios config
-{
-  withCredentials: true, // Send cookies cross-origin
-  baseURL: import.meta.env.VITE_API_URL,
+const token = localStorage.getItem("accessToken");
+if (token) {
+  config.headers.Authorization = `Bearer ${token}`;
+}
+
+// Refresh interceptor sends both localStorage token + withCredentials cookie
+config.withCredentials = true;
+```
+
+---
+
+## Token Refresh Flow
+
+```
+┌──────────────────────┐
+│  Access Token TTL    │  15 minutes (configurable via JWT_TTL)
+└───────┬──────────────┘
+        │ expires
+        ▼
+┌──────────────────────┐
+│  Send Refresh        │  POST /api/v1/auth/refresh
+│  Request             │  body: {} (empty)
+│                      │  Authorization: Bearer <refresh_token>
+│                      │  withCredentials: true
+└───────┬──────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│  Validate Refresh    │  BE checks type="refresh" claim
+│  Token               │
+└───────┬──────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│  Return New Pair     │  New access_token + refresh_token
+│  + Store             │  Overwrite localStorage items
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│  Retry Original      │  Axios interceptor retries the
+│  Request             │  failed request with new token
+└──────────────────────┘
+```
+
+### Automatic Refresh (Axios Interceptor)
+
+The response interceptor in `axiosSetup.ts` handles 401 errors automatically:
+
+```ts
+// Only triggers on 401 — avoids unnecessary refresh calls
+if (error.response?.status === 401) {
+  const refreshed = await refreshAccessToken();
+  if (refreshed) {
+    return axios(error.config); // Retry with new token
+  }
+  // Refresh failed — redirect to login
+  window.location.href = "/login";
 }
 ```
+
+**Important:** Refresh is only called on 401 responses — not on 422, 404, or other errors.
 
 ---
 
@@ -110,38 +175,14 @@ POST /api/v1/auth/login
 
 ```tsx
 const logout = async () => {
-  await axios.post('/api/v1/auth/logout');
-  // Clear local state
-  localStorage.removeItem('auth_token'); // if using token storage
-  window.location.href = '/login';
+  await axios.post("/api/v1/auth/logout");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  window.location.href = "/login";
 };
 ```
 
----
-
-## Token Refresh
-
-### Automatic Refresh
-
-```tsx
-// axios interceptor
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error.response?.status === 401) {
-      // Try to refresh token
-      const refreshed = await axios.post('/api/v1/auth/refresh');
-      if (refreshed.status === 200) {
-        // Retry original request
-        return axios(error.config);
-      }
-      // Redirect to login
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-);
-```
+The access token is blacklisted server-side and cannot be reused.
 
 ---
 
@@ -150,7 +191,7 @@ axios.interceptors.response.use(
 ### Auth Store (nanostores)
 
 ```tsx
-// stores/authStore.ts
+// src/modules/auth/stores/authStores.ts
 import { atom, map } from 'nanostores';
 
 export const $user = map<User | null>(null);
@@ -167,19 +208,25 @@ export const clearUser = () => {
 };
 ```
 
+User data is persisted in `localStorage` under the key `"user"` by `getAuth()` in `src/components/auth/AuthHelpers.ts`.
+
 ---
 
 ## Business Rules
 
-1. **Cookie Only** - No bearer token in Authorization header
-2. **SameSite Strict** - Cookie not sent cross-origin
-3. **Session Timeout** - Configurable via backend session settings
-4. **Rate Limiting** - Login endpoint limited to 5 attempts per minute
+1. **Bearer Token** — All authenticated requests use `Authorization: Bearer <token>` header
+2. **No Cookies for Auth** — Tokens stored in localStorage; refresh uses HttpOnly cookie via `withCredentials`
+3. **No CSRF** — No CSRF protection needed (no session cookies)
+4. **Access Token TTL** — Configurable via `JWT_TTL` (default 15 minutes)
+5. **Refresh Token** — Used to obtain new access tokens before expiry (14-day TTL)
+6. **Blacklist** — Logged-out tokens are blacklisted server-side
+7. **Active Users Only** — Login only succeeds for users with `status = 1`
+8. **Rate Limiting** — Login endpoint limited to 5 attempts per minute
 
 ---
 
 ## Related Documents
 
-- [Roles Overview](roles/overview.md) - User roles
-- [Permissions Matrix](roles/permissions.md) - Access control
-- [Governance Authentication](../governance/authentication.md) - Frontend auth setup
+- [Roles Overview](roles/overview.md) — User roles
+- [Permissions Matrix](roles/permissions.md) — Access control
+- [Governance Authentication](../governance/authentication.md) — Frontend auth setup

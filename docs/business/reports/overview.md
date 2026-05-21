@@ -18,6 +18,9 @@ The reporting module provides financial and inventory reports for asset manageme
 | Asset Summary by Department | `/api/v1/reports/by-department` | Assets grouped by department |
 | Recently Added Assets | `/api/v1/reports/recent` | New assets within date range |
 | Depreciation Schedule | `/api/v1/reports/depreciation` | Depreciation details per asset |
+| Opname Summary | `/api/v1/opname/reports/summary` | Session totals: matched, mismatched, not found, extra |
+| Discrepancy Report | `/api/v1/opname/reports/discrepancies` | All discrepancies by session and type |
+| Asset Opname History | `/api/v1/assets/{id}/opname-history` | All opname events for a specific asset |
 
 ---
 
@@ -47,6 +50,9 @@ Each report supports the following filter parameters:
 | GET | `/api/v1/reports/by-department` | Summary by department |
 | GET | `/api/v1/reports/recent` | Recently added assets |
 | GET | `/api/v1/reports/depreciation` | Depreciation schedule |
+| GET | `/api/v1/opname/sessions/{id}/summary` | Opname session summary |
+| GET | `/api/v1/opname/sessions/{id}/discrepancies` | Discrepancy detail report |
+| GET | `/api/v1/assets/{id}/opname-history` | Asset opname event history |
 
 ---
 

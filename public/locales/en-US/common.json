@@ -76,7 +76,6 @@
         "users": "user",
         "categories": "categories",
         "locations": "locations",
-        "vendors": "vendors",
         "assets": "assets",
         "checkouts": "checkouts",
         "transfers": "transfers",
@@ -499,46 +498,6 @@
         "notification": {
           "success": "Location success updated.",
           "error": "Oops, failed to saved."
-        }
-      }
-    },
-    "vendors": {
-      "list": {
-        "title": "List Vendors",
-        "total_vendors": "Total Vendors",
-        "active": "Active",
-        "inactive": "Inactive",
-        "empty": "No vendors yet. Add your first one.",
-        "create_first": "Add First Vendor",
-        "status_active": "Active",
-        "status_inactive": "Inactive"
-      },
-      "create": {
-        "title": "Add Vendor",
-        "form": {
-          "name": "Vendor Name",
-          "code": "Code",
-          "category": "Category",
-          "contact_person": "Contact Person",
-          "email": "Email",
-          "phone": "Phone",
-          "address": "Address",
-          "notes": "Notes",
-          "is_active": "Active Status"
-        },
-        "notification": {
-          "success": "Vendor success created.",
-          "error": "Oops, failed to save."
-        }
-      },
-      "read": {
-        "title": "Vendor Detail"
-      },
-      "update": {
-        "title": "Update Vendor",
-        "notification": {
-          "success": "Vendor success updated.",
-          "error": "Oops, failed to save."
         }
       }
     },

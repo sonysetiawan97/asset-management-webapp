@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "@components/buttons/BackButton";
 import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "@modules/roles/components/FormFields";
@@ -19,20 +19,19 @@ type Props = {
 const UpdatePage: FC<Props> = ({ privileges, defaultValue }) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, reset, getValues } = useFormContext<UpdateModel>();
+  const { handleSubmit, reset } = useFormContext<UpdateModel>();
   const { updateAsync, isLoading } = useUpdate<UpdateModel>();
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
 
   const onSubmit = async (data: UpdateModel) => {
     try {
-      const id = getValues("id");
-      const payload: UpdateModel = {
-        id,
+      const payload = {
         code: data.code,
         name: data.name,
         privileges: data.privileges,
       };
-      
+
       await updateAsync({ id, url: moduleName, body: payload });
       enqueueSnackbar(t("modules.roles.update.notification.success"), {
         variant: "success",

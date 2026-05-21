@@ -40,7 +40,6 @@ export interface SubmitCreateUserModel {
 }
 
 export interface UpdateUserModel {
-  id: string | number;
   first_name?: string;
   last_name?: string;
   username: string;
@@ -51,7 +50,6 @@ export interface UpdateUserModel {
 }
 
 export interface UpdateUserProfileModel {
-  id: string | number;
   first_name?: string;
   last_name?: string;
   username: string;

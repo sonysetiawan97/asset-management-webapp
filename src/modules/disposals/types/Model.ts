@@ -20,7 +20,7 @@ export interface DisposalRequest {
   approved_at?: string;
   created_by: string;
   created_by_name?: string;
-  created_at: string;
+  created_time: string;
 }
 
 export interface CreateDisposalModel {

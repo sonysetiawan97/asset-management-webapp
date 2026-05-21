@@ -19,7 +19,7 @@ export interface Notification {
   data?: Record<string, unknown>;
   is_read: boolean;
   read_at?: string;
-  created_at: string;
+  created_time: string;
 }
 
 export interface ReadNotification extends Notification {}

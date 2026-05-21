@@ -16,7 +16,7 @@ export interface CheckoutLog {
   return_date?: string;
   condition_on_return?: CheckoutCondition;
   notes?: string;
-  created_at: string;
+  created_time: string;
 }
 
 export interface CreateCheckoutModel {

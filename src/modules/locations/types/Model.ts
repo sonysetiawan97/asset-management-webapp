@@ -8,8 +8,8 @@ export interface Model {
   code: string;
   type: LocationType;
   parent_id: string | null;
-  created_at: string;
-  updated_at: string;
+  created_time: string;
+  updated_time: string;
 }
 
 export interface CreateModel {
@@ -25,12 +25,11 @@ export interface ReadModel {
   code: string;
   type: LocationType;
   parent_id: string | null;
-  created_at: string;
-  updated_at: string;
+  created_time: string;
+  updated_time: string;
 }
 
 export interface UpdateModel {
-  id: string;
   name: string;
   code?: string;
   type: LocationType;

@@ -23,7 +23,6 @@ export interface ReadModel {
 }
 
 export interface UpdateModel {
-    id: string;
     code: string;
     name: string;
     privilege?: string[] | string;

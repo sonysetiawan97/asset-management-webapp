@@ -60,6 +60,8 @@ AST-2026-000001
 | name | string | Yes | Descriptive name (255 chars max) |
 | asset_code | string | Yes | System-generated unique code |
 | serial_number | string | No | Manufacturer serial number |
+| brand | string | No | Brand / manufacturer, e.g., Dell, HP, Herman Miller |
+| model_number | string | No | Model identifier |
 | category_id | uuid | Yes | Reference to category |
 | location_id | uuid | No | Current location |
 | department_id | uuid | Yes | Owning department |

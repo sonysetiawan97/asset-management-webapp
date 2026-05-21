@@ -85,7 +85,6 @@ export interface DetailModel {
 }
 
 export interface UpdateModel {
-  id: string;
   name: string;
   nik: string;
   phone: string;

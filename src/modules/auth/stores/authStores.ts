@@ -20,7 +20,6 @@ const setRefreshToken = (refreshToken: string): void => {
 };
 
 const getRefreshToken = (): string | null => {
-  console.log('refresh', localStorage.getItem("refreshToken"))
   return localStorage.getItem("refreshToken");
 };
 

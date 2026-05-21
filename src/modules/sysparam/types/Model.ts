@@ -25,7 +25,6 @@ export interface ReadModel {
 }
 
 export interface UpdateModel {
-  id: string;
   name: string;
   nik: string;
   status: 0 | 1;

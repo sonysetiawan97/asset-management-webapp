@@ -20,6 +20,8 @@
 | Document | Description |
 |----------|-------------|
 | [location/hierarchy](location/hierarchy.md) | Location structure and hierarchy |
+| [departments/overview](departments/overview.md) | Department entity and relationships |
+| [departments/management](departments/management.md) | Department CRUD, deactivation, RBAC |
 
 ### Transfers
 
@@ -33,6 +35,16 @@
 |----------|-------------|
 | [maintenance/overview](maintenance/overview.md) | Maintenance logging |
 | [maintenance/alerts](maintenance/alerts.md) | Automated alerts |
+
+### Opname
+
+| Document | Description |
+|----------|-------------|
+| [opname/sessions](opname/sessions.md) | OpnameSession entity, statuses, API |
+| [opname/items](opname/items.md) | OpnameItem entity, counted statuses |
+| [opname/workflow](opname/workflow.md) | Counting workflow, 9 steps |
+| [opname/reports](opname/reports.md) | Opname-specific reports |
+| [opname/notifications](opname/notifications.md) | Opname alert triggers |
 
 ### Disposal
 

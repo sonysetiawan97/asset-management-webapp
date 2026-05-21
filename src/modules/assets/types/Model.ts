@@ -33,8 +33,8 @@ export interface Model {
   license_key: string;
   license_expiry: string;
   notes: string;
-  created_at: string;
-  updated_at: string;
+  created_time: string;
+  updated_time: string;
 }
 
 export interface CreateModel {
@@ -61,7 +61,6 @@ export interface CreateModel {
 export interface ReadModel extends Model {}
 
 export interface UpdateModel {
-  id: string;
   name: string;
   asset_code: string;
   serial_number?: string;

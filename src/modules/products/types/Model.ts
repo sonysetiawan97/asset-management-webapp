@@ -24,7 +24,6 @@ export interface ReadModel {
 }
 
 export interface UpdateModel {
-  id: string;
   name: string;
   description: string;
   price: number;

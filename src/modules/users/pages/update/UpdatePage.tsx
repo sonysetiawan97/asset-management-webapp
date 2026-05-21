@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUpdate } from "@hooks/request/useUpdate";
 import {
   moduleName,
@@ -27,14 +27,23 @@ interface UpdatePageProps {
 const UpdatePage: FC<UpdatePageProps> = ({ listRole }) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, reset, getValues } = useFormContext<UpdateUserModel>();
+  const { handleSubmit, reset } = useFormContext<UpdateUserModel>();
   const { updateAsync, isLoading } = useUpdate<SubmitUpdateUserModel>();
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
 
   const onSubmit = async (data: UpdateUserModel) => {
     try {
-      const id = getValues("id");
-      await updateAsync({ id: String(id), url: moduleName, body: data });
+      const { role, photo, ...rest } = data;
+      const payload: SubmitUpdateUserModel = {
+        first_name: rest.first_name,
+        last_name: rest.last_name,
+        username: rest.username,
+        email: rest.email,
+        role: typeof role === 'string' ? [role] : role,
+        status: rest.status,
+      };
+      await updateAsync({ id, url: moduleName, body: payload });
       enqueueSnackbar(t("modules.users.update.notification.success"), {
         variant: "success",
       });

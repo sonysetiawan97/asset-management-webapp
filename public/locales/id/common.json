@@ -76,7 +76,6 @@
         "users": "Pengguna",
         "categories": "Kategori",
         "locations": "Lokasi",
-        "vendors": "Vendor",
         "assets": "Aset",
         "checkouts": "Check-out",
         "transfers": "Transfer",
@@ -448,46 +447,6 @@
         "title": "Perbarui Lokasi",
         "notification": {
           "success": "Lokasi berhasil diperbarui.",
-          "error": "Oops, gagal menyimpan."
-        }
-      }
-    },
-    "vendors": {
-      "list": {
-        "title": "Daftar Vendor",
-        "total_vendors": "Total Vendor",
-        "active": "Aktif",
-        "inactive": "Nonaktif",
-        "empty": "Belum ada vendor. Tambahkan yang pertama.",
-        "create_first": "Tambah Vendor Pertama",
-        "status_active": "Aktif",
-        "status_inactive": "Nonaktif"
-      },
-      "create": {
-        "title": "Tambah Vendor",
-        "form": {
-          "name": "Nama Vendor",
-          "code": "Kode",
-          "category": "Kategori",
-          "contact_person": "Nama Kontak",
-          "email": "Email",
-          "phone": "Telepon",
-          "address": "Alamat",
-          "notes": "Catatan",
-          "is_active": "Status Aktif"
-        },
-        "notification": {
-          "success": "Vendor berhasil dibuat.",
-          "error": "Oops, gagal menyimpan."
-        }
-      },
-      "read": {
-        "title": "Detail Vendor"
-      },
-      "update": {
-        "title": "Perbarui Vendor",
-        "notification": {
-          "success": "Vendor berhasil diperbarui.",
           "error": "Oops, gagal menyimpan."
         }
       }

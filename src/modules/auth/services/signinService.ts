@@ -22,7 +22,8 @@ export const signin = async (request: SigninRequest): Promise<AuthResponse> => {
 
     return data;
   } catch (error) {
-    const { message } = error as AxiosError;
-    throw new Error(`Signin failed: ${message}`);
+    const axiosError = error as AxiosError;
+    const apiMessage = axiosError.response?.data?.message ?? axiosError.message;
+    throw new Error(apiMessage);
   }
 };
