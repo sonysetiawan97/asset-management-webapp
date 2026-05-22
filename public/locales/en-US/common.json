@@ -547,6 +547,7 @@
         "in_use": "In Use",
         "total_value": "Total Value",
         "filter_by_status": "Filter by status",
+        "filter_all": "All",
         "empty": "No assets yet. Register your first one.",
         "create_first": "Register First Asset",
         "purchase_price": "Purchase",

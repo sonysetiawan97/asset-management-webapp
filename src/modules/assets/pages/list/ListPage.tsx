@@ -15,11 +15,13 @@ interface ListProps {
   isLoading: boolean;
   categories: { id: string; name: string }[];
   locations: { id: string; name: string }[];
+  selectedStatus: string | null;
+  onStatusChange: (status: string | null) => void;
 }
 
 // Format currency
 const formatCurrency = (value: number | undefined) => {
-  if (value === undefined || value === null) return "—";
+  if (value === undefined || value === null || isNaN(value)) return "—";
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "IDR",
@@ -37,7 +39,7 @@ const formatDate = (dateStr: string | undefined) => {
   });
 };
 
-const List = ({ data, count, isLoading: _isLoading, categories, locations }: ListProps) => {
+const List = ({ data, count, isLoading: _isLoading, categories, locations, selectedStatus, onStatusChange }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
@@ -47,7 +49,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations }: Lis
     count: data.filter((a) => a.asset_status === s.value).length,
   }));
 
-  const totalValue = data.reduce((acc, a) => acc + (a.purchase_price || 0), 0);
+  const totalValue = data.reduce((acc, a) => acc + (Number(a.purchase_price) || 0), 0);
   const availableCount = data.filter((a) => a.asset_status === "available").length;
   const inUseCount = data.filter((a) => a.asset_status === "in_use").length;
 
@@ -79,10 +81,23 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations }: Lis
       <div className="status-filter-bar">
         <span className="status-filter-bar__label">{t("modules.assets.list.filter_by_status")}</span>
         <div className="status-filter-bar__chips">
+          {/* All chip — resets filter */}
+          <button
+            className={`status-chip ${selectedStatus === null ? "active" : ""}`}
+            onClick={() => onStatusChange(null)}
+          >
+            <span className="status-chip__label">{t("modules.assets.list.filter_all")}</span>
+            <span className="status-chip__count">{count}</span>
+          </button>
           {statusStats.map((s) => {
             const colors = STATUS_COLORS[s.value] ?? { dot: "#6b7280" };
             return (
-              <button key={s.value} className="status-chip" data-status={s.value}>
+              <button
+                key={s.value}
+                className={`status-chip ${selectedStatus === s.value ? "active" : ""}`}
+                data-status={s.value}
+                onClick={() => onStatusChange(s.value)}
+              >
                 <span
                   className="status-chip__dot"
                   style={{ background: colors.dot }}

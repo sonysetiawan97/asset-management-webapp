@@ -497,6 +497,7 @@
         "in_use": "Dipakai",
         "total_value": "Nilai Total",
         "filter_by_status": "Filter berdasarkan status",
+        "filter_all": "Semua",
         "empty": "Belum ada aset. Daftarkan yang pertama.",
         "create_first": "Daftarkan Aset Pertama",
         "purchase_price": "Pembelian",

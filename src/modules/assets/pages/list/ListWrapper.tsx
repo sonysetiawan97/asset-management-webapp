@@ -1,4 +1,4 @@
-import { useEffect, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import ListPage from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { type Model, moduleName } from "@modules/assets/types/Model";
@@ -11,14 +11,19 @@ import { useFindAll } from "@hooks/request/useFindAll";
 export const ListWrapper: FC = () => {
   const { skip, limit } = usePagination();
   const { query } = useSearch();
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
+  const params = {
+    "!search": query,
+    "!sort[id]": -1,
+    ...(selectedStatus && { asset_status: selectedStatus }),
+  };
+
   const { data, isLoading, error } = useList<Model>({
     module: moduleName,
     skip,
     limit,
-    params: {
-      "!search": query,
-      "!sort[id]": -1,
-    },
+    params,
   });
 
   const { data: categoryData } = useFindAll<{ id: string; name: string }>("categories", "categories");
@@ -43,6 +48,8 @@ export const ListWrapper: FC = () => {
       isLoading={isLoading}
       categories={categories}
       locations={locations}
+      selectedStatus={selectedStatus}
+      onStatusChange={setSelectedStatus}
     />
   );
 };
