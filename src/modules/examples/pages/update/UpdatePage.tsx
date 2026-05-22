@@ -19,6 +19,11 @@ const UpdatePage = () => {
   const { id } = useParams<{ id: string }>();
 
   const onSubmit = async (data: UpdateModel) => {
+    if (!id) {
+      enqueueSnackbar("ID is required", { variant: "error" });
+      return;
+    }
+
     const hobbies: string[] = (data.hobbies as unknown as SelectOption[]).map(
       (item) => String(item.value)
     );

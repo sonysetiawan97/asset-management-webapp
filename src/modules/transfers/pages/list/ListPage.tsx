@@ -127,7 +127,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
                     <div className="workflow-meta__item">
                       {t("modules.transfers.list.requested_by")}: {transfer.created_by_name ?? "—"}
                     </div>
-                    <div className="workflow-meta__item">{formatDate(transfer.created_at)}</div>
+                    <div className="workflow-meta__item">{formatDate(transfer.created_time)}</div>
                   </div>
                 </div>
 

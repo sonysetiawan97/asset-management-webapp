@@ -27,7 +27,6 @@ const UpdateWrapper: FC = () => {
   useEffect(() => {
     if (data && isPrivilegesReady) {
       reset({
-        id: data.id,
         name: data.name,
         privilege: Object.values(checkedMap).flat(),
         ...checkedMap,

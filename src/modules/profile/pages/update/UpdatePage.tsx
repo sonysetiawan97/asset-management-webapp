@@ -39,6 +39,12 @@ const UpdatePage = () => {
         role: roleCode,
         status: user?.status,
       };
+
+      if (!id) {
+        enqueueSnackbar("ID is required", { variant: "error" });
+        return;
+      }
+
       try {
         await updateAsync({ id, url: moduleName, body: payload });
         enqueueSnackbar(t("modules.profile.update.notification.success"), {

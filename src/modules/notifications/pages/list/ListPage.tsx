@@ -134,7 +134,7 @@ export const List: FC<ListProps> = ({ filterRead }) => {
               <div className="notification-content">
                 <div className="notification-header">
                   <span className="notification-title">{notification.title}</span>
-                  <span className="notification-time">{formatDate(notification.created_at)}</span>
+                  <span className="notification-time">{formatDate(notification.created_time)}</span>
                 </div>
                 <p className="notification-message">{notification.message}</p>
                 <span className="notification-type">{NOTIFICATION_TYPE_LABELS[notification.type]}</span>

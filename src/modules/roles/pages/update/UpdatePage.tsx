@@ -32,6 +32,11 @@ const UpdatePage: FC<Props> = ({ privileges, defaultValue }) => {
         privileges: data.privileges,
       };
 
+      if (!id) {
+        enqueueSnackbar("ID is required", { variant: "error" });
+        return;
+      }
+
       await updateAsync({ id, url: moduleName, body: payload });
       enqueueSnackbar(t("modules.roles.update.notification.success"), {
         variant: "success",

@@ -43,6 +43,12 @@ const UpdatePage: FC<UpdatePageProps> = ({ listRole }) => {
         role: typeof role === 'string' ? [role] : role,
         status: rest.status,
       };
+
+      if (!id) {
+        enqueueSnackbar("ID is required", { variant: "error" });
+        return;
+      }
+
       await updateAsync({ id, url: moduleName, body: payload });
       enqueueSnackbar(t("modules.users.update.notification.success"), {
         variant: "success",
