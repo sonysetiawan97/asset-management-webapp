@@ -22,6 +22,10 @@ const UpdatePage = () => {
   const { data: categoriesData, isLoading: isLoadingCategories } = useFindAll<Model>("categories", "categories");
 
   const onSubmit = async (data: UpdateModel) => {
+    if (!id) {
+      enqueueSnackbar("Category ID is required", { variant: "error" });
+      return;
+    }
     try {
       await updateAsync({ id, url: moduleName, body: data });
       enqueueSnackbar(t("modules.categories.update.notification.success"), { variant: "success" });

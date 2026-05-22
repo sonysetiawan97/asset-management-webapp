@@ -35,6 +35,10 @@ const UpdatePage = () => {
   if (isLoadingAny) return <LoadingPage />;
 
   const onSubmit = async (data: UpdateModel) => {
+    if (!id) {
+      enqueueSnackbar("Asset ID is required", { variant: "error" });
+      return;
+    }
     try {
       await updateAsync({ id, url: moduleName, body: data });
       enqueueSnackbar(t("modules.assets.update.notification.success"), { variant: "success" });

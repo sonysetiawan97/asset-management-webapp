@@ -117,6 +117,13 @@ export const SysparamsIcon: FC<IconProps> = ({ size = 20, className }) => (
   </svg>
 );
 
+// Departments
+export const DepartmentsIcon: FC<IconProps> = ({ size = 20, className }) => (
+  <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>
+    <path d="M480-80q-17 0-28.5-11.5T440-120v-120H280q-17 0-28.5-11.5T240-160v-160q0-17 11.5-28.5T280-200h160v-120q0-17 11.5-28.5T480-360q17 0 28.5 11.5T520-300v120h160q17 0 28.5 11.5T720-160v160q0 17-11.5 28.5T680-120H520v120q0 17-11.5 28.5T480-80Zm0-240Zm-200 0Zm400 0Z" />
+  </svg>
+);
+
 // Plus (Create button)
 export const PlusIcon: FC<IconProps> = ({ size = 16, className }) => (
   <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>

@@ -1,4 +1,4 @@
-import { moduleName, type UpdateModel } from "@modules/locations/types/Model";
+import { moduleName, type UpdateModel } from "@modules/departments/types/Model";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SubmitButton } from "@components/buttons/SubmitButton";
@@ -9,7 +9,7 @@ import { BackButton } from "@components/buttons/BackButton";
 import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { type Model } from "@modules/locations/types/Model";
+import { type Model } from "@modules/departments/types/Model";
 import { LoadingPage } from "@/components/loadings/LoadingPage";
 
 const UpdatePage = () => {
@@ -19,16 +19,16 @@ const UpdatePage = () => {
   const { updateAsync, isLoading } = useUpdate<UpdateModel>();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { data: locationsData, isLoading: isLoadingLocations } = useFindAll<Model>("locations", "locations");
+  const { data: departmentsData, isLoading: isLoadingDepartments } = useFindAll<Model>("departments", "departments");
 
   const onSubmit = async (data: UpdateModel) => {
     if (!id) {
-      enqueueSnackbar("Location ID is required", { variant: "error" });
+      enqueueSnackbar("Department ID is required", { variant: "error" });
       return;
     }
     try {
       await updateAsync({ id, url: moduleName, body: data });
-      enqueueSnackbar(t("modules.locations.update.notification.success"), { variant: "success" });
+      enqueueSnackbar(t("modules.departments.update.notification.success"), { variant: "success" });
       navigate(`/${moduleName}`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
@@ -36,14 +36,14 @@ const UpdatePage = () => {
     }
   };
 
-  if (isLoadingLocations) return <LoadingPage />;
+  if (isLoadingDepartments) return <LoadingPage />;
 
-  const locations = locationsData?.result ?? [];
+  const departments = departmentsData?.result ?? [];
 
   return (
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
-        <FormFields locations={locations} />
+        <FormFields departments={departments} />
       </div>
 
       <div className="col-12">

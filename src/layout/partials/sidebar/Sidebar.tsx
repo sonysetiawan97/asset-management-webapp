@@ -8,6 +8,7 @@ import {
   DashboardIcon,
   CategoriesIcon,
   LocationsIcon,
+  DepartmentsIcon,
   AssetsIcon,
   CheckoutsIcon,
   TransfersIcon,
@@ -64,6 +65,13 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
               url="/locations"
               title={t("sidebar.master.menu.locations")}
               icon={<LocationsIcon />}
+            />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/departments">
+            <SidebarMenuItem
+              url="/departments"
+              title={t("sidebar.master.menu.departments")}
+              icon={<DepartmentsIcon />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/assets">

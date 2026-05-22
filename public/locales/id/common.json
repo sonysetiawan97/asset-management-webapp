@@ -76,6 +76,7 @@
         "users": "Pengguna",
         "categories": "Kategori",
         "locations": "Lokasi",
+        "departments": "Departemen",
         "assets": "Aset",
         "checkouts": "Check-out",
         "transfers": "Transfer",
@@ -448,6 +449,43 @@
         "notification": {
           "success": "Lokasi berhasil diperbarui.",
           "error": "Oops, gagal menyimpan."
+        }
+      }
+    },
+    "departments": {
+      "list": {
+        "title": "Daftar Departemen",
+        "total_departments": "Total Departemen",
+        "root_departments": "Departemen Induk",
+        "sub_departments": "Sub Departemen",
+        "total_headcount": "Total Personel",
+        "empty": "Belum ada departemen. Buat yang pertama.",
+        "create_first": "Buat Departemen Pertama",
+        "has_children": "memiliki anak",
+        "headcount": "personel",
+        "budget": "anggaran"
+      },
+      "create": {
+        "title": "Buat Departemen",
+        "notification": {
+          "success": "Departemen berhasil dibuat."
+        }
+      },
+      "form": {
+        "name": "Nama Departemen",
+        "code": "Kode",
+        "parent": "Departemen Induk",
+        "description": "Deskripsi",
+        "budget": "Anggaran",
+        "headcount": "Jumlah Personel"
+      },
+      "read": {
+        "title": "Detail Departemen"
+      },
+      "update": {
+        "title": "Perbarui Departemen",
+        "notification": {
+          "success": "Departemen berhasil diperbarui."
         }
       }
     },

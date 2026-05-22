@@ -76,6 +76,7 @@
         "users": "user",
         "categories": "categories",
         "locations": "locations",
+        "departments": "departments",
         "assets": "assets",
         "checkouts": "checkouts",
         "transfers": "transfers",
@@ -498,6 +499,43 @@
         "notification": {
           "success": "Location success updated.",
           "error": "Oops, failed to saved."
+        }
+      }
+    },
+    "departments": {
+      "list": {
+        "title": "List Departments",
+        "total_departments": "Total Departments",
+        "root_departments": "Root Departments",
+        "sub_departments": "Sub Departments",
+        "total_headcount": "Total Headcount",
+        "empty": "No departments yet. Create your first one.",
+        "create_first": "Create First Department",
+        "has_children": "has children",
+        "headcount": "headcount",
+        "budget": "budget"
+      },
+      "create": {
+        "title": "Create Department",
+        "notification": {
+          "success": "Department created successfully."
+        }
+      },
+      "form": {
+        "name": "Department Name",
+        "code": "Code",
+        "parent": "Parent Department",
+        "description": "Description",
+        "budget": "Budget",
+        "headcount": "Headcount"
+      },
+      "read": {
+        "title": "Department Detail"
+      },
+      "update": {
+        "title": "Update Department",
+        "notification": {
+          "success": "Department updated successfully."
         }
       }
     },
