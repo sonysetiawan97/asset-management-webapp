@@ -12,7 +12,7 @@ import { useFindOneById } from "@hooks/request/useFindOneById";
 import { useUpdate } from "@hooks/request/useUpdate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { FormFields } from "../../components/FormFields";
@@ -48,9 +48,9 @@ const UpdateWrapper: FC = () => {
     }
   };
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
-  if (!assetsData || !usersData) return <LoadingPage />;
+  if (!assetsData || !usersData) return <ContentLoader />;
 
   return (
     <FormProvider {...methods}>

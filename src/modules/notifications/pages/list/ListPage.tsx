@@ -4,7 +4,7 @@ import { usePagination } from "@hooks/list/usePagination";
 import { useList } from "@hooks/list/useList";
 import { type Notification, moduleName, NOTIFICATION_TYPE_LABELS, NOTIFICATION_TYPE_ICONS } from "../../types/Model";
 import { useMarkRead } from "../../services/useNotificationPoll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useEffect, useState } from "react";
 
@@ -55,7 +55,7 @@ export const List: FC<ListProps> = ({ filterRead }) => {
     await markRead(id);
   };
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useFindOneById } from "@hooks/request/useFindOneById";
 import NotFound from "@modules/errors/pages/404NotFound";
-import { LoadingPage } from "@components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { useGetPrivileges } from "@modules/roles/hooks/useGetPrivileges";
 import { PrivilegeOption } from "@modules/privileges/types/Model";
 
@@ -91,7 +91,7 @@ const UpdateWrapper: FC = () => {
 
   const isInitialLoading = isLoading || !isPrivilegesReady;
 
-  if (isInitialLoading) return <LoadingPage />;
+  if (isInitialLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
 
   return (

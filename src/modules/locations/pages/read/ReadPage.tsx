@@ -3,7 +3,7 @@ import { UpdateButton } from "@components/buttons/UpdateButton";
 import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { type Model } from "@modules/locations/types/Model";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 interface ReadPageProps {
   defaultValue?: Model;
@@ -12,7 +12,7 @@ interface ReadPageProps {
 const ReadPage = ({ defaultValue }: ReadPageProps) => {
   const { data: locationsData, isLoading } = useFindAll<Model>("locations", "locations");
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
 
   const locations = locationsData?.result ?? [];
 

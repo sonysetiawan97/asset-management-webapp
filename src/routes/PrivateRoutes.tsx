@@ -1,11 +1,6 @@
-import { type FC, Suspense, lazy } from "react";
+import { type FC, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { MasterLayout } from "../layout/MasterLayout";
-
-import { LoadingAuthPage } from "@/components/loadings/LoadingAuthPage";
-import { PaginationProvider } from "@/contexts/PaginationProvider";
-import { SearchProvider } from "@/contexts/SearchProvider";
-import { AuthMiddleware } from "@components/auth/AuthMiddleware";
 
 const ErrorRoutes = lazy(() => import("@modules/errors/ErrorRoutes"));
 const Dashboard = lazy(() => import("@modules/dashboard/dashboard"));
@@ -33,41 +28,33 @@ const SysparamRoutes = lazy(() => import("@modules/sysparam/PrivateRoutes"));
 
 const PrivateRoutes: FC = () => {
   return (
-    <Suspense fallback={<LoadingAuthPage />}>
-      <PaginationProvider>
-        <SearchProvider>
-          <AuthMiddleware>
-            <Routes>
-                <Route path='auth/*' element={<Navigate to='/dashboard' />} />
-                <Route element={<MasterLayout />}>
-                  <Route path="/users/*" element={<UserRoutes />} />
-                  <Route path="/privileges/*" element={<PrivilegeRoutes />} />
-                  <Route path="/roles/*" element={<RoleRoutes />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/products/*" element={<ProductRoutes />} />
-                  <Route path="/suppliers/*" element={<SupplierRoutes />} />
-                  <Route path="/categories/*" element={<CategoryRoutes />} />
-                  <Route path="/locations/*" element={<LocationRoutes />} />
-                  <Route path="/departments/*" element={<DepartmentRoutes />} />
-                  <Route path="/assets/*" element={<AssetRoutes />} />
-                  <Route path="/checkouts/*" element={<CheckoutRoutes />} />
-                  <Route path="/transfers/*" element={<TransferRoutes />} />
-                  <Route path="/maintenance/*" element={<MaintenanceRoutes />} />
-                  <Route path="/notifications/*" element={<NotificationRoutes />} />
-                  <Route path="/reports/*" element={<ReportRoutes />} />
-                  <Route path="/disposals/*" element={<DisposalRoutes />} />
-                  <Route path="/audit-trail/*" element={<AuditTrailRoutes />} />
-                  <Route path="/examples/*" element={<ExampleRoutes />} />
-                  {/* <Route path="/orders/*" element={<OrderRoutes />} /> */}
-                  <Route path="/profile/*" element={<ProfileRoutes />} />
-                  <Route path="/sysparams/*" element={<SysparamRoutes />} />
-                </Route>
-                <Route path="*" element={<ErrorRoutes />} />
-            </Routes>
-          </AuthMiddleware>
-        </SearchProvider>
-      </PaginationProvider>
-    </Suspense>
+    <Routes>
+      <Route path="auth/*" element={<Navigate to="/dashboard" />} />
+      <Route element={<MasterLayout />}>
+        <Route path="/users/*" element={<UserRoutes />} />
+        <Route path="/privileges/*" element={<PrivilegeRoutes />} />
+        <Route path="/roles/*" element={<RoleRoutes />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/products/*" element={<ProductRoutes />} />
+        <Route path="/suppliers/*" element={<SupplierRoutes />} />
+        <Route path="/categories/*" element={<CategoryRoutes />} />
+        <Route path="/locations/*" element={<LocationRoutes />} />
+        <Route path="/departments/*" element={<DepartmentRoutes />} />
+        <Route path="/assets/*" element={<AssetRoutes />} />
+        <Route path="/checkouts/*" element={<CheckoutRoutes />} />
+        <Route path="/transfers/*" element={<TransferRoutes />} />
+        <Route path="/maintenance/*" element={<MaintenanceRoutes />} />
+        <Route path="/notifications/*" element={<NotificationRoutes />} />
+        <Route path="/reports/*" element={<ReportRoutes />} />
+        <Route path="/disposals/*" element={<DisposalRoutes />} />
+        <Route path="/audit-trail/*" element={<AuditTrailRoutes />} />
+        <Route path="/examples/*" element={<ExampleRoutes />} />
+        {/* <Route path="/orders/*" element={<OrderRoutes />} /> */}
+        <Route path="/profile/*" element={<ProfileRoutes />} />
+        <Route path="/sysparams/*" element={<SysparamRoutes />} />
+      </Route>
+      <Route path="*" element={<ErrorRoutes />} />
+    </Routes>
   );
 };
 

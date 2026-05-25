@@ -10,7 +10,7 @@ import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const CreatePage = () => {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ const CreatePage = () => {
   const { data: usersData, isLoading: loadingUsers } = useFindAll<{ id: string; name: string }>("users", "users");
 
   const isLoadingAny = loadingCategories || loadingLocations || loadingDepartments || loadingVendors || loadingUsers;
-  if (isLoadingAny) return <LoadingPage />;
+  if (isLoadingAny) return <ContentLoader />;
 
   const categories = categoriesData?.result ?? [];
   const locations = locationsData?.result ?? [];

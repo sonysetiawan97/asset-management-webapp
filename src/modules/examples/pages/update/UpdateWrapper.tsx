@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useFindOneById } from "@hooks/request/useFindOneById";
 import NotFound from "@modules/errors/pages/404NotFound";
-import { LoadingPage } from "@components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { useOptionsRoleById } from "@modules/users/hooks/useRoleOptions";
 import { useDefaultOptionSysparamByGroup } from "@modules/products/hooks/useSysparamOptions";
 
@@ -51,7 +51,7 @@ const UpdateWrapper: FC = () => {
     ]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
 
   return (

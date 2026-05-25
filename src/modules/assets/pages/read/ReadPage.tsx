@@ -3,7 +3,7 @@ import { UpdateButton } from "@components/buttons/UpdateButton";
 import { FormFields } from "../../components/FormFields";
 import { QRCodeSection } from "../../components/QRCodeSection";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { useFormContext } from "react-hook-form";
 import type { ReadModel } from "../../types/Model";
 
@@ -29,7 +29,7 @@ const ReadPage = (_props: ReadPageProps) => {
   const users = userData?.result ?? [];
 
   const isLoadingAny = categoryData === undefined || locationData === undefined || departmentData === undefined || vendorData === undefined || userData === undefined;
-  if (isLoadingAny) return <LoadingPage />;
+  if (isLoadingAny) return <ContentLoader />;
 
   return (
     <>

@@ -10,7 +10,7 @@ import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { type Model } from "@modules/categories/types/Model";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const UpdatePage = () => {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ const UpdatePage = () => {
     }
   };
 
-  if (isLoadingCategories) return <LoadingPage />;
+  if (isLoadingCategories) return <ContentLoader />;
 
   const categories = categoriesData?.result ?? [];
 

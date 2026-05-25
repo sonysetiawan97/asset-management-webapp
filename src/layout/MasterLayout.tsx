@@ -3,6 +3,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./partials/header/Header";
 import Sidebar from "./partials/sidebar/Sidebar";
+import { LoadingInline } from "@components/loadings/LoadingInline";
+import { $isPageLoading } from "@stores/LoadingStore";
 
 const MasterLayout: FC = () => {
   const [isActive, setIsActive] = useState(false);
@@ -13,6 +15,10 @@ const MasterLayout: FC = () => {
 
   useEffect(() => {
     setIsActive(false);
+    // Briefly show inline loading on every route change
+    $isPageLoading.set(true);
+    const timer = setTimeout(() => $isPageLoading.set(false), 300);
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -56,7 +62,9 @@ const MasterLayout: FC = () => {
                 <div
                   id="kt_app_content_container"
                   className="app-container container-fluid px-4"
+                  style={{ position: "relative", minHeight: "400px" }}
                 >
+                  <LoadingInline />
                   <Outlet />
                 </div>
               </div>

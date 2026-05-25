@@ -3,7 +3,7 @@ import { useList } from "@hooks/list/useList";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const formatCurrency = (v?: number) => v === undefined || v === null ? "—" : new Intl.NumberFormat("en-US", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(v);
 const formatDate = (d?: string) => d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
@@ -16,7 +16,7 @@ export const InventoryReport: FC = () => {
     setBreadcrumbs([{ label: "Home", path: "/" }, { label: "Reports", path: "/reports" }, { label: "Inventory" }]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
 
   const assets = data?.data.result || [];
   const total = assets.length;

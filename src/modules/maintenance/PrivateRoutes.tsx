@@ -1,6 +1,5 @@
-import { lazy, Suspense, useEffect, type FC } from "react";
+import { lazy, useEffect, type FC } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import { LoadingPage } from "@components/loadings/LoadingPage";
 import { setPageTitle } from "@stores/PageHeaderStore";
 import { moduleName } from "./types/Model";
 
@@ -13,8 +12,7 @@ const UpdateWrapper = lazy(() => import("./pages/update/UpdateWrapper"));
 const PrivateRoutes: FC = () => {
   useEffect(() => { setPageTitle(moduleName); }, []);
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Routes>
+    <Routes>
         <Route element={<Outlet />}>
           <Route index element={<ListWrapper />} />
           <Route path="/create" element={<CreateWrapper />} />
@@ -23,7 +21,6 @@ const PrivateRoutes: FC = () => {
         </Route>
         <Route path="*" element={<ErrorRoutes />} />
       </Routes>
-    </Suspense>
   );
 };
 

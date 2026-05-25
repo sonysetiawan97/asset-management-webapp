@@ -8,7 +8,7 @@ import { CancelButton } from "@components/buttons/CancelButton";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { ResetButton } from "@components/buttons/ResetButton";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -21,7 +21,7 @@ const CreatePage = () => {
 
   const { data: categoriesData, isLoading: loadingCategories } = useFindAll<Model>("categories", "categories");
 
-  if (loadingCategories) return <LoadingPage />;
+  if (loadingCategories) return <ContentLoader />;
 
   const categories = categoriesData?.result ?? [];
 

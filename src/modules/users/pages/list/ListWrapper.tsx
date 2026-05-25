@@ -4,7 +4,7 @@ import { useSearch } from "@hooks/list/useSearch";
 import { moduleName, UserListModel } from "@/modules/users/types/UserTypes";
 import { FC, useEffect } from "react";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
-import { LoadingPage } from "@components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { ListPage } from "./ListPage";
 
 export const ListWrapper: FC = () => {
@@ -28,7 +28,7 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

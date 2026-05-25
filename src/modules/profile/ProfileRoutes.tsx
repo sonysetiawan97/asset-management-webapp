@@ -1,7 +1,6 @@
 import { setPageTitle } from "@stores/PageHeaderStore";
-import { FC, lazy, Suspense, useEffect } from "react";
+import { FC, lazy, useEffect } from "react";
 import { moduleName } from "./types/ProfileTypes";
-import { LoadingPage } from "@components/loadings/LoadingPage";
 import { Outlet, Route, Routes } from "react-router-dom";
 
 const ErrorRoutes = lazy(() => import("@modules/errors/ErrorRoutes"));
@@ -16,8 +15,7 @@ const ProfileRoutes: FC = () => {
   }, []);
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Routes>
+    <Routes>
         <Route element={<Outlet />}>
           <Route index element={<DetailProfileWrapper />} />
           <Route path="" element={<DetailProfileWrapper />} />
@@ -25,7 +23,6 @@ const ProfileRoutes: FC = () => {
         </Route>
         <Route path="*" element={<ErrorRoutes />} />
       </Routes>
-    </Suspense>
   );
 };
 

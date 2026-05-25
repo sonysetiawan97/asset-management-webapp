@@ -9,7 +9,7 @@ import { BackButton } from "@components/buttons/BackButton";
 import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const UpdatePage = () => {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ const UpdatePage = () => {
   const users = userData?.result ?? [];
 
   const isLoadingAny = categoryData === undefined || locationData === undefined || departmentData === undefined || vendorData === undefined || userData === undefined;
-  if (isLoadingAny) return <LoadingPage />;
+  if (isLoadingAny) return <ContentLoader />;
 
   const onSubmit = async (data: UpdateModel) => {
     if (!id) {

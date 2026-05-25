@@ -15,7 +15,7 @@ import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
 
 const ReadWrapper: FC = () => {
@@ -49,9 +49,9 @@ const ReadWrapper: FC = () => {
     }
   };
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
-  if (!assetsData || !usersData) return <LoadingPage />;
+  if (!assetsData || !usersData) return <ContentLoader />;
 
   return (
     <FormProvider {...methods}>

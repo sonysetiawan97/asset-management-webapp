@@ -3,7 +3,7 @@ import ListPage from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { type Model, moduleName } from "@modules/assets/types/Model";
 import { useSearch } from "@hooks/list/useSearch";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useFindAll } from "@hooks/request/useFindAll";
@@ -38,7 +38,7 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

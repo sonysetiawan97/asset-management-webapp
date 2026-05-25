@@ -4,6 +4,8 @@ import { Snackbar } from "./utils/snackbar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ModalProvider } from "@/contexts/ModalProvider";
 import { FilterProvider } from "@/contexts/FilterProvider";
+import { PaginationProvider } from "@/contexts/PaginationProvider";
+import { SearchProvider } from "@/contexts/SearchProvider";
 
 // All retry logic is handled in the axios interceptor (axiosSetup.ts).
 // React Query retries are disabled globally — HTTP status codes are
@@ -21,9 +23,13 @@ const App: FC = () => {
     <QueryClientProvider client={queryClient}>
       <ModalProvider>
         <FilterProvider>
-          <Snackbar>
-            <Outlet />
-          </Snackbar>
+          <PaginationProvider>
+            <SearchProvider>
+              <Snackbar>
+                <Outlet />
+              </Snackbar>
+            </SearchProvider>
+          </PaginationProvider>
         </FilterProvider>
       </ModalProvider>
     </QueryClientProvider>

@@ -10,7 +10,7 @@ import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "../../components/FormFields";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { type Model } from "@modules/departments/types/Model";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const UpdatePage = () => {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ const UpdatePage = () => {
     }
   };
 
-  if (isLoadingDepartments) return <LoadingPage />;
+  if (isLoadingDepartments) return <ContentLoader />;
 
   const departments = departmentsData?.result ?? [];
 

@@ -9,7 +9,7 @@ import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
 import { FormFields } from "../../components/FormFields";
 import { BackButton } from "@components/buttons/BackButton";
 import { useFindOneById } from "@hooks/request/useFindOneById";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
 import { useFindAll } from "@hooks/request/useFindAll";
 
@@ -20,7 +20,7 @@ const ReadPage: FC = () => {
   const assets = assetsData?.result ?? [];
   const users = usersData?.result ?? [];
 
-  if (!assetsData || !usersData) return <LoadingPage />;
+  if (!assetsData || !usersData) return <ContentLoader />;
 
   return (
     <form className="row g-3">
@@ -42,7 +42,7 @@ const ReadWrapper: FC = () => {
     setBreadcrumbs([{ label: "Home", path: "/" }, { label: "Checkouts", path: `/${moduleName}` }, { label: data?.asset_name ?? "Read" }]);
   }, [data, reset]);
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
 
   return (

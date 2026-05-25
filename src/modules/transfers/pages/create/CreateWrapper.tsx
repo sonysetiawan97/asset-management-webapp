@@ -12,7 +12,7 @@ import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateTransferModel>({ mode: "onBlur" });
@@ -40,7 +40,7 @@ const CreateWrapper: FC = () => {
     }
   };
 
-  if (!assets || !locations || !users) return <LoadingPage />;
+  if (!assets || !locations || !users) return <ContentLoader />;
 
   return (
     <FormProvider {...methods}>

@@ -61,6 +61,110 @@
   100% { content: ''; }
 }
 
+/* ─── Inline Page Loading (inside body container) ─── */
+.loading-inline {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--color-rgb-bg, 255 255 255), 0.7);
+  backdrop-filter: blur(2px);
+  border-radius: var(--radius-md);
+}
+
+.loading-inline__spinner {
+  width: 32px;
+  height: 32px;
+  border: 2.5px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spinOrbit 700ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* ─── Content Skeleton Loader ─── */
+.content-loader {
+  padding: var(--space-2) 0;
+}
+
+.skeleton-title {
+  height: 28px;
+  width: 220px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-button {
+  height: 36px;
+  width: 120px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+  animation-delay: 80ms;
+}
+
+.skeleton-table {
+  margin-top: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.skeleton-thead {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: #f8f9fa;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skeleton-th {
+  flex: 1;
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-th:nth-child(2) { animation-delay: 40ms; }
+.skeleton-th:nth-child(3) { animation-delay: 80ms; }
+.skeleton-th:nth-child(4) { animation-delay: 120ms; }
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  animation: skeletonSlideIn 300ms ease-out both;
+}
+
+.skeleton-row:last-child { border-bottom: none; }
+
+.skeleton-row > span {
+  flex: 1;
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-row > span:nth-child(2) { animation-delay: 60ms; }
+.skeleton-row > span:nth-child(3) { animation-delay: 120ms; }
+.skeleton-row > span:nth-child(4) { animation-delay: 180ms; }
+
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+@keyframes skeletonSlideIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── Date Input Polish ─── */
 .date-input input::-webkit-calendar-picker-indicator {
   opacity: 0.5;

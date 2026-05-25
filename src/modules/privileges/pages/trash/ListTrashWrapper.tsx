@@ -1,7 +1,7 @@
 import { useEffect, type FC } from "react";
 import { useList } from "@hooks/list/useList";
 import { useSearch } from "@hooks/list/useSearch";
-import { LoadingPage } from "@/components/loadings/LoadingPage";
+import { ContentLoader } from "@components/loadings/ContentLoader";
 import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { Model, moduleName } from "@modules/privileges/types/Model";
@@ -29,7 +29,7 @@ export const ListTrashWrapper: FC = () => {
     ]);
   }, []);
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
