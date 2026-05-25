@@ -27,10 +27,14 @@ export interface TransferRequest {
 
 export interface CreateTransferModel {
   asset_id: string;
+  from_location_id: string;
   to_location_id: string;
+  from_custodian_id?: string;
   to_custodian_id?: string;
   reason: string;
 }
+
+export interface UpdateTransferModel extends CreateTransferModel {}
 
 export interface ReadTransferModel extends TransferRequest {}
 

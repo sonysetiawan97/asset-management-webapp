@@ -14,7 +14,6 @@ interface FormFieldsProps {
   categories: { id: string; name: string; useful_life_years: number; salvage_value_pct: number }[];
   locations: { id: string; name: string }[];
   departments: { id: string; name: string }[];
-  vendors: { id: string; name: string }[];
   users: { id: string; name: string }[];
 }
 
@@ -23,7 +22,6 @@ export const FormFields = ({
   categories,
   locations,
   departments,
-  vendors,
   users,
 }: FormFieldsProps) => {
   const { t } = useTranslation();
@@ -43,7 +41,6 @@ export const FormFields = ({
   const categoryOptions = categories.map((c) => ({ value: c.id, label: c.name }));
   const locationOptions = [{ value: "", label: "-- No Location --" }, ...locations.map((l) => ({ value: l.id, label: l.name }))];
   const departmentOptions = [{ value: "", label: "-- Select Department --" }, ...departments.map((d) => ({ value: d.id, label: d.name }))];
-  const vendorOptions = [{ value: "", label: "-- No Vendor --" }, ...vendors.map((v) => ({ value: v.id, label: v.name }))];
   const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: u.id, label: u.name }))];
   const conditionOptions = ASSET_CONDITIONS.map((c) => ({ value: c.value, label: c.label }));
 
@@ -99,14 +96,6 @@ export const FormFields = ({
               options={departmentOptions}
               readOnly={readOnly}
               required={true}
-            />
-          </div>
-          <div className="col-12 col-md-4">
-            <SelectInput
-              name="vendor_id"
-              label={t("modules.assets.create.form.vendor")}
-              options={vendorOptions}
-              readOnly={readOnly}
             />
           </div>
           <div className="col-12 col-md-4">

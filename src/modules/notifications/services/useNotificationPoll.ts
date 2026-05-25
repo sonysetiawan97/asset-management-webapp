@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useList } from "@hooks/list/useList";
-import { useUpdate } from "@hooks/request/useUpdate";
+import { usePartialUpdate } from "@hooks/request/usePartialUpdate";
+import { useMutation } from "@tanstack/react-query";
+import { apiAxios } from "@/utils/apiAxios";
 import { type Notification, moduleName } from "../types/Model";
 
 export const useNotificationPoll = () => {
@@ -9,26 +11,28 @@ export const useNotificationPoll = () => {
     module: moduleName,
     skip: 0,
     limit: 1,
-    params: { "!sort[created_at]": -1, is_read: false },
+    params: { read: "false" },
   });
 
   useEffect(() => {
-    setUnreadCount(data?.data.count ?? 0);
+    setUnreadCount(data?.data?.count ?? 0);
   }, [data]);
 
   return unreadCount;
 };
 
 export const useMarkAllRead = () => {
-  const { updateAsync } = useUpdate<Record<string, never>>();
-  return useCallback(async () => {
-    await updateAsync({ id: "read-all", url: `${moduleName}/read-all`, body: {} });
-  }, [updateAsync]);
+  const markAllRead = useMutation({
+    mutationFn: async () => {
+      await apiAxios.patch(`/${moduleName}/mark-all-read`);
+    },
+  });
+  return markAllRead.mutateAsync;
 };
 
 export const useMarkRead = () => {
-  const { updateAsync } = useUpdate<Record<string, never>>();
+  const { partialUpdate } = usePartialUpdate<Record<string, never>>(moduleName);
   return useCallback(async (id: string) => {
-    await updateAsync({ id, url: `${moduleName}/${id}/read`, body: {} });
-  }, [updateAsync]);
+    await partialUpdate({ url: moduleName, id, body: {} });
+  }, [partialUpdate]);
 };

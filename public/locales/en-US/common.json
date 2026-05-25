@@ -38,7 +38,8 @@
     "restore": "Restore",
     "remove": "Remove",
     "change_password": "Change password",
-    "edit_profile" : "Edit profile"
+    "edit_profile": "Edit profile",
+    "checkout": "Checkout Asset"
   },
   "modal": {
     "confirmation": {
@@ -616,7 +617,10 @@
         "assigned_to": "Assigned To",
         "checked_out": "Checked Out",
         "expected_return": "Expected Return",
-        "returned_on": "Returned On"
+        "returned_on": "Returned On",
+        "checked_out_on": "Checked Out On",
+        "btn_view": "View",
+        "btn_check_in": "Check In"
       },
       "create": {
         "title": "Check Out Asset",
@@ -628,12 +632,22 @@
           "return_date": "Return Date",
           "notes": "Notes"
         },
-        "notification": { "success": "Asset checked out successfully.", "error": "Oops, failed to save." }
+        "notification": {
+          "success": "Asset checked out successfully.",
+          "error": "Oops, failed to save."
+        }
       },
-      "read": { "title": "Checkout Detail" },
+      "read": {
+        "title": "Checkout Detail"
+      },
       "update": {
         "title": "Check In Asset",
-        "notification": { "success": "Asset checked in successfully.", "error": "Oops, failed to save." }
+        "notification": {
+          "success": "Asset checked in successfully.",
+          "error": "Oops, failed to save."
+        },
+        "alert_returned": "Already Returned",
+        "label_notes": "Notes"
       }
     },
     "transfers": {
@@ -652,9 +666,14 @@
           "to_custodian": "To Custodian",
           "reason": "Reason"
         },
-        "notification": { "success": "Transfer request submitted.", "error": "Oops, failed to save." }
+        "notification": {
+          "success": "Transfer request submitted.",
+          "error": "Oops, failed to save."
+        }
       },
-      "read": { "title": "Transfer Detail" }
+      "read": {
+        "title": "Transfer Detail"
+      }
     },
     "maintenance": {
       "list": {
@@ -678,12 +697,20 @@
           "cost": "Cost",
           "next_maintenance": "Next Maintenance Date"
         },
-        "notification": { "success": "Maintenance logged.", "error": "Oops, failed to save." }
+        "notification": {
+          "success": "Maintenance logged.",
+          "error": "Oops, failed to save."
+        }
       },
-      "read": { "title": "Maintenance Detail" },
+      "read": {
+        "title": "Maintenance Detail"
+      },
       "update": {
         "title": "Complete Maintenance",
-        "notification": { "success": "Maintenance completed.", "error": "Oops, failed to save." }
+        "notification": {
+          "success": "Maintenance completed.",
+          "error": "Oops, failed to save."
+        }
       }
     },
     "notifications": {
@@ -726,9 +753,14 @@
           "transaction_date": "Transaction Date",
           "certificate_ref": "Certificate Ref"
         },
-        "notification": { "success": "Disposal request submitted.", "error": "Oops, failed to save." }
+        "notification": {
+          "success": "Disposal request submitted.",
+          "error": "Oops, failed to save."
+        }
       },
-      "read": { "title": "Disposal Detail" }
+      "read": {
+        "title": "Disposal Detail"
+      }
     },
     "audit": {
       "list": {

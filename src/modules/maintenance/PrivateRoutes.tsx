@@ -18,6 +18,7 @@ const PrivateRoutes: FC = () => {
           <Route path="/create" element={<CreateWrapper />} />
           <Route path="/:id" element={<ReadWrapper />} />
           <Route path="/:id/update" element={<UpdateWrapper />} />
+          <Route path="/:id/update" element={<UpdateWrapper />} />
         </Route>
         <Route path="*" element={<ErrorRoutes />} />
       </Routes>

@@ -1,5 +1,6 @@
 import { type FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { moduleName, type CreateTransferModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";
@@ -16,8 +17,9 @@ import { ContentLoader } from "@components/loadings/ContentLoader";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateTransferModel>({ mode: "onBlur" });
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { isLoading } = useCreate<CreateTransferModel>(moduleName);
+  const { createAsync, isLoading } = useCreate<CreateTransferModel>(moduleName);
   const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
   const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
@@ -33,7 +35,10 @@ const CreateWrapper: FC = () => {
 
   const onSubmit = async (data: CreateTransferModel) => {
     try {
-      console.log("Transfer:", data);
+      await createAsync({ url: moduleName, body: data });
+      enqueueSnackbar(t("modules.transfers.create.notification.success"), { variant: "success" });
+      methods.reset();
+      navigate(`/${moduleName}`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
       enqueueSnackbar(message, { variant: "error" });

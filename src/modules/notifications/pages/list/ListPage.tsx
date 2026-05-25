@@ -9,6 +9,9 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useEffect, useState } from "react";
 
 interface ListProps {
+  data: Notification[];
+  count: number;
+  isLoading: boolean;
   filterRead?: boolean;
 }
 
@@ -36,15 +39,17 @@ export const List: FC<ListProps> = ({ filterRead }) => {
   );
 
   const params = activeTab === "unread"
-    ? { "!sort[created_at]": -1, is_read: false }
-    : { "!sort[created_at]": -1, is_read: activeTab === "read" ? true : undefined };
+    ? { read: "false" }
+    : activeTab === "read"
+    ? { read: "true" }
+    : {};
 
   const { data, isLoading, error } = useList<Notification>({
     module: moduleName, skip, limit, params,
   });
 
-  const allNotifications = data?.data.result || [];
-  const totalCount = data?.data.count || 0;
+  const allNotifications = data?.data?.result || [];
+  const totalCount = data?.data?.count || 0;
   const unreadCount = allNotifications.filter((n) => !n.is_read).length;
 
   useEffect(() => {

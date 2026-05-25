@@ -38,7 +38,8 @@
     "restore": "Pulihkan",
     "remove": "Menghapus",
     "change_password": "Ubah password",
-    "edit_profile" : "Ubah profil"
+    "edit_profile": "Ubah profil",
+    "checkout": "Checkout Asset"
   },
   "modal": {
     "confirmation": {
@@ -178,7 +179,7 @@
         }
       }
     },
-   "examples": {
+    "examples": {
       "list": {
         "title": "List Examples"
       },
@@ -566,7 +567,10 @@
         "assigned_to": "Ditugaskan Ke",
         "checked_out": "Di-check-out",
         "expected_return": "Tgl Kembali Rencana",
-        "returned_on": "Dikembalikan Pada"
+        "returned_on": "Tgl Dikembalikan",
+        "checked_out_on": "Tgl Checkout",
+        "btn_view": "Lihat",
+        "btn_check_in": "Check In"
       },
       "create": {
         "title": "Check Out Aset",
@@ -578,12 +582,22 @@
           "return_date": "Tgl Kembali",
           "notes": "Catatan"
         },
-        "notification": { "success": "Aset berhasil di-check-out.", "error": "Oops, gagal menyimpan." }
+        "notification": {
+          "success": "Aset berhasil di-check-out.",
+          "error": "Oops, gagal menyimpan."
+        }
       },
-      "read": { "title": "Detail Check-out" },
+      "read": {
+        "title": "Detail Check-out"
+      },
       "update": {
         "title": "Check In Aset",
-        "notification": { "success": "Aset berhasil di-check-in.", "error": "Oops, gagal menyimpan." }
+        "notification": {
+          "success": "Aset berhasil di-check-in.",
+          "error": "Oops, gagal menyimpan."
+        },
+        "alert_returned": "Sudah Dikembalikan",
+        "label_notes": "Catatan"
       }
     },
     "transfers": {
@@ -602,9 +616,14 @@
           "to_custodian": "Ke Penanggung Jawab",
           "reason": "Alasan"
         },
-        "notification": { "success": "Permintaan transfer diajukan.", "error": "Oops, gagal menyimpan." }
+        "notification": {
+          "success": "Permintaan transfer diajukan.",
+          "error": "Oops, gagal menyimpan."
+        }
       },
-      "read": { "title": "Detail Transfer" }
+      "read": {
+        "title": "Detail Transfer"
+      }
     },
     "maintenance": {
       "list": {
@@ -628,12 +647,20 @@
           "cost": "Biaya",
           "next_maintenance": "Tgl Perawatan Berikutnya"
         },
-        "notification": { "success": "Perawatan berhasil dicatat.", "error": "Oops, gagal menyimpan." }
+        "notification": {
+          "success": "Perawatan berhasil dicatat.",
+          "error": "Oops, gagal menyimpan."
+        }
       },
-      "read": { "title": "Detail Perawatan" },
+      "read": {
+        "title": "Detail Perawatan"
+      },
       "update": {
         "title": "Selesaikan Perawatan",
-        "notification": { "success": "Perawatan selesai.", "error": "Oops, gagal menyimpan." }
+        "notification": {
+          "success": "Perawatan selesai.",
+          "error": "Oops, gagal menyimpan."
+        }
       }
     },
     "notifications": {
@@ -650,7 +677,9 @@
       }
     },
     "reports": {
-      "inventory": { "title": "Laporan Inventaris" },
+      "inventory": {
+        "title": "Laporan Inventaris"
+      },
       "export_csv": "Ekspor CSV"
     },
     "disposals": {
@@ -674,9 +703,14 @@
           "transaction_date": "Tgl Transaksi",
           "certificate_ref": "Ref Sertifikat"
         },
-        "notification": { "success": "Permintaan pelepasan diajukan.", "error": "Oops, gagal menyimpan." }
+        "notification": {
+          "success": "Permintaan pelepasan diajukan.",
+          "error": "Oops, gagal menyimpan."
+        }
       },
-      "read": { "title": "Detail Pelepasan" }
+      "read": {
+        "title": "Detail Pelepasan"
+      }
     },
     "audit": {
       "list": {

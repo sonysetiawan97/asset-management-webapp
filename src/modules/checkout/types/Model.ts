@@ -1,4 +1,4 @@
-export const moduleName = "checkout";
+export const moduleName = "checkouts";
 
 export type CheckoutCondition = "new" | "good" | "fair" | "poor";
 

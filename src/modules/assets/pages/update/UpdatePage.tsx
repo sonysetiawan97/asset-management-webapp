@@ -22,16 +22,14 @@ const UpdatePage = () => {
   const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
   const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: vendorData } = useFindAll<{ id: string; name: string }>("vendors", "vendors");
   const { data: userData } = useFindAll<{ id: string; name: string }>("users", "users");
 
   const categories = categoryData?.result ?? [];
   const locations = locationData?.result ?? [];
   const departments = departmentData?.result ?? [];
-  const vendors = vendorData?.result ?? [];
   const users = userData?.result ?? [];
 
-  const isLoadingAny = categoryData === undefined || locationData === undefined || departmentData === undefined || vendorData === undefined || userData === undefined;
+  const isLoadingAny = categoryData === undefined || locationData === undefined || departmentData === undefined || userData === undefined;
   if (isLoadingAny) return <ContentLoader />;
 
   const onSubmit = async (data: UpdateModel) => {
@@ -56,7 +54,6 @@ const UpdatePage = () => {
           categories={categories}
           locations={locations}
           departments={departments}
-          vendors={vendors}
           users={users}
         />
       </div>

@@ -30,11 +30,28 @@ export const FormFields = ({ readOnly = false, assets, locations, users }: FormF
         </div>
         <div className="col-12 col-md-6">
           <SelectInput
+            name="from_location_id"
+            label={t("modules.transfers.create.form.from_location")}
+            options={locationOptions}
+            readOnly={readOnly}
+            required={true}
+          />
+        </div>
+        <div className="col-12 col-md-6">
+          <SelectInput
             name="to_location_id"
             label={t("modules.transfers.create.form.to_location")}
             options={locationOptions}
             readOnly={readOnly}
             required={true}
+          />
+        </div>
+        <div className="col-12 col-md-6">
+          <SelectInput
+            name="from_custodian_id"
+            label={t("modules.transfers.create.form.from_custodian")}
+            options={userOptions}
+            readOnly={readOnly}
           />
         </div>
         <div className="col-12 col-md-6">
