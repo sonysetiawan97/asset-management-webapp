@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 import { getRefreshToken } from "../modules/auth/stores/authStores";
+import { authAxios } from "./authAxios";
 
 const { VITE_API_BASE_URL, VITE_API_AUTH_URL, VITE_API_TIMEOUT } = import.meta.env;
 
@@ -15,10 +16,10 @@ const refreshAccessToken = async (): Promise<boolean> => {
   refreshPromise = (async () => {
     try {
       const storedRefreshToken = getRefreshToken();
-      const { data } = await axios.post(
-        `${VITE_API_AUTH_URL}/auth/refresh`,
+      const { data } = await authAxios.post(
+        "/auth/refresh",
         {},
-        { withCredentials: true, headers: { Authorization: `Bearer ${storedRefreshToken}` } },
+        { headers: { Authorization: `Bearer ${storedRefreshToken}` } },
       );
       localStorage.setItem("accessToken", data.access_token);
       localStorage.setItem("refreshToken", data.refresh_token);
