@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 
-const formatCurrency = (v?: number) => v === undefined || v === null ? "—" : new Intl.NumberFormat("en-US", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(v);
+const formatCurrency = (v?: number) => v === undefined || v === null || !isFinite(v) ? "—" : new Intl.NumberFormat("en-US", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(v);
 const formatDate = (d?: string) => d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
 
 export const InventoryReport: FC = () => {
@@ -20,8 +20,8 @@ export const InventoryReport: FC = () => {
 
   const assets = data?.data.result || [];
   const total = assets.length;
-  const totalPurchase = assets.reduce((acc: number, a: any) => acc + (a.purchase_price || 0), 0);
-  const totalBook = assets.reduce((acc: number, a: any) => acc + (a.book_value || 0), 0);
+  const totalPurchase = assets.reduce((acc: number, a: any) => acc + Number(a.purchase_price), 0);
+  const totalBook = assets.reduce((acc: number, a: any) => acc + Number(a.book_value), 0);
 
   return (
     <div className="report-container">

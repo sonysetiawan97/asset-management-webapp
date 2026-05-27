@@ -2,10 +2,17 @@ import { type FC } from "react";
 import { moduleName, type TransferRequest } from "../../types/Model";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
+import { usePagination } from "@hooks/list/usePagination";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 
 export const ListWrapper: FC = () => {
-  const { data, isLoading } = useList<TransferRequest>({ module: moduleName });
+  const { skip, limit } = usePagination();
+  const { data, isLoading } = useList<TransferRequest>({
+    module: moduleName,
+    skip,
+    limit,
+    params: {},
+  });
 
   if (isLoading) return <ContentLoader />;
 

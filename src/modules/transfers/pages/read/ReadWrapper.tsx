@@ -16,7 +16,7 @@ import { FormFields } from "../../components/FormFields";
 const ReadPage: FC = () => {
   const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
   const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "locations");
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: usersData } = useFindAll<{ id: number; first_name: string; last_name: string }>("users", "users");
 
   const assets = assetsData?.result ?? [];
   const locations = locationsData?.result ?? [];

@@ -656,13 +656,19 @@
         "total_transfers": "Total Transfers",
         "filter_by_status": "Filter by status",
         "empty": "No transfer requests yet.",
-        "requested_by": "Requested By"
+        "requested_by": "Requested By",
+        "notification": {
+          "approved": "Transfer approved.",
+          "rejected": "Transfer rejected."
+        }
       },
       "create": {
         "title": "Initiate Transfer",
         "form": {
           "asset": "Asset",
+          "from_location": "From Location",
           "to_location": "To Location",
+          "from_custodian": "From Custodian",
           "to_custodian": "To Custodian",
           "reason": "Reason"
         },

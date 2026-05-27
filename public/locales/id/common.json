@@ -606,13 +606,19 @@
         "total_transfers": "Total Transfer",
         "filter_by_status": "Filter berdasarkan status",
         "empty": "Belum ada permintaan transfer.",
-        "requested_by": "Diminta Oleh"
+        "requested_by": "Diminta Oleh",
+        "notification": {
+          "approved": "Transfer disetujui.",
+          "rejected": "Transfer ditolak."
+        }
       },
       "create": {
         "title": "Mulai Transfer",
         "form": {
           "asset": "Aset",
+          "from_location": "Dari Lokasi",
           "to_location": "Ke Lokasi",
+          "from_custodian": "Dari Penanggung Jawab",
           "to_custodian": "Ke Penanggung Jawab",
           "reason": "Alasan"
         },

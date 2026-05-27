@@ -6,7 +6,7 @@ interface FormFieldsProps {
   readOnly?: boolean;
   assets: { id: string; name: string; asset_code: string }[];
   locations: { id: string; name: string }[];
-  users: { id: string; name: string }[];
+  users: { id: number; first_name: string; last_name: string }[];
 }
 
 export const FormFields = ({ readOnly = false, assets, locations, users }: FormFieldsProps) => {
@@ -14,7 +14,7 @@ export const FormFields = ({ readOnly = false, assets, locations, users }: FormF
 
   const assetOptions = assets.map((a) => ({ value: a.id, label: `${a.name} (${a.asset_code})` }));
   const locationOptions = locations.map((l) => ({ value: l.id, label: l.name }));
-  const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: u.id, label: u.name }))];
+  const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: String(u.id), label: `${u.first_name} ${u.last_name}`.trim() }))];
 
   return (
     <>

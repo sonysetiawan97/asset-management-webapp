@@ -1,8 +1,12 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiAxios } from "@/utils/apiAxios";
 import { moduleName, type TransferRequest, TRANSFER_STATUSES } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { useSnackbar } from "notistack";
+import type { AxiosError } from "axios";
 
 interface ListProps {
   data: TransferRequest[];
@@ -15,14 +19,41 @@ const formatDate = (dateStr: string | undefined) => {
   return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 };
 
-export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
+export const List: FC<ListProps> = ({ data, count }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+  const [selectedStatus, setSelectedStatus] = useState<string>("all");
+
+  const workflowMutation = useMutation({
+    mutationFn: ({ id, action }: { id: string; action: "approve" | "reject" }) =>
+      apiAxios.patch(`${moduleName}/${id}/${action}`),
+    onSuccess: (_, { action }) => {
+      queryClient.invalidateQueries({ queryKey: [moduleName] });
+      enqueueSnackbar(
+        action === "approve"
+          ? t("modules.transfers.list.notification.approved")
+          : t("modules.transfers.list.notification.rejected"),
+        { variant: "success" }
+      );
+    },
+    onError: (error: unknown) => {
+      const { message } = error as AxiosError;
+      enqueueSnackbar(message, { variant: "error" });
+    },
+  });
+
+  const handleApprove = (id: string) => workflowMutation.mutate({ id, action: "approve" });
+  const handleReject = (id: string) => workflowMutation.mutate({ id, action: "reject" });
 
   const statusCounts = TRANSFER_STATUSES.map((s) => ({
     ...s,
     count: data.filter((r) => r.status === s.value).length,
   }));
+
+  const filteredData =
+    selectedStatus === "all" ? data : data.filter((r) => r.status === selectedStatus);
 
   return (
     <div className="module-list-container">
@@ -44,8 +75,18 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
       <div className="status-filter-bar">
         <span className="status-filter-bar__label">{t("modules.transfers.list.filter_by_status")}</span>
         <div className="status-filter-bar__chips">
+          <button
+            className={`status-chip ${selectedStatus === "all" ? "active" : ""}`}
+            onClick={() => { setSelectedStatus("all"); setSkip(0); }}
+          >
+            <span className="status-chip__label">All</span>
+          </button>
           {statusCounts.map((s) => (
-            <button key={s.value} className="status-chip">
+            <button
+              key={s.value}
+              className={`status-chip ${selectedStatus === s.value ? "active" : ""}`}
+              onClick={() => { setSelectedStatus(s.value); setSkip(0); }}
+            >
               <span className="status-chip__dot" style={{ background: s.dot }} />
               <span className="status-chip__label">{s.label}</span>
               <span className="status-chip__count">{s.count}</span>
@@ -72,7 +113,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
 
       {/* Cards */}
       <div className="workflow-grid animate-fade-slide-up">
-        {data.length === 0 ? (
+        {filteredData.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
               <svg width="48" height="48" viewBox="0 -960 960 960" fill="#d1d5db">
@@ -82,7 +123,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
             <p className="empty-state__text">{t("modules.transfers.list.empty")}</p>
           </div>
         ) : (
-          data.map((transfer, index) => {
+          filteredData.map((transfer, index) => {
             const statusMeta = TRANSFER_STATUSES.find((s) => s.value === transfer.status);
             return (
               <div key={transfer.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
@@ -101,19 +142,19 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
 
                   <div className="transfer-route">
                     <div className="transfer-route__from">
-                      <svg width="12" height="12" viewBox="0 -960 960" fill="#ef4444">
+                      <svg width="12" height="12" viewBox="0 -960 960 960" fill="#ef4444">
                         <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
                       </svg>
                       <span>{transfer.from_location_name ?? "—"}</span>
                       {transfer.from_custodian_name && <small>{transfer.from_custodian_name}</small>}
                     </div>
                     <div className="transfer-route__arrow">
-                      <svg width="16" height="16" viewBox="0 -960 960" fill="currentColor">
+                      <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
                         <path d="m424-296-56-56 120-120H120v-80h312L368-712l56-56 184 184-184 184Z" />
                       </svg>
                     </div>
                     <div className="transfer-route__to">
-                      <svg width="12" height="12" viewBox="0 -960 960" fill="#10b981">
+                      <svg width="12" height="12" viewBox="0 -960 960 960" fill="#10b981">
                         <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
                       </svg>
                       <span>{transfer.to_location_name ?? "—"}</span>
@@ -135,11 +176,21 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
                   <div className="workflow-actions">
                     {transfer.status === "pending" && (
                       <>
-                        <button className="btn-action btn-action--success" title="Approve" onClick={() => {}}>
-                          <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d="M382-202 144-440l56-56 182 182 350-350 56 56-406 406Z" /></svg>
+                        <button
+                          className="btn-action btn-action--success"
+                          title="Approve"
+                          onClick={() => handleApprove(transfer.id)}
+                          disabled={workflowMutation.isPending}
+                        >
+                          <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d={"M382-202 144-440l56-56 182 182 350-350 56 56-406 406Z"} /></svg>
                         </button>
-                        <button className="btn-action btn-action--danger" title="Reject" onClick={() => {}}>
-                          <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d="M336-285 168-453l56-56 168 168 168-168 56 56-168 168 168 168-56 56-168-168-168 168-56-56 168-168Z" /></svg>
+                        <button
+                          className="btn-action btn-action--danger"
+                          title="Reject"
+                          onClick={() => handleReject(transfer.id)}
+                          disabled={workflowMutation.isPending}
+                        >
+                          <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d={"M336-285 168-453l56-56 168 168 168-168 56 56-168 168 168 168-56 56-168-168-168 168-56-56 168-168Z"} /></svg>
                         </button>
                       </>
                     )}
