@@ -85,7 +85,8 @@
         "reports": "reports",
         "disposals": "disposals",
         "audit_trail": "audit trail",
-        "notifications": "notifications"
+        "notifications": "notifications",
+        "scan": "scan"
       }
     },
     "base": {
@@ -733,6 +734,38 @@
         "tab_all": "All",
         "tab_unread": "Unread",
         "tab_read": "Read"
+      }
+    },
+    "scan": {
+      "list": {
+        "title": "QR Scanner",
+        "breadcrumb": "QR Scanner",
+        "scanner_title": "Scan QR Code",
+        "start_scan": "Start Camera",
+        "stop_scan": "Stop Camera",
+        "scanning": "Scanning...",
+        "scanner_placeholder": "Tap Start Camera to begin scanning",
+        "manual_fallback": "Or enter asset code manually",
+        "manual_placeholder": "Asset code...",
+        "lookup": "Lookup",
+        "result_title": "Asset Information",
+        "result_empty": "No asset scanned yet",
+        "result_empty_hint": "Scan a QR code or enter an asset code above",
+        "scan_again": "Scan Another Asset",
+        "view_asset": "View Asset",
+        "edit_asset": "Edit Asset",
+        "label_asset_code": "Asset Code",
+        "label_serial": "Serial Number",
+        "label_category": "Category",
+        "label_location": "Location",
+        "label_department": "Department",
+        "label_custodian": "Custodian",
+        "label_purchase_date": "Purchase Date",
+        "label_purchase_price": "Purchase Price",
+        "label_notes": "Notes",
+        "error_not_found": "Asset not found",
+        "error_generic": "Failed to lookup asset",
+        "camera_permission_denied": "Camera permission denied. Please allow camera access to use QR scanning."
       }
     },
     "reports": {

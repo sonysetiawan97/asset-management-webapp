@@ -1542,3 +1542,76 @@
 .method-badge--scrapped { background: #f3f4f6; color: #374151; }
 .method-badge--donated { background: #fef3c7; color: #78350f; }
 .method-badge--recycled { background: #d1fae5; color: #065f46; }
+
+/* ─── QR Scanner Module ─── */
+.module-scan-container { }
+
+/* Scanner viewport */
+.scanner-viewport {
+  width: 280px;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  position: relative;
+}
+
+.scanner-viewport #scan-reader {
+  width: 100%;
+  height: 100%;
+}
+
+.scanner-viewport #scan-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* Scanner placeholder */
+.scanner-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+/* Scanner overlay corners */
+.scanner-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scanner-line {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0d6efd, transparent);
+  top: 50%;
+  animation: scan-line 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.6);
+}
+
+@keyframes scan-line {
+  0%, 100% { top: 20%; opacity: 0.5; }
+  50% { top: 80%; opacity: 1; }
+}
+
+/* Asset detail table in scanner result */
+.asset-detail-table th {
+  color: #6c757d;
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.asset-detail-table td {
+  font-size: 0.8125rem;
+}
+
+/* Manual input section */
+.manual-input-section {}
+
+.manual-input-section input::placeholder {
+  color: #adb5bd;
+}

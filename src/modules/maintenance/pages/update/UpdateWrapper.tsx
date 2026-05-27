@@ -51,10 +51,11 @@ const UpdateWrapper: FC = () => {
       enqueueSnackbar(t("common.form.error.id_required"), { variant: "error" });
       return;
     }
+    if (!data) return;
     try {
       const payload = {
         ...formData,
-        performed_by: data.performed_by ? String(data.performed_by) : undefined,
+        performed_by: String(data.performed_by),
       };
       await updateAsync({ id, url: moduleName, body: payload });
       enqueueSnackbar(t("modules.maintenance.update.notification.success"), { variant: "success" });
@@ -67,7 +68,6 @@ const UpdateWrapper: FC = () => {
 
   if (isLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
-  if (!assetsData || !usersData) return <ContentLoader />;
 
   return (
     <FormProvider {...methods}>

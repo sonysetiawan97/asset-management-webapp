@@ -3,7 +3,7 @@ import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 import { getRefreshToken } from "../modules/auth/stores/authStores";
 import { authAxios } from "./authAxios";
 
-const { VITE_API_BASE_URL, VITE_API_AUTH_URL, VITE_API_TIMEOUT } = import.meta.env;
+const { VITE_API_BASE_URL, VITE_API_TIMEOUT } = import.meta.env;
 
 // Shared refresh promise — prevents concurrent refresh calls from racing.
 let refreshPromise: Promise<boolean> | null = null;

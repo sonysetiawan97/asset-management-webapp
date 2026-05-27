@@ -85,7 +85,8 @@
         "reports": "Laporan",
         "disposals": "Pelepasan",
         "audit_trail": "Riwayat Audit",
-        "notifications": "Notifikasi"
+        "notifications": "Notifikasi",
+        "scan": "Pemindai"
       }
     },
     "base": {
@@ -683,6 +684,38 @@
         "tab_all": "Semua",
         "tab_unread": "Belum Baca",
         "tab_read": "Dibaca"
+      }
+    },
+    "scan": {
+      "list": {
+        "title": "Pemindai QR",
+        "breadcrumb": "Pemindai QR",
+        "scanner_title": "Pindai Kode QR",
+        "start_scan": "Mulai Kamera",
+        "stop_scan": "Hentikan Kamera",
+        "scanning": "Memindai...",
+        "scanner_placeholder": "Ketuk Mulai Kamera untuk memindai",
+        "manual_fallback": "Atau masukkan kode aset secara manual",
+        "manual_placeholder": "Kode aset...",
+        "lookup": "Cari",
+        "result_title": "Informasi Aset",
+        "result_empty": "Belum ada aset yang dipindai",
+        "result_empty_hint": "Pindai kode QR atau masukkan kode aset di atas",
+        "scan_again": "Pindai Aset Lain",
+        "view_asset": "Lihat Aset",
+        "edit_asset": "Edit Aset",
+        "label_asset_code": "Kode Aset",
+        "label_serial": "Nomor Seri",
+        "label_category": "Kategori",
+        "label_location": "Lokasi",
+        "label_department": "Departemen",
+        "label_custodian": "Penanggung Jawab",
+        "label_purchase_date": "Tanggal Pembelian",
+        "label_purchase_price": "Harga Pembelian",
+        "label_notes": "Catatan",
+        "error_not_found": "Aset tidak ditemukan",
+        "error_generic": "Gagal mencari aset",
+        "camera_permission_denied": "Izin kamera ditolak. Izinkan akses kamera untuk menggunakan pemindaian QR."
       }
     },
     "reports": {

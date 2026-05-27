@@ -3,7 +3,6 @@ import SelectInput from "@components/form/select/SelectInput";
 import { DateInput } from "@components/form/inputs/DateInput";
 import { NumberInput } from "@components/form/inputs/NumberInput";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
-import { MultipleUploadFile } from "@components/form/fileupload/MultipleUploadFile";
 import { MAINTENANCE_TYPES } from "@modules/maintenance/types/Model";
 
 interface FormFieldsProps {

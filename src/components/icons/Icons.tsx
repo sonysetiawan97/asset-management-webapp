@@ -124,6 +124,13 @@ export const DepartmentsIcon: FC<IconProps> = ({ size = 20, className }) => (
   </svg>
 );
 
+// Scan / QR Scanner
+export const ScanIcon: FC<IconProps> = ({ size = 20, className }) => (
+  <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>
+    <path d="M240-240v-120h120v120H240Zm160 0v-120h120v120H400Zm160 0v-120h120v120H560Zm160 0v-480h120v120H720v360h-60Zm0-480v120H560v-120h360Zm0 0v120H560V-720h360Z" />
+  </svg>
+);
+
 // Plus (Create button)
 export const PlusIcon: FC<IconProps> = ({ size = 16, className }) => (
   <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>
