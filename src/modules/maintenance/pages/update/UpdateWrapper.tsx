@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { moduleName, type ReadMaintenanceModel, type CompleteMaintenanceModel } from "../../types/Model";
+import { moduleName, type ReadMaintenanceModel, type UpdateMaintenanceModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
@@ -21,25 +21,42 @@ const UpdateWrapper: FC = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data, error, isLoading } = useFindOneById<ReadMaintenanceModel>(moduleName, id);
-  const methods = useForm<CompleteMaintenanceModel>({ mode: "onBlur" });
+  const methods = useForm<UpdateMaintenanceModel>({ mode: "onBlur" });
   const { reset } = methods;
-  const { updateAsync, isLoading: isUpdating } = useUpdate<CompleteMaintenanceModel>();
+  const { updateAsync, isLoading: isUpdating } = useUpdate<UpdateMaintenanceModel>();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: usersData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
 
   const assets = assetsData?.result ?? [];
   const users = usersData?.result ?? [];
 
   useEffect(() => {
-    if (data) reset(data);
+    if (!data || !users.length) return;
+    reset({
+      asset_id: data.asset_id,
+      type: data.type,
+      date_performed: data.date_performed,
+      performed_by: data.performed_by ? String(data.performed_by) : undefined,
+      description: data.description,
+      cost: data.cost,
+      next_maintenance_date: data.next_maintenance_date,
+    });
     setBreadcrumbs([{ label: "Home", path: "/" }, { label: "Maintenance", path: `/${moduleName}` }, { label: data?.asset_name ?? "Complete" }]);
-  }, [data, reset]);
+  }, [data, users.length, reset]);
 
-  const onSubmit = async (formData: CompleteMaintenanceModel) => {
+  const onSubmit = async (formData: UpdateMaintenanceModel) => {
+    if (!id) {
+      enqueueSnackbar(t("common.form.error.id_required"), { variant: "error" });
+      return;
+    }
     try {
-      await updateAsync({ id: id!, url: moduleName, body: formData });
+      const payload = {
+        ...formData,
+        performed_by: data.performed_by ? String(data.performed_by) : undefined,
+      };
+      await updateAsync({ id, url: moduleName, body: payload });
       enqueueSnackbar(t("modules.maintenance.update.notification.success"), { variant: "success" });
       navigate(`/${moduleName}`);
     } catch (error: unknown) {
@@ -60,7 +77,7 @@ const UpdateWrapper: FC = () => {
         </svg>
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="col-12"><FormFields assets={assets} users={users} /></div>
+        <div className="col-12"><FormFields readOnly assets={assets} users={users} /></div>
         <div className="col-12">
           <div className="d-flex gap-2">
             <BackButton />

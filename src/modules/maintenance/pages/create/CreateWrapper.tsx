@@ -13,13 +13,15 @@ import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { ContentLoader } from "@components/loadings/ContentLoader";
+import { useNavigate } from "react-router-dom";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateMaintenanceModel>({ mode: "onBlur" });
   const { t } = useTranslation();
-  const { isLoading } = useCreate<CreateMaintenanceModel>(moduleName);
+  const { createAsync, isLoading } = useCreate<CreateMaintenanceModel>(moduleName);
+  const navigate = useNavigate();
   const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: usersData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
 
   const assets = assetsData?.result ?? [];
   const users = usersData?.result ?? [];
@@ -32,7 +34,10 @@ const CreateWrapper: FC = () => {
 
   const onSubmit = async (data: CreateMaintenanceModel) => {
     try {
-      console.log("Maintenance:", data);
+      const payload = { ...data, performed_by: data.performed_by ? String(data.performed_by) : undefined };
+      await createAsync({ url: moduleName, body: payload });
+      enqueueSnackbar(t("modules.maintenance.create.notification.success"), { variant: "success" });
+      navigate(`/${moduleName}`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
       enqueueSnackbar(message, { variant: "error" });

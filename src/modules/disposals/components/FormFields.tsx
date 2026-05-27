@@ -51,7 +51,7 @@ export const FormFields = ({ readOnly = false, assets }: FormFieldsProps) => {
             label={t("modules.disposals.create.form.sale_price")}
             readOnly={readOnly}
             min={0}
-            step={1000}
+            step={1}
           />
         </div>
         <div className="col-12 col-md-6">

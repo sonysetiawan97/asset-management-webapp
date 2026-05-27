@@ -3,20 +3,21 @@ import SelectInput from "@components/form/select/SelectInput";
 import { DateInput } from "@components/form/inputs/DateInput";
 import { NumberInput } from "@components/form/inputs/NumberInput";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
+import { MultipleUploadFile } from "@components/form/fileupload/MultipleUploadFile";
 import { MAINTENANCE_TYPES } from "@modules/maintenance/types/Model";
 
 interface FormFieldsProps {
   readOnly?: boolean;
   assets: { id: string; name: string; asset_code: string }[];
-  users: { id: string; name: string }[];
+  users: { id: string; first_name: string; last_name: string }[];
 }
 
 export const FormFields = ({ readOnly = false, assets, users }: FormFieldsProps) => {
   const { t } = useTranslation();
 
-  const assetOptions = assets.map((a) => ({ value: a.id, label: `${a.name} (${a.asset_code})` }));
-  const userOptions = [{ value: "", label: "-- Technician --" }, ...users.map((u) => ({ value: u.id, label: u.name }))];
+  const assetOptions = assets.map((a) => ({ value: String(a.id), label: `${a.name} (${a.asset_code})` }));
   const typeOptions = MAINTENANCE_TYPES.map((t) => ({ value: t.value, label: t.label }));
+  const performedByOptions = users.map((u) => ({ value: String(u.id), label: `${u.first_name} ${u.last_name}`.trim() }));
 
   return (
     <>
@@ -51,7 +52,7 @@ export const FormFields = ({ readOnly = false, assets, users }: FormFieldsProps)
           <SelectInput
             name="performed_by"
             label={t("modules.maintenance.create.form.performed_by")}
-            options={userOptions}
+            options={performedByOptions}
             readOnly={readOnly}
           />
         </div>
@@ -69,7 +70,7 @@ export const FormFields = ({ readOnly = false, assets, users }: FormFieldsProps)
             label={t("modules.maintenance.create.form.cost")}
             readOnly={readOnly}
             min={0}
-            step={1000}
+            step={1}
           />
         </div>
         <div className="col-12 col-md-6">

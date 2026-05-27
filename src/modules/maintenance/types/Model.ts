@@ -1,3 +1,5 @@
+import { type FileProps } from "@/types/File";
+
 export const moduleName = "maintenance";
 
 export type MaintenanceType = "scheduled" | "corrective" | "preventive" | "inspection";
@@ -14,6 +16,7 @@ export interface MaintenanceLog {
   description: string;
   cost?: number;
   next_maintenance_date?: string;
+  attachments?: FileProps[];
   status: "open" | "completed";
   created_by: string;
   created_by_name?: string;
@@ -28,6 +31,18 @@ export interface CreateMaintenanceModel {
   description: string;
   cost?: number;
   next_maintenance_date?: string;
+  attachments?: FileProps[];
+}
+
+export interface UpdateMaintenanceModel {
+  asset_id: string;
+  type: MaintenanceType;
+  date_performed: string;
+  performed_by?: string;
+  description: string;
+  cost?: number;
+  next_maintenance_date?: string;
+  attachments?: FileProps[];
 }
 
 export interface CompleteMaintenanceModel {
@@ -38,7 +53,7 @@ export interface CompleteMaintenanceModel {
   next_maintenance_date?: string;
 }
 
-export interface ReadMaintenanceModel extends MaintenanceLog {}
+export type ReadMaintenanceModel = MaintenanceLog;
 
 export const MAINTENANCE_TYPES: { value: MaintenanceType; label: string; className: string }[] = [
   { value: "scheduled", label: "Scheduled", className: "maint-badge--scheduled" },

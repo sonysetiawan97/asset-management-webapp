@@ -645,7 +645,9 @@
           "performed_by": "Teknisi",
           "description": "Deskripsi",
           "cost": "Biaya",
-          "next_maintenance": "Tgl Perawatan Berikutnya"
+          "next_maintenance": "Tgl Perawatan Berikutnya",
+          "attachments": "Lampiran",
+          "attachments_info": "Ukuran maksimum file adalah 5 MB dan hanya file PDF yang diizinkan"
         },
         "notification": {
           "success": "Perawatan berhasil dicatat.",
@@ -653,7 +655,8 @@
         }
       },
       "read": {
-        "title": "Detail Perawatan"
+        "title": "Detail Perawatan",
+        "complete": "Selesaikan"
       },
       "update": {
         "title": "Selesaikan Perawatan",

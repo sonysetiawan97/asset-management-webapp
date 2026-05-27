@@ -41,7 +41,7 @@ const SelectInput: FC<Props> = ({
         render={({ field }) => (
           <Select
             options={options}
-            value={options.find((opt) => opt.value === field.value) || null}
+            value={options.find((opt) => String(opt.value) === String(field.value)) || null}
             onChange={(selected, actionMeta) => {
               field.onChange(selected?.value ?? null);
               if (onChange) onChange(selected, actionMeta);

@@ -129,7 +129,7 @@ export const FormFields = ({
               readOnly={readOnly}
               required={true}
               min={0}
-              step={1000}
+              step={1}
             />
           </div>
           <div className="col-12 col-md-4">
@@ -155,7 +155,7 @@ export const FormFields = ({
               label={t("modules.assets.create.form.salvage_value")}
               readOnly={readOnly}
               min={0}
-              step={100}
+              step={1}
             />
           </div>
         </div>

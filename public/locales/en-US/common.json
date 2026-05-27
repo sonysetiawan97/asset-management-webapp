@@ -695,7 +695,9 @@
           "performed_by": "Performed By",
           "description": "Description",
           "cost": "Cost",
-          "next_maintenance": "Next Maintenance Date"
+          "next_maintenance": "Next Maintenance Date",
+          "attachments": "Attachments",
+          "attachments_info": "Maximum file size is 5 MB and only PDF files are allowed"
         },
         "notification": {
           "success": "Maintenance logged.",
@@ -703,7 +705,8 @@
         }
       },
       "read": {
-        "title": "Maintenance Detail"
+        "title": "Maintenance Detail",
+        "complete": "Complete"
       },
       "update": {
         "title": "Complete Maintenance",
