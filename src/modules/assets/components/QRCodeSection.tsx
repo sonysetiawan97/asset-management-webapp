@@ -13,8 +13,9 @@ export const QRCodeSection = ({ assetId, assetCode, assetName }: QRCodeSectionPr
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
 
-  // Generate QR code data: asset lookup URL
-  const qrData = `${window.location.origin}/assets/${assetId}`;
+  // Generate QR code data: asset_code only (not a URL).
+  // This way the scanner receives the code directly and can look it up.
+  const qrData = assetCode;
 
   useEffect(() => {
     if (canvasRef.current) {

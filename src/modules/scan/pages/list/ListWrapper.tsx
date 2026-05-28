@@ -29,7 +29,8 @@ const ListWrapper: FC = () => {
 
     setIsLookingUp(true);
     try {
-      const { data } = await apiAxios.get("/api/v1/assets/lookup", {
+      console.log(assetCode)
+      const { data } = await apiAxios.get("/assets/lookup", {
         params: { asset_code: assetCode },
       });
 
