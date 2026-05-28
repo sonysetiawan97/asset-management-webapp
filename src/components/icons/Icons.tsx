@@ -131,6 +131,8 @@ export const ScanIcon: FC<IconProps> = ({ size = 20, className }) => (
   </svg>
 );
 
+// Opname / Inventory Check
+
 // Plus (Create button)
 export const PlusIcon: FC<IconProps> = ({ size = 16, className }) => (
   <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>
@@ -149,5 +151,12 @@ export const EditIcon: FC<IconProps> = ({ size = 14, className }) => (
 export const ViewIcon: FC<IconProps> = ({ size = 14, className }) => (
   <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>
     <path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Zm0-72q-40 0-68-28t-28-68q0-40 28-68t68-28q40 0 68 28t28 68q0 40-28 68t-68 28Zm0 192q-142.6 0-259.8-78.5Q103-349 48-480q55-131 172.2-209.5Q337.4-768 480-768q142.6 0 259.8 78.5Q857-611 912-480q-55 131-172.2 209.5Q622.6-192 480-192Zm0-288Zm0 216q112 0 207-58t146-158q-51-100-146-158t-207-58q-112 0-207 58T127-480q51 100 146 158t207 58Z" />
+  </svg>
+);
+
+// Opname (clipboard check)
+export const OpnameIcon: FC<IconProps> = ({ size = 20, className }) => (
+  <svg height={size} viewBox="0 -960 960 960" width={size} fill="currentColor" className={className}>
+    <path d="M240-160q-33 0-56.5-23.5T160-240q0-33 23.5-56.5T240-320q33 0 56.5 23.5T320-240q0 33-23.5 56.5T240-160Zm0-80q17 0 28.5-11.5T280-280q0-17-11.5-28.5T240-320q-17 0-28.5 11.5T200-280q0 17 11.5 28.5T240-240Zm520 80v-80h-80v80h80Zm40 0v-80h-80v80h80Zm40 0v-80h-80v80h80Zm40 0v-80h-80v80h80ZM640-80v-184q0-17-11.5-28.5T600-304h-80q-17 0-28.5 11.5T480-264v184q0 17 11.5 28.5T520-40h80q17 0 28.5-11.5T640-80Zm-160-480v-80h-80v80h80Zm0-160v-80h-80v80h80Zm-80-40h-40v-80h40v80Zm-200 0h-40v-80h40v80Zm0 40h-40v-80h40v80Zm0 80h-40v-80h40v80Z" />
   </svg>
 );

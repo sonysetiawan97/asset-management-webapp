@@ -86,6 +86,7 @@
         "disposals": "Pelepasan",
         "audit_trail": "Riwayat Audit",
         "notifications": "Notifikasi",
+        "opname": "Opname",
         "scan": "Pemindai"
       }
     },
@@ -760,6 +761,98 @@
         "total": "Total Kejadian",
         "filter": "Filter",
         "empty": "Belum ada kejadian audit."
+      }
+    },
+    "opname": {
+      "list": {
+        "title": "Opname Inventaris",
+        "btn_create": "Sesi Baru",
+        "btn_view": "Lihat",
+        "btn_count": "Hitung",
+        "progress": "Kemajuan",
+        "empty": "Belum ada sesi opname."
+      },
+      "create": {
+        "title": "Sesi Opname Baru",
+        "notification": {
+          "success": "Sesi opname berhasil dibuat.",
+          "error": "Gagal membuat sesi opname."
+        }
+      },
+      "read": {
+        "title": "Sesi: {name}",
+        "tab_info": "Info",
+        "tab_items": "Item",
+        "tab_summary": "Ringkasan",
+        "tab_discrepancies": "Ketidaksesuaian",
+        "field_name": "Nama",
+        "field_department": "Departemen",
+        "field_location": "Lokasi",
+        "field_start_date": "Tanggal Mulai",
+        "field_end_date": "Tanggal Selesai",
+        "field_status": "Status",
+        "field_notes": "Catatan",
+        "field_created_by": "Dibuat Oleh",
+        "progress_total": "Total Item",
+        "progress_counted": "Sudah Dihitung",
+        "progress_remaining": "Sisa",
+        "summary_match": "Sesuai",
+        "summary_mismatch": "Tidak Sesuai",
+        "summary_not_found": "Tidak Ditemukan",
+        "summary_extra": "Tambahan",
+        "action_start": "Mulai Sesi",
+        "action_complete": "Selesai Menghitung",
+        "action_approve": "Setujui",
+        "action_reject": "Tolak",
+        "action_close": "Tutup Sesi",
+        "alert_started": "Sesi dimulai. Item siap dihitung.",
+        "alert_completed": "Penghitungan selesai. Menunggu persetujuan.",
+        "alert_approved": "Sesi disetujui. Siap ditutup.",
+        "alert_rejected": "Sesi ditolak dan dikembalikan ke draft.",
+        "alert_closed": "Sesi ditutup.",
+        "no_items": "Belum ada item. Mulai sesi untuk menghasilkan item."
+      },
+      "update": {
+        "title": "Edit Sesi Opname",
+        "notification": {
+          "success": "Sesi opname diperbarui.",
+          "error": "Gagal memperbarui sesi opname."
+        }
+      },
+      "count": {
+        "title": "Hitung Aset — {session}",
+        "field_asset_code": "Kode Aset",
+        "field_asset_name": "Nama Aset",
+        "field_expected_status": "Status Diharapkan",
+        "field_expected_location": "Lokasi Diharapkan",
+        "field_counted_status": "Status Dihitung",
+        "field_counted_location": "Lokasi Dihitung",
+        "field_counted_condition": "Kondisi Dihitung",
+        "field_notes": "Catatan",
+        "status_match": "Sesuai",
+        "status_mismatch": "Tidak Sesuai",
+        "status_not_found": "Tidak Ditemukan",
+        "status_extra": "Tambahan",
+        "condition_new": "Baru",
+        "condition_good": "Baik",
+        "condition_fair": "Cukup",
+        "condition_poor": "Buruk",
+        "btn_confirm": "Konfirmasi Hitung",
+        "btn_skip": "Lewati",
+        "btn_save_notes": "Simpan Catatan",
+        "notification_success": "Hitungan tercatat.",
+        "notification_error": "Gagal mencatat hitungan."
+      },
+      "form": {
+        "name": "Nama Sesi",
+        "name_placeholder": "mis. Opname Bulanan 2024",
+        "department": "Departemen",
+        "department_placeholder": "Semua Departemen",
+        "location": "Lokasi",
+        "location_placeholder": "Semua Lokasi",
+        "start_date": "Tanggal Mulai",
+        "end_date": "Tanggal Selesai (opsional)",
+        "notes": "Catatan"
       }
     }
   }

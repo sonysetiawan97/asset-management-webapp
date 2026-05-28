@@ -1,48 +1,106 @@
-import { useEffect, type FC } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { moduleName, type ReadModel } from "../../types/Model";
-import { setBreadcrumbs } from "@stores/BreadcrumbStore";
-import { ReadPage } from "./ReadPage";
-import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState, type FC } from "react";
 import { useParams } from "react-router-dom";
-import { useFindOneById } from "@hooks/request/useFindOneById";
-import NotFound from "@modules/errors/pages/404NotFound";
+import Read from "./ReadPage";
+import { useFindOneById as useFindById } from "@hooks/request/useFindOneById";
+import { apiAxios } from "@utils/apiAxios";
+import { enqueueSnackbar } from "notistack";
+import { setBreadcrumbs } from "@stores/BreadcrumbStore";
+import { useTranslation } from "react-i18next";
+import { type ReadModel } from "../../types/Model";
 import { LoadingPage } from "@components/loadings/LoadingPage";
 
-const ReadWrapper: FC = () => {
-  const { t } = useTranslation();
+export const ReadWrapper: FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, error, isLoading } = useFindOneById<ReadModel>(moduleName, id);
-  const methods = useForm<ReadModel>({ mode: "onBlur" });
-  const { reset } = methods;
-
-  useEffect(() => {
-    if (data) {
-      reset(data);
-    }
-  }, [data, reset]);
+  const { t } = useTranslation();
+  const { data, isLoading, error } = useFindById<ReadModel>("opname/sessions", id!);
+  const [activeTab, setActiveTab] = useState<"items" | "summary" | "discrepancies">("items");
+  const [items, setItems] = useState<unknown[]>([]);
+  const [summary, setSummary] = useState<unknown>(null);
+  const [discrepancies, setDiscrepancies] = useState<unknown[]>([]);
+  const [loadingSub, setLoadingSub] = useState(false);
 
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
-      { label: "Opname", path: `/${moduleName}` },
-      { label: data?.name || "Detail" },
+      { label: t("modules.opname.list.title"), path: "/opname/sessions" },
+      { label: t("modules.opname.read.breadcrumb"), path: "" },
     ]);
-  }, [data]);
+  }, [t]);
+
+  useEffect(() => {
+    if (!id) return;
+    setLoadingSub(true);
+
+    if (activeTab === "items") {
+      apiAxios
+        .get(`/opname/sessions/${id}/items`)
+        .then((res) => {
+          setItems(res.data.data.result ?? []);
+          setLoadingSub(false);
+        })
+        .catch(() => {
+          setLoadingSub(false);
+          enqueueSnackbar(t("modules.opname.read.error_loading_items"), { variant: "error" });
+        });
+    } else if (activeTab === "summary") {
+      apiAxios
+        .get(`/opname/sessions/${id}/summary`)
+        .then((res) => {
+          setSummary(res.data.data ?? null);
+          setLoadingSub(false);
+        })
+        .catch(() => {
+          setLoadingSub(false);
+          enqueueSnackbar(t("modules.opname.read.error_loading_summary"), { variant: "error" });
+        });
+    } else if (activeTab === "discrepancies") {
+      apiAxios
+        .get(`/opname/sessions/${id}/discrepancies`)
+        .then((res) => {
+          setDiscrepancies(res.data.data ?? []);
+          setLoadingSub(false);
+        })
+        .catch(() => {
+          setLoadingSub(false);
+          enqueueSnackbar(t("modules.opname.read.error_loading_discrepancies"), { variant: "error" });
+        });
+    }
+  }, [activeTab, id, t]);
+
+  if (!id) {
+    enqueueSnackbar("ID is required", { variant: "error" });
+    return <LoadingPage />;
+  }
 
   if (isLoading) return <LoadingPage />;
-  if (!data || error) return <NotFound />;
+  if (error) return <div className="p-4">Error: {error.message}</div>;
+  if (!data) return <LoadingPage />;
 
   return (
-    <FormProvider {...methods}>
-      <TitleBarWithIcon title={t("modules.opname.read.title", { name: data.name })}>
-        <svg className="d-flex" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#373737">
-          <path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Zm0-72q-40 0-68-28t-28-68q0-40 28-68t68-28q40 0 68 28t28 68q0 40-28 68t-68 28Zm0 192q-142.6 0-259.8-78.5Q103-349 48-480q55-131 172.2-209.5Q337.4-768 480-768q142.6 0 259.8 78.5Q857-611 912-480q-55 131-172.2 209.5Q622.6-192 480-192Zm0-288Zm0 216q112 0 207-58t146-158q-51-100-146-158t-207-58q-112 0-207 58T127-480q51 100 146 158t207 58Z" />
-        </svg>
-      </TitleBarWithIcon>
-      <ReadPage />
-    </FormProvider>
+    <Read
+      data={data}
+      onAction={async (action: string) => {
+        try {
+          const endpoint = `/opname/sessions/${id}/${action}`;
+          await apiAxios.patch(endpoint);
+
+          enqueueSnackbar(t(`modules.opname.read.notification.${action}`), {
+            variant: "success",
+          });
+          window.location.reload();
+        } catch {
+          enqueueSnackbar(t("modules.opname.read.notification.action_failed"), {
+            variant: "error",
+          });
+        }
+      }}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      items={items}
+      summary={summary}
+      discrepancies={discrepancies}
+      loadingSub={loadingSub}
+    />
   );
 };
 

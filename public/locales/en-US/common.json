@@ -86,6 +86,7 @@
         "disposals": "disposals",
         "audit_trail": "audit trail",
         "notifications": "notifications",
+        "opname": "opname",
         "scan": "scan"
       }
     },
@@ -810,6 +811,98 @@
         "total": "Total Events",
         "filter": "Filter",
         "empty": "No audit events yet."
+      }
+    },
+    "opname": {
+      "list": {
+        "title": "Inventory Opname",
+        "btn_create": "New Session",
+        "btn_view": "View",
+        "btn_count": "Count",
+        "progress": "Progress",
+        "empty": "No opname sessions yet."
+      },
+      "create": {
+        "title": "New Opname Session",
+        "notification": {
+          "success": "Opname session created successfully.",
+          "error": "Failed to create opname session."
+        }
+      },
+      "read": {
+        "title": "Session: {name}",
+        "tab_info": "Info",
+        "tab_items": "Items",
+        "tab_summary": "Summary",
+        "tab_discrepancies": "Discrepancies",
+        "field_name": "Name",
+        "field_department": "Department",
+        "field_location": "Location",
+        "field_start_date": "Start Date",
+        "field_end_date": "End Date",
+        "field_status": "Status",
+        "field_notes": "Notes",
+        "field_created_by": "Created By",
+        "progress_total": "Total Items",
+        "progress_counted": "Counted",
+        "progress_remaining": "Remaining",
+        "summary_match": "Matched",
+        "summary_mismatch": "Mismatched",
+        "summary_not_found": "Not Found",
+        "summary_extra": "Extra",
+        "action_start": "Start Session",
+        "action_complete": "Complete Counting",
+        "action_approve": "Approve",
+        "action_reject": "Reject",
+        "action_close": "Close Session",
+        "alert_started": "Session started. Items are ready for counting.",
+        "alert_completed": "Counting complete. Pending approval.",
+        "alert_approved": "Session approved. Ready to close.",
+        "alert_rejected": "Session rejected and returned to draft.",
+        "alert_closed": "Session closed.",
+        "no_items": "No items in this session yet. Start the session to generate items."
+      },
+      "update": {
+        "title": "Edit Opname Session",
+        "notification": {
+          "success": "Opname session updated.",
+          "error": "Failed to update opname session."
+        }
+      },
+      "count": {
+        "title": "Count Assets — {session}",
+        "field_asset_code": "Asset Code",
+        "field_asset_name": "Asset Name",
+        "field_expected_status": "Expected Status",
+        "field_expected_location": "Expected Location",
+        "field_counted_status": "Counted Status",
+        "field_counted_location": "Counted Location",
+        "field_counted_condition": "Counted Condition",
+        "field_notes": "Notes",
+        "status_match": "Match",
+        "status_mismatch": "Mismatch",
+        "status_not_found": "Not Found",
+        "status_extra": "Extra",
+        "condition_new": "New",
+        "condition_good": "Good",
+        "condition_fair": "Fair",
+        "condition_poor": "Poor",
+        "btn_confirm": "Confirm Count",
+        "btn_skip": "Skip",
+        "btn_save_notes": "Save Notes",
+        "notification_success": "Count recorded.",
+        "notification_error": "Failed to record count."
+      },
+      "form": {
+        "name": "Session Name",
+        "name_placeholder": "e.g. Monthly Opname 2024",
+        "department": "Department",
+        "department_placeholder": "All Departments",
+        "location": "Location",
+        "location_placeholder": "All Locations",
+        "start_date": "Start Date",
+        "end_date": "End Date (optional)",
+        "notes": "Notes"
       }
     }
   }

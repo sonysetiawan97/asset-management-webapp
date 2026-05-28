@@ -69,7 +69,7 @@ const ReadPage = (_props: ReadPageProps) => {
         </div>
       </form>
       {assetId && assetCode && (
-        <QRCodeSection assetId={assetId} assetCode={assetCode} assetName={assetName ?? ""} />
+        <QRCodeSection assetCode={assetCode} assetName={assetName ?? ""} />
       )}
 
       {showCheckoutModal && assetId && (

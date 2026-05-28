@@ -17,11 +17,12 @@ import {
   DisposalsIcon,
   AuditTrailIcon,
   NotificationsIcon,
+  OpnameIcon,
+  ScanIcon,
   UsersIcon,
   PrivilegesIcon,
   RolesIcon,
   SysparamsIcon,
-  ScanIcon,
 } from "@components/icons/Icons";
 
 type ToggleMenuSidebar = {
@@ -102,6 +103,9 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/notifications">
             <SidebarMenuItem url="/notifications" title={t("sidebar.master.menu.notifications")} icon={<NotificationsIcon />} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/opname/sessions">
+            <SidebarMenuItem url="/opname/sessions" title={t("sidebar.master.menu.opname")} icon={<OpnameIcon />} />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/scan">
             <SidebarMenuItem url="/scan" title={t("sidebar.master.menu.scan")} icon={<ScanIcon />} />

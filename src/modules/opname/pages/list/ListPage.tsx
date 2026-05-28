@@ -23,6 +23,17 @@ const formatDate = (dateStr: string) => {
   });
 };
 
+const formatStatusLabel = (status: string) => {
+  const map: Record<string, string> = {
+    draft: "Draft",
+    in_progress: "In Progress",
+    pending_approval: "Pending Approval",
+    approved: "Approved",
+    closed: "Closed",
+  };
+  return map[status] ?? status;
+};
+
 export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, onStatusChange }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
@@ -107,7 +118,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, on
                       <td>{formatDate(session.start_date)}</td>
                       <td>
                         <StatusBadge
-                          label={session.status.replace("_", " ")}
+                          label={formatStatusLabel(session.status)}
                           bgColor={color.bg}
                           textColor={color.text}
                           dotColor={color.dot}

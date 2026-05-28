@@ -3,12 +3,11 @@ import QRCode from "qrcode";
 import { useTranslation } from "react-i18next";
 
 interface QRCodeSectionProps {
-  assetId: string;
   assetCode: string;
   assetName: string;
 }
 
-export const QRCodeSection = ({ assetId, assetCode, assetName }: QRCodeSectionProps) => {
+export const QRCodeSection = ({ assetCode, assetName }: QRCodeSectionProps) => {
   const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
