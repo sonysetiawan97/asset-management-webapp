@@ -72,6 +72,14 @@ const ListPage: FC<ListPageProps> = ({
         triggerFeedback();
         scanner.stop().then(() => {
           html5QrRef.current = null;
+          // Give camera stream time to fully release before updating state
+          setTimeout(() => {
+            onStopScan();
+            onManualLookup(decodedText);
+          }, 150);
+        }).catch(() => {
+          html5QrRef.current = null;
+          onStopScan();
           onManualLookup(decodedText);
         });
       },
