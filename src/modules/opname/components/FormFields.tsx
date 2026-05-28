@@ -5,11 +5,10 @@ import { DateInput } from "@components/form/inputs/DateInput";
 import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { Controller, useFormContext } from "react-hook-form";
 import { useFindAll } from "@hooks/request/useFindAll";
-import type { CreateModel } from "../types/Model";
 
 const FormFields = () => {
   const { t } = useTranslation();
-  const { control, formState: { errors } } = useFormContext<CreateModel>();
+  const { control } = useFormContext();
 
   const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
   const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
@@ -17,7 +16,7 @@ const FormFields = () => {
   const loadDepartmentOptions = async (
     search: string,
     _loadedOptions: unknown,
-    { page }: { skip: number }
+    _additional: { skip: number } | undefined
   ) => {
     const items = departmentData?.result ?? [];
     const filtered = items.filter((d) =>
@@ -32,7 +31,7 @@ const FormFields = () => {
   const loadLocationOptions = async (
     search: string,
     _loadedOptions: unknown,
-    { page }: { skip: number }
+    _additional: { skip: number } | undefined
   ) => {
     const items = locationData?.result ?? [];
     const filtered = items.filter((l) =>
@@ -84,7 +83,6 @@ const FormFields = () => {
               name="start_date"
               label={t("modules.opname.form.start_date")}
               required
-              invalidFeedback={errors.start_date?.message as string}
             />
           )}
         />
@@ -99,7 +97,6 @@ const FormFields = () => {
               {...field}
               name="end_date"
               label={t("modules.opname.form.end_date")}
-              invalidFeedback={errors.end_date?.message as string}
             />
           )}
         />
@@ -109,7 +106,6 @@ const FormFields = () => {
         <TextAreaInput
           name="notes"
           label={t("modules.opname.form.notes")}
-          rows={3}
         />
       </div>
     </>

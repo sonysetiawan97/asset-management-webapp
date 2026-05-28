@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { moduleName, type OpnameSession, OPNAME_STATUSES, STATUS_COLORS } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
-import { Pagination } from "@components/pagination/Pagination";
-import { StatusBadge } from "@/components/misc/StatusBadge";
+import { Pagination } from "@components/list/Pagination";
+import { StatusBadge } from "@/components/list/StatusBadge";
 
 interface ListProps {
   data: OpnameSession[];
@@ -142,7 +142,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, on
             </tbody>
           </table>
         </div>
-        <Pagination count={count} skip={skip} limit={limit} onChange={setSkip} />
+        <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
       </div>
     </div>
   );
