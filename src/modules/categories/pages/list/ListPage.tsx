@@ -65,7 +65,7 @@ const CategoryCard = ({
         </div>
 
         {/* ── Metrics ── */}
-        <div className="hierarchy-detail">
+        {/* <div className="hierarchy-detail">
           <div className="hierarchy-metric">
             <span className="hierarchy-metric__value">{category.useful_life_years}</span>
             <span className="hierarchy-metric__label">{t("modules.categories.list.years")}</span>
@@ -80,7 +80,7 @@ const CategoryCard = ({
             </span>
             <span className="hierarchy-metric__label">{t("modules.categories.list.assets")}</span>
           </div>
-        </div>
+        </div> */}
 
         {/* ── Action ── */}
         <div className="hierarchy-actions">
