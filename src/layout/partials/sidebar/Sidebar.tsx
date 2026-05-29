@@ -6,19 +6,16 @@ import { SidebarMenuTitle } from "@components/menu/SidebarMenuTitle";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import {
   DashboardIcon,
-  CategoriesIcon,
-  LocationsIcon,
-  DepartmentsIcon,
   AssetsIcon,
   CheckoutsIcon,
   TransfersIcon,
   MaintenanceIcon,
   ReportsIcon,
-  DisposalsIcon,
-  AuditTrailIcon,
-  NotificationsIcon,
   OpnameIcon,
   ScanIcon,
+  DepartmentsIcon,
+  CategoriesIcon,
+  LocationsIcon,
   UsersIcon,
   PrivilegesIcon,
   RolesIcon,
@@ -46,71 +43,66 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
           <img alt="Logo" src={Logo} width={80} />
         </div>
         <div className="list-group list-group-flush overflow-auto">
-          <SidebarMenuTitle title={t("sidebar.master.title")} />
-
+          {/* Assets Management */}
+          <SidebarMenuTitle title={t("sidebar.assets_management.title")} />
           <AuthPrivilegesChecker link="/dashboard">
             <SidebarMenuItem
               url="/dashboard"
-              title={t("sidebar.master.menu.dashboard")}
+              title={t("sidebar.assets_management.menu.dashboard")}
               icon={<DashboardIcon />}
+            />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/assets">
+            <SidebarMenuItem
+              url="/assets"
+              title={t("sidebar.assets_management.menu.assets")}
+              icon={<AssetsIcon />}
+            />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/checkouts">
+            <SidebarMenuItem url="/checkouts" title={t("sidebar.assets_management.menu.checkouts")} icon={<CheckoutsIcon />} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/transfers">
+            <SidebarMenuItem url="/transfers" title={t("sidebar.assets_management.menu.transfers")} icon={<TransfersIcon />} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/maintenance">
+            <SidebarMenuItem url="/maintenance" title={t("sidebar.assets_management.menu.maintenance")} icon={<MaintenanceIcon />} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/reports">
+            <SidebarMenuItem url="/reports" title={t("sidebar.assets_management.menu.report")} icon={<ReportsIcon />} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/opname/sessions">
+            <SidebarMenuItem url="/opname/sessions" title={t("sidebar.assets_management.menu.opname")} icon={<OpnameIcon />} />
+          </AuthPrivilegesChecker>
+          <AuthPrivilegesChecker link="/scan">
+            <SidebarMenuItem url="/scan" title={t("sidebar.assets_management.menu.scan")} icon={<ScanIcon />} />
+          </AuthPrivilegesChecker>
+
+          {/* Master Data */}
+          <SidebarMenuTitle title={t("sidebar.master_data.title")} />
+          <AuthPrivilegesChecker link="/departments">
+            <SidebarMenuItem
+              url="/departments"
+              title={t("sidebar.master_data.menu.departments")}
+              icon={<DepartmentsIcon />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/categories">
             <SidebarMenuItem
               url="/categories"
-              title={t("sidebar.master.menu.categories")}
+              title={t("sidebar.master_data.menu.categories")}
               icon={<CategoriesIcon />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/locations">
             <SidebarMenuItem
               url="/locations"
-              title={t("sidebar.master.menu.locations")}
+              title={t("sidebar.master_data.menu.locations")}
               icon={<LocationsIcon />}
             />
           </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/departments">
-            <SidebarMenuItem
-              url="/departments"
-              title={t("sidebar.master.menu.departments")}
-              icon={<DepartmentsIcon />}
-            />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/assets">
-            <SidebarMenuItem
-              url="/assets"
-              title={t("sidebar.master.menu.assets")}
-              icon={<AssetsIcon />}
-            />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/checkouts">
-            <SidebarMenuItem url="/checkouts" title={t("sidebar.master.menu.checkouts")} icon={<CheckoutsIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/transfers">
-            <SidebarMenuItem url="/transfers" title={t("sidebar.master.menu.transfers")} icon={<TransfersIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/maintenance">
-            <SidebarMenuItem url="/maintenance" title={t("sidebar.master.menu.maintenance")} icon={<MaintenanceIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/reports">
-            <SidebarMenuItem url="/reports" title={t("sidebar.master.menu.reports")} icon={<ReportsIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/disposals">
-            <SidebarMenuItem url="/disposals" title={t("sidebar.master.menu.disposals")} icon={<DisposalsIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/audit-trail">
-            <SidebarMenuItem url="/audit-trail" title={t("sidebar.master.menu.audit_trail")} icon={<AuditTrailIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/notifications">
-            <SidebarMenuItem url="/notifications" title={t("sidebar.master.menu.notifications")} icon={<NotificationsIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/opname/sessions">
-            <SidebarMenuItem url="/opname/sessions" title={t("sidebar.master.menu.opname")} icon={<OpnameIcon />} />
-          </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/scan">
-            <SidebarMenuItem url="/scan" title={t("sidebar.master.menu.scan")} icon={<ScanIcon />} />
-          </AuthPrivilegesChecker>
 
+          {/* User Management */}
           <SidebarMenuTitle title={t("sidebar.user-management.title")} />
           <AuthPrivilegesChecker link="/users">
             <SidebarMenuItem
@@ -134,6 +126,7 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
             />
           </AuthPrivilegesChecker>
 
+          {/* System */}
           <SidebarMenuTitle title={t("sidebar.system.title")} links={["/sysparams"]} />
           <AuthPrivilegesChecker link="/sysparams">
             <SidebarMenuItem

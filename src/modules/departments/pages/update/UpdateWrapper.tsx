@@ -20,14 +20,13 @@ const UpdateWrapper: FC = () => {
   useEffect(() => {
     if (data) {
       // Pick only UpdateModel fields from ReadModel, converting null to undefined
-      const { id: _id, code, name, description, manager_id, parent_id, budget, headcount } = data as ReadModel;
+      const { id: _id, code, name, description, manager_id, parent_id, headcount } = data as ReadModel;
       reset({
         code,
         name,
         description,
         manager_id: manager_id ?? undefined,
         parent_id: parent_id ?? undefined,
-        budget: budget ?? undefined,
         headcount: headcount ?? undefined,
       });
     }

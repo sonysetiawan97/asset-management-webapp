@@ -64,44 +64,31 @@
     }
   },
   "sidebar": {
-    "master": {
-      "title": "MASTER",
+    "assets_management": {
+      "title": "PENGELOLAAN ASET",
       "menu": {
-        "dashboard": "dashboard",
-        "products": "Produk",
-        "examples": "Contoh",
-        "sysparams": "sysparams",
-        "roles": "Peran",
-        "privileges": "Hak Akses",
-        "trash": "Sampah",
-        "users": "Pengguna",
-        "categories": "Kategori",
-        "locations": "Lokasi",
-        "departments": "Departemen",
+        "dashboard": "Dashboard",
         "assets": "Aset",
         "checkouts": "Check-out",
         "transfers": "Transfer",
         "maintenance": "Perawatan",
-        "reports": "Laporan",
-        "disposals": "Pelepasan",
-        "audit_trail": "Riwayat Audit",
-        "notifications": "Notifikasi",
+        "report": "Laporan",
         "opname": "Opname",
         "scan": "Pemindai"
       }
     },
-    "base": {
-      "title": "BASE",
+    "master_data": {
+      "title": "DATA MASTER",
       "menu": {
-        "setting": "Pengaturan",
-        "themes": "Tema"
+        "departments": "Departemen",
+        "categories": "Kategori",
+        "locations": "Lokasi"
       }
     },
     "user-management": {
       "title": "PENGATURAN PENGGUNA",
       "menu": {
         "user": "Pengguna",
-        "themes": "Tema",
         "privilege": "Hak Akses",
         "role": "Peran"
       }
@@ -118,7 +105,6 @@
     "prev": "Prev",
     "next": "Next",
     "last": "last"
-  },
   },
   "request": {
     "error": {

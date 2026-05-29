@@ -64,44 +64,31 @@
     }
   },
   "sidebar": {
-    "master": {
-      "title": "MASTER",
+    "assets_management": {
+      "title": "ASSETS MANAGEMENT",
       "menu": {
-        "dashboard": "dashboard",
-        "products": "products",
-        "examples": "examples",
-        "sysparams": "sysparams",
-        "roles": "roles",
-        "privileges": "privileges",
-        "trash": "trash",
-        "users": "user",
-        "categories": "categories",
-        "locations": "locations",
-        "departments": "departments",
-        "assets": "assets",
-        "checkouts": "checkouts",
-        "transfers": "transfers",
-        "maintenance": "maintenance",
-        "reports": "reports",
-        "disposals": "disposals",
-        "audit_trail": "audit trail",
-        "notifications": "notifications",
-        "opname": "opname",
-        "scan": "scan"
+        "dashboard": "Dashboard",
+        "assets": "Assets",
+        "checkouts": "Check-outs",
+        "transfers": "Transfers",
+        "maintenance": "Maintenance",
+        "report": "Report",
+        "opname": "Opname",
+        "scan": "Scan"
       }
     },
-    "base": {
-      "title": "BASE",
+    "master_data": {
+      "title": "MASTER DATA",
       "menu": {
-        "setting": "Setting",
-        "themes": "Themes"
+        "departments": "Departments",
+        "categories": "Categories",
+        "locations": "Locations"
       }
     },
     "user-management": {
       "title": "USER MANAGEMENT",
       "menu": {
         "user": "User",
-        "themes": "Themes",
         "privilege": "Privilege",
         "role": "Role"
       }
