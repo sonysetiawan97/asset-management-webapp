@@ -115,8 +115,8 @@
   },
   "pagination": {
     "first": "first",
-    "prev": "prev",
-    "next": "next",
+    "prev": "Prev",
+    "next": "Next",
     "last": "last"
   },
   "request": {
@@ -783,7 +783,12 @@
         "sale_price": "Sale Price",
         "initiated": "Initiated",
         "by": "by",
-        "empty": "No disposal requests yet."
+        "empty": "No disposal requests yet.",
+        "filter_by_status": "Filter by status",
+        "notification": {
+          "approved": "Disposal approved successfully.",
+          "rejected": "Disposal rejected successfully."
+        }
       },
       "create": {
         "title": "Initiate Disposal",

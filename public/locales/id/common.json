@@ -114,10 +114,11 @@
     }
   },
   "pagination": {
-    "first": "awal",
-    "prev": "sebelum",
-    "next": "sesudah",
-    "last": "akhir"
+    "first": "first",
+    "prev": "Prev",
+    "next": "Next",
+    "last": "last"
+  },
   },
   "request": {
     "error": {
@@ -733,7 +734,12 @@
         "sale_price": "Harga Jual",
         "initiated": "Diajukan",
         "by": "oleh",
-        "empty": "Belum ada permintaan pelepasan."
+        "empty": "Belum ada permintaan pelepasan.",
+        "filter_by_status": "Filter berdasarkan status",
+        "notification": {
+          "approved": "Pelepasan disetujui.",
+          "rejected": "Pelepasan ditolak."
+        }
       },
       "create": {
         "title": "Ajukan Pelepasan",

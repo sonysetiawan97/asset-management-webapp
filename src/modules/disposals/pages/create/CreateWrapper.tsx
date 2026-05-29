@@ -4,6 +4,7 @@ import { moduleName, type CreateDisposalModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
 import { FormFields } from "../../components/FormFields";
 import { CancelButton } from "@components/buttons/CancelButton";
@@ -17,9 +18,10 @@ import { ContentLoader } from "@components/loadings/ContentLoader";
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateDisposalModel>({ mode: "onBlur" });
   const { t } = useTranslation();
-  const { isLoading } = useCreate<CreateDisposalModel>(moduleName);
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
+  const { createAsync, isLoading } = useCreate<CreateDisposalModel>(moduleName);
+  const { data: assetsData, isLoading: assetsLoading } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
 
   const assets = assetsData?.result ?? [];
 
@@ -28,14 +30,18 @@ const CreateWrapper: FC = () => {
   }, []);
 
   const onSubmit = async (formData: CreateDisposalModel) => {
-    try { console.log("Disposal:", formData); }
-    catch (error: unknown) {
+    try {
+      await createAsync({ url: moduleName, body: formData });
+      enqueueSnackbar(t("modules.disposals.create.notification.success"), { variant: "success" });
+      methods.reset();
+      navigate(`/${moduleName}`);
+    } catch (error: unknown) {
       const { message } = error as AxiosError;
-      enqueueSnackbar(message, { variant: "error" });
+      enqueueSnackbar(message || t("modules.disposals.create.notification.error"), { variant: "error" });
     }
   };
 
-  if (!assets) return <ContentLoader />;
+  if (assetsLoading) return <ContentLoader />;
 
   return (
     <FormProvider {...methods}>
