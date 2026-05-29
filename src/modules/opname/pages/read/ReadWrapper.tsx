@@ -2,7 +2,7 @@ import { useEffect, useState, type FC } from "react";
 import { useParams } from "react-router-dom";
 import Read from "./ReadPage";
 import { useFindOneById as useFindById } from "@hooks/request/useFindOneById";
-import { apiAxios } from "@utils/apiAxios";
+import { apiAxios } from "@/utils/apiAxios";
 import { enqueueSnackbar } from "notistack";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";

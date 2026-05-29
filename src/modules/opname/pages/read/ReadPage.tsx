@@ -5,7 +5,7 @@ import { moduleName, type OpnameItem, type ReadModel } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { StatusBadge } from "@components/list/StatusBadge";
 import { LoadingPage } from "@components/loadings/LoadingPage";
-import { apiAxios } from "@utils/apiAxios";
+import { apiAxios } from "@/utils/apiAxios";
 import { enqueueSnackbar } from "notistack";
 
 interface ReadPageProps {

@@ -466,8 +466,7 @@
         "empty": "Belum ada departemen. Buat yang pertama.",
         "create_first": "Buat Departemen Pertama",
         "has_children": "memiliki anak",
-        "headcount": "personel",
-        "budget": "anggaran"
+        "headcount": "personel"
       },
       "create": {
         "title": "Buat Departemen",
@@ -480,7 +479,6 @@
         "code": "Kode",
         "parent": "Departemen Induk",
         "description": "Deskripsi",
-        "budget": "Anggaran",
         "headcount": "Jumlah Personel"
       },
       "read": {

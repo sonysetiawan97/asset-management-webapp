@@ -8,7 +8,6 @@ export interface Model {
   manager_id: string | null;
   parent_id: string | null;
   headcount: number;
-  budget: number;
   created_time: string;
   updated_time: string;
 }
@@ -19,7 +18,6 @@ export interface CreateModel {
   description?: string;
   manager_id?: string;
   parent_id?: string;
-  budget?: number;
   headcount?: number;
 }
 

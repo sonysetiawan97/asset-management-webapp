@@ -50,15 +50,6 @@ export const FormFields = ({ readOnly = false, departments, defaultValue }: Form
         </div>
         <div className="col-12 col-md-6">
           <NumberInput
-            name="budget"
-            label={t("modules.departments.form.budget")}
-            readOnly={readOnly}
-            min={0}
-            step={1}
-          />
-        </div>
-        <div className="col-12 col-md-6">
-          <NumberInput
             name="headcount"
             label={t("modules.departments.form.headcount")}
             readOnly={readOnly}

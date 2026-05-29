@@ -63,12 +63,6 @@ const DepartmentCard = ({
             <span className="hierarchy-metric__value">{department.headcount || 0}</span>
             <span className="hierarchy-metric__label">{t("modules.departments.list.headcount")}</span>
           </div>
-          <div className="hierarchy-metric">
-            <span className="hierarchy-metric__value">
-              {department.budget ? `$${Number(department.budget).toLocaleString()}` : "-"}
-            </span>
-            <span className="hierarchy-metric__label">{t("modules.departments.list.budget")}</span>
-          </div>
         </div>
 
         {/* ── Action ── */}
