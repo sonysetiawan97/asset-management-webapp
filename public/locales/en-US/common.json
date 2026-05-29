@@ -458,6 +458,12 @@
       "list": {
         "title": "List Locations",
         "total_locations": "Total Locations",
+        "filter_by_type": "Filter by Type",
+        "filter_all": "All",
+        "col_name": "Location Name",
+        "col_code": "Code",
+        "col_type": "Type",
+        "col_parent": "Parent Location",
         "root_categories": "Root Locations",
         "sub_categories": "Sub Locations",
         "empty": "No locations yet. Create your first one.",

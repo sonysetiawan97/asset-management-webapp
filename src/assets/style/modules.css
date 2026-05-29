@@ -1104,7 +1104,7 @@
 }
 
 .status-chip:hover { border-color: var(--color-accent); background: var(--color-accent-subtle); }
-
+.status-chip.active { border-color: var(--color-accent); background: var(--color-accent-subtle); }
 .status-chip__dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 .status-chip__label {

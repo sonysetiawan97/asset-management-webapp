@@ -408,6 +408,12 @@
       "list": {
         "title": "Daftar Lokasi",
         "total_locations": "Total Lokasi",
+        "filter_by_type": "Filter berdasarkan Tipe",
+        "filter_all": "Semua",
+        "col_name": "Nama Lokasi",
+        "col_code": "Kode",
+        "col_type": "Tipe",
+        "col_parent": "Lokasi Induk",
         "root_categories": "Lokasi Induk",
         "sub_categories": "Sub Lokasi",
         "empty": "Belum ada lokasi. Buat yang pertama.",

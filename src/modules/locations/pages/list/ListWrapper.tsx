@@ -1,4 +1,4 @@
-import { useEffect, type FC } from "react";
+import { useEffect, type FC, useState } from "react";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { type Model, moduleName } from "../../types/Model";
@@ -9,6 +9,7 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useFindAll } from "@hooks/request/useFindAll";
 
 export const ListWrapper: FC = () => {
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const { skip, limit } = usePagination();
   const { query } = useSearch();
   const { data, isLoading, error } = useList<Model>({
@@ -19,6 +20,7 @@ export const ListWrapper: FC = () => {
       "!search": query,
       "!sort[id]": -1,
       status: 1,
+      ...(selectedType ? { type: selectedType } : {}),
     },
   });
   const { data: locationsData } = useFindAll<Model>("locations", "locations");
@@ -39,6 +41,8 @@ export const ListWrapper: FC = () => {
       count={data?.data.count || 0}
       isLoading={isLoading}
       locations={locationsData?.result ?? []}
+      selectedType={selectedType}
+      onTypeChange={setSelectedType}
     />
   );
 };
