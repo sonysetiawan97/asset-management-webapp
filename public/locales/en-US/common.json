@@ -626,6 +626,7 @@
         "assigned_to": "Assigned To",
         "checked_out": "Checked Out",
         "expected_return": "Expected Return",
+        "expected": "Expected",
         "returned_on": "Returned On",
         "checked_out_on": "Checked Out On",
         "btn_view": "View",

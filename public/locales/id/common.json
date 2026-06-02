@@ -604,6 +604,7 @@
         "assigned_to": "Ditugaskan Ke",
         "checked_out": "Di-check-out",
         "expected_return": "Tgl Kembali Rencana",
+        "expected": "Direncanakan",
         "returned_on": "Tgl Dikembalikan",
         "checked_out_on": "Tgl Checkout",
         "btn_view": "Lihat",
