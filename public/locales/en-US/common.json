@@ -570,7 +570,35 @@
         }
       },
       "read": {
-        "title": "Asset Detail"
+        "title": "Asset Detail",
+        "logs": {
+          "title": "Asset Logs",
+          "checkout": {
+            "title": "Checkout History",
+            "empty": "No checkout records yet.",
+            "assignedTo": "Assigned to",
+            "assignedBy": "Assigned by",
+            "checkoutDate": "Checkout date",
+            "expectedReturn": "Expected return",
+            "returnDate": "Returned on",
+            "conditionOnReturn": "Condition on return",
+            "status": {
+              "open": "Open",
+              "returned": "Returned",
+              "overdue": "Overdue"
+            }
+          },
+          "maintenance": {
+            "title": "Maintenance History",
+            "empty": "No maintenance records yet.",
+            "type": "Type",
+            "performedBy": "Performed by",
+            "datePerformed": "Date performed",
+            "cost": "Cost",
+            "nextMaintenance": "Next maintenance",
+            "notes": "Notes"
+          }
+        }
       },
       "update": {
         "title": "Update Asset",

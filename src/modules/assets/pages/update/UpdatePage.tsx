@@ -22,7 +22,7 @@ const UpdatePage = () => {
   const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
   const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: userData } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: userData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
 
   const categories = categoryData?.result ?? [];
   const locations = locationData?.result ?? [];

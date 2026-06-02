@@ -548,7 +548,35 @@
         }
       },
       "read": {
-        "title": "Detail Aset"
+        "title": "Detail Aset",
+        "logs": {
+          "title": "Log Aset",
+          "checkout": {
+            "title": "Riwayat Checkout",
+            "empty": "Belum ada catatan checkout.",
+            "assignedTo": "Ditugaskan ke",
+            "assignedBy": "Ditugaskan oleh",
+            "checkoutDate": "Tanggal checkout",
+            "expectedReturn": "Pengembalian yang diharapkan",
+            "returnDate": "Dikembalikan pada",
+            "conditionOnReturn": "Kondisi saat dikembalikan",
+            "status": {
+              "open": "Terbuka",
+              "returned": "Dikembalikan",
+              "overdue": "Terlambat"
+            }
+          },
+          "maintenance": {
+            "title": "Riwayat Pemeliharaan",
+            "empty": "Belum ada catatan pemeliharaan.",
+            "type": "Jenis",
+            "performedBy": "Dilakukan oleh",
+            "datePerformed": "Tanggal dilakukan",
+            "cost": "Biaya",
+            "nextMaintenance": "Pemeliharaan berikutnya",
+            "notes": "Catatan"
+          }
+        }
       },
       "update": {
         "title": "Perbarui Aset",

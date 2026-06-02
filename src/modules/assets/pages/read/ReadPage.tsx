@@ -3,6 +3,7 @@ import { BackButton } from "@components/buttons/BackButton";
 import { UpdateButton } from "@components/buttons/UpdateButton";
 import { FormFields } from "../../components/FormFields";
 import { QRCodeSection } from "../../components/QRCodeSection";
+// import { AssetLogsSection } from "../../components/AssetLogsSection";
 import { CheckoutModal } from "../../components/CheckoutModal";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { ContentLoader } from "@components/loadings/ContentLoader";
@@ -27,7 +28,7 @@ const ReadPage = (_props: ReadPageProps) => {
   const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
   const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: userData } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: userData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
 
   const categories = categoryData?.result ?? [];
   const locations = locationData?.result ?? [];
@@ -71,6 +72,7 @@ const ReadPage = (_props: ReadPageProps) => {
       {assetId && assetCode && (
         <QRCodeSection assetCode={assetCode} assetName={assetName ?? ""} />
       )}
+      {/* {assetId && <AssetLogsSection assetId={assetId} />} */}
 
       {showCheckoutModal && assetId && (
         <CheckoutModal

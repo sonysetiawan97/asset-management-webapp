@@ -14,7 +14,7 @@ interface FormFieldsProps {
   categories: { id: string; name: string; useful_life_years: number; salvage_value_pct: number }[];
   locations: { id: string; name: string }[];
   departments: { id: string; name: string }[];
-  users: { id: string; name: string }[];
+  users: { id: string; first_name: string; last_name: string }[];
 }
 
 export const FormFields = ({
@@ -41,7 +41,7 @@ export const FormFields = ({
   const categoryOptions = categories.map((c) => ({ value: c.id, label: c.name }));
   const locationOptions = [{ value: "", label: "-- No Location --" }, ...locations.map((l) => ({ value: l.id, label: l.name }))];
   const departmentOptions = [{ value: "", label: "-- Select Department --" }, ...departments.map((d) => ({ value: d.id, label: d.name }))];
-  const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: u.id, label: u.name }))];
+  const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: u.id, label: `${u.first_name} ${u.last_name}`.trim() }))];
   const conditionOptions = ASSET_CONDITIONS.map((c) => ({ value: c.value, label: c.label }));
 
   return (

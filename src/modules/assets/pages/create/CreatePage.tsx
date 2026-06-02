@@ -22,7 +22,7 @@ const CreatePage = () => {
   const { data: categoriesData, isLoading: loadingCategories } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
   const { data: locationsData, isLoading: loadingLocations } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const { data: departmentsData, isLoading: loadingDepartments } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: usersData, isLoading: loadingUsers } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: usersData, isLoading: loadingUsers } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
 
   const isLoadingAny = loadingCategories || loadingLocations || loadingDepartments || loadingUsers;
   if (isLoadingAny) return <ContentLoader />;
