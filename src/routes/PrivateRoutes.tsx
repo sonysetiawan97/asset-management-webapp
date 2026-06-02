@@ -9,7 +9,6 @@ const PrivilegeRoutes = lazy(() => import("@modules/privileges/PrivateRoutes"));
 const RoleRoutes = lazy(() => import("@modules/roles/PrivateRoutes"));
 const ProductRoutes = lazy(() => import("@modules/products/PrivateRoutes"));
 const ExampleRoutes = lazy(() => import("@modules/examples/PrivateRoutes"));
-const SupplierRoutes = lazy(() => import("@modules/suppliers/PrivateRoutes"));
 const CategoryRoutes = lazy(() => import("@modules/categories/PrivateRoutes"));
 const LocationRoutes = lazy(() => import("@modules/locations/PrivateRoutes"));
 const DepartmentRoutes = lazy(() => import("@modules/departments/PrivateRoutes"));
@@ -38,7 +37,6 @@ const PrivateRoutes: FC = () => {
         <Route path="/roles/*" element={<RoleRoutes />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/products/*" element={<ProductRoutes />} />
-        <Route path="/suppliers/*" element={<SupplierRoutes />} />
         <Route path="/categories/*" element={<CategoryRoutes />} />
         <Route path="/locations/*" element={<LocationRoutes />} />
         <Route path="/departments/*" element={<DepartmentRoutes />} />

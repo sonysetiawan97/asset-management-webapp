@@ -354,34 +354,6 @@
         "title": "Detail Profile"
       }
     },
-    "suppliers": {
-      "list": {
-        "title": "List Suppliers"
-      },
-      "create": {
-        "title": "Create Supplier",
-        "form": {
-          "code": "Code",
-          "name": "Name",
-          "phone": "Phone",
-          "email": "Email"
-        },
-        "notification": {
-          "success": "Supplier success created.",
-          "error": "Oops, failed to saved."
-        }
-      },
-      "read": {
-        "title": "Supplier Detail"
-      },
-      "update": {
-        "title": "Update Supplier",
-        "notification": {
-          "success": "Supplier success updated.",
-          "error": "Oops, failed to saved."
-        }
-      }
-    },
     "orders": {
       "list": {
         "title": "List Orders"

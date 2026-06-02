@@ -65,7 +65,6 @@ AST-2026-000001
 | category_id | uuid | Yes | Reference to category |
 | location_id | uuid | No | Current location |
 | department_id | uuid | Yes | Owning department |
-| vendor_id | uuid | No | Purchase vendor |
 | custodian_id | uuid | No | Current custodian (user) |
 
 ### Financial Attributes
@@ -108,7 +107,6 @@ Asset
 ├── belongsTo Category (category_id)
 ├── belongsTo Location (location_id)
 ├── belongsTo Department (department_id)
-├── belongsTo User (vendor_id) - optional vendor
 ├── belongsTo User (custodian_id) - current holder
 ├── hasMany MaintenanceLog
 ├── hasMany CheckoutLog

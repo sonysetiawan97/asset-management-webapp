@@ -19,7 +19,6 @@ export interface Model {
   category_id: string;
   location_id: string;
   department_id: string;
-  vendor_id: string;
   custodian_id: string;
   purchase_price: number;
   purchase_date: string;
@@ -44,7 +43,6 @@ export interface CreateModel {
   category_id: string;
   location_id?: string;
   department_id?: string;
-  vendor_id?: string;
   custodian_id?: string;
   purchase_price: number;
   purchase_date: string;
@@ -67,7 +65,6 @@ export interface UpdateModel {
   category_id: string;
   location_id?: string;
   department_id?: string;
-  vendor_id?: string;
   custodian_id?: string;
   purchase_price: number;
   purchase_date: string;
