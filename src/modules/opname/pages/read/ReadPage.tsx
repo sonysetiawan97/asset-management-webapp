@@ -5,6 +5,7 @@ import { moduleName, type OpnameItem, type ReadModel } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { StatusBadge } from "@components/list/StatusBadge";
 import { LoadingPage } from "@components/loadings/LoadingPage";
+import { Pagination } from "@components/list/Pagination";
 import { apiAxios } from "@/utils/apiAxios";
 import { enqueueSnackbar } from "notistack";
 
@@ -17,6 +18,10 @@ interface ReadPageProps {
   summary: unknown;
   discrepancies: unknown[];
   loadingSub: boolean;
+  itemsCount: number;
+  itemsSkip: number;
+  itemsLimit: number;
+  onItemsPageChange: (newSkip: number) => void;
 }
 
 const STATUS_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
@@ -73,6 +78,10 @@ export const ReadPage: FC<ReadPageProps> = ({
   summary,
   discrepancies,
   loadingSub,
+  itemsCount,
+  itemsSkip,
+  itemsLimit,
+  onItemsPageChange,
 }) => {
   const { t } = useTranslation();
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -249,8 +258,8 @@ export const ReadPage: FC<ReadPageProps> = ({
                   type="button"
                 >
                   {t(`modules.opname.read.tab_${tab}`)}
-                  {tab === "items" && items.length > 0 && (
-                    <span className="badge bg-secondary ms-1">{items.length}</span>
+                  {tab === "items" && itemsCount > 0 && (
+                    <span className="badge bg-secondary ms-1">{itemsCount}</span>
                   )}
                   {tab === "discrepancies" && discrepancies.length > 0 && (
                     <span className="badge bg-danger ms-1">{discrepancies.length}</span>
@@ -295,25 +304,33 @@ export const ReadPage: FC<ReadPageProps> = ({
                     )}
                   </div>
                 ) : (
-                  <div className="table-responsive">
-                    <table className="table table-hover table-sm align-middle">
-                      <thead className="table-light">
-                        <tr>
-                          <th>Asset Code</th>
-                          <th>Asset Name</th>
-                          <th>Result</th>
-                          <th>Counted At</th>
-                          <th>Counter</th>
-                          <th>Notes</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(items as OpnameItem[]).map((item) => (
-                          <ItemRow key={item.id} item={item} />
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                  <>
+                    <div className="table-responsive">
+                      <table className="table table-hover table-sm align-middle">
+                        <thead className="table-light">
+                          <tr>
+                            <th>Asset Code</th>
+                            <th>Asset Name</th>
+                            <th>Result</th>
+                            <th>Counted At</th>
+                            <th>Counter</th>
+                            <th>Notes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(items as OpnameItem[]).map((item) => (
+                            <ItemRow key={item.id} item={item} />
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <Pagination
+                      count={itemsCount}
+                      skip={itemsSkip}
+                      limit={itemsLimit}
+                      onPageChange={onItemsPageChange}
+                    />
+                  </>
                 )}
               </div>
             )}
