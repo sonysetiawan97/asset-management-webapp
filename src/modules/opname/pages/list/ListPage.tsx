@@ -47,28 +47,30 @@ export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, on
 
   return (
     <div className="module-list-container">
-      {/* Stat Bar */}
-      <div className="module-stat-bar">
-        <div className="row g-2 w-100">
-          <div className="col">
-            <div className="stat-chip stat-chip--all" onClick={() => onStatusChange(null)}>
-              <span className="stat-chip__label">{t("filter_all", { defaultValue: "All" })}</span>
-              <span className="stat-chip__count">{data.length}</span>
-            </div>
-          </div>
+      {/* Status Filter Bar */}
+      <div className="status-filter-bar">
+        <span className="status-filter-bar__label">{t("modules.opname.list.filter_by_status")}</span>
+        <div className="status-filter-bar__chips">
+          <button
+            className={`status-chip ${selectedStatus === null ? "active" : ""}`}
+            onClick={() => onStatusChange(null)}
+          >
+            <span className="status-chip__label">{t("modules.opname.list.filter_all")}</span>
+            <span className="status-chip__count">{count}</span>
+          </button>
           {statusStats.map((s) => {
             const color = getStatusColor(s.value);
             return (
-              <div className="col" key={s.value}>
-                <div
-                  className={`stat-chip ${selectedStatus === s.value ? "active" : ""}`}
-                  onClick={() => onStatusChange(s.value)}
-                  style={{ "--chip-bg": color.bg, "--chip-text": color.text, "--chip-dot": color.dot } as React.CSSProperties}
-                >
-                  <span className="stat-chip__label">{t(s.label)}</span>
-                  <span className="stat-chip__count">{s.count}</span>
-                </div>
-              </div>
+              <button
+                key={s.value}
+                className={`status-chip ${selectedStatus === s.value ? "active" : ""}`}
+                data-status={s.value}
+                onClick={() => onStatusChange(s.value)}
+              >
+                <span className="status-chip__dot" style={{ background: color.dot }} />
+                <span className="status-chip__label">{t(s.label)}</span>
+                <span className="status-chip__count">{s.count}</span>
+              </button>
             );
           })}
         </div>
@@ -126,7 +128,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, on
                       </td>
                       <td style={{ minWidth: "140px" }}>
                         <div className="d-flex align-items-center gap-2">
-                          <div className="progress flex-grow-1" style={{ height: "6px" }}>
+                          <div className="progress flex-grow-1" style={{ height: "6px", backgroundColor: "#e0e7ff" }}>
                             <div
                               className="progress-bar"
                               role="progressbar"
@@ -142,7 +144,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, on
                         </div>
                       </td>
                       <td className="text-center">
-                        <Link to={`/${moduleName}/${session.id}`} className="btn btn-sm btn-outline-primary">
+                        <Link to={`/${moduleName}/${session.id}`} className="btn-action" title={t("modules.opname.list.btn_view")}>
                           <i className="bi bi-eye" />
                         </Link>
                       </td>

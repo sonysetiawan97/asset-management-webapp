@@ -837,7 +837,9 @@
         "btn_view": "Lihat",
         "btn_count": "Hitung",
         "progress": "Kemajuan",
-        "empty": "Belum ada sesi opname."
+        "empty": "Belum ada sesi opname.",
+        "filter_by_status": "Filter berdasarkan status",
+        "filter_all": "Semua"
       },
       "create": {
         "title": "Sesi Opname Baru",

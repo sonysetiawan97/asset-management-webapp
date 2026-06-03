@@ -859,7 +859,9 @@
         "btn_view": "View",
         "btn_count": "Count",
         "progress": "Progress",
-        "empty": "No opname sessions yet."
+        "empty": "No opname sessions yet.",
+        "filter_by_status": "Filter by status",
+        "filter_all": "All"
       },
       "create": {
         "title": "New Opname Session",
