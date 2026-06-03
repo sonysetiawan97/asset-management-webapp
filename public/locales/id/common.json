@@ -645,6 +645,15 @@
         "filter_by_status": "Filter berdasarkan status",
         "empty": "Belum ada permintaan transfer.",
         "requested_by": "Diminta Oleh",
+        "transfer_type": "Tipe",
+        "transfer_type_short": {
+          "inter_department": "Antar-Dept",
+          "inter_location": "Antar-Lok",
+          "combined": "Gabung"
+        },
+        "from_label": "Dari",
+        "to_label": "Ke",
+        "no_value": "—",
         "notification": {
           "approved": "Transfer disetujui.",
           "rejected": "Transfer ditolak."
@@ -654,11 +663,22 @@
         "title": "Mulai Transfer",
         "form": {
           "asset": "Aset",
+          "transfer_type": "Tipe Transfer",
+          "transfer_type_options": {
+            "inter_department": "Antar-Departemen",
+            "inter_location": "Antar-Lokasi",
+            "combined": "Gabung"
+          },
+          "section_source": "Sumber (dari aset terpilih)",
+          "section_destination": "Tujuan",
           "from_location": "Dari Lokasi",
           "to_location": "Ke Lokasi",
+          "from_department": "Dari Departemen",
+          "to_department": "Ke Departemen",
           "from_custodian": "Dari Penanggung Jawab",
           "to_custodian": "Ke Penanggung Jawab",
-          "reason": "Alasan"
+          "reason": "Alasan",
+          "notes": "Catatan (opsional)"
         },
         "notification": {
           "success": "Permintaan transfer diajukan.",

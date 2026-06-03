@@ -1,4 +1,4 @@
-export const moduleName = "opname/sessions";
+export const moduleName = "opname";
 
 export type OpnameStatus = "draft" | "in_progress" | "pending_approval" | "approved" | "closed";
 
@@ -35,7 +35,7 @@ export interface ReadModel extends OpnameSession {
   creator?: { id: string; first_name: string; last_name: string };
 }
 
-export interface UpdateModel extends CreateModel {}
+export type UpdateModel = CreateModel
 
 export interface OpnameItem {
   id: string;

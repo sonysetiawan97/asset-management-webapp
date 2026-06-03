@@ -1,6 +1,6 @@
 import { useEffect, type FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { moduleName, type UpdateModel, type ReadModel } from "../../types/Model";
+import { type UpdateModel, type ReadModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { UpdatePage } from "./UpdatePage";
 import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
@@ -13,7 +13,7 @@ import { LoadingPage } from "@components/loadings/LoadingPage";
 const UpdateWrapper: FC = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
-  const { data, error, isLoading } = useFindOneById<ReadModel>(moduleName, id);
+  const { data, error, isLoading } = useFindOneById<ReadModel>("opname/sessions", id);
   const methods = useForm<UpdateModel>({ mode: "onBlur" });
   const { reset } = methods;
 
@@ -26,7 +26,7 @@ const UpdateWrapper: FC = () => {
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
-      { label: "Opname", path: `/${moduleName}` },
+      { label: "Opname", path: `/opname` },
       { label: data?.name || "Edit" },
     ]);
   }, [data]);

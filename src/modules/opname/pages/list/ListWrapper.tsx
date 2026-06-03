@@ -1,7 +1,7 @@
 import { useEffect, useState, type FC } from "react";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
-import { type OpnameSession, moduleName } from "../../types/Model";
+import { type OpnameSession } from "../../types/Model";
 import { useSearch } from "@hooks/list/useSearch";
 import { LoadingPage } from "@/components/loadings/LoadingPage";
 import { usePagination } from "@hooks/list/usePagination";
@@ -19,7 +19,7 @@ export const ListWrapper: FC = () => {
   };
 
   const { data, isLoading, error } = useList<OpnameSession>({
-    module: moduleName,
+    module: "opname/sessions",
     skip,
     limit,
     params,
@@ -28,7 +28,7 @@ export const ListWrapper: FC = () => {
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
-      { label: "Opname", path: `/${moduleName}` },
+      { label: "Opname", path: `/opname/sessions` },
     ]);
   }, []);
 

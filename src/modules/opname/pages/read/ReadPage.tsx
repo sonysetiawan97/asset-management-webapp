@@ -434,7 +434,7 @@ export const ReadPage: FC<ReadPageProps> = ({
                                   className="btn btn-outline-success btn-xs"
                                   onClick={async () => {
                                     try {
-                                      await apiAxios.patch(`/opname/items/${item.id}/approve-adjustment`);
+                                      await apiAxios.patch(`/opname/sessions/${session.id}/items/${item.id}/approve-adjustment`);
                                       enqueueSnackbar(
                                         t("modules.opname.read.notification.adjustment_approved"),
                                         { variant: "success" }

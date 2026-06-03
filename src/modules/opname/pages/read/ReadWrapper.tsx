@@ -22,8 +22,8 @@ export const ReadWrapper: FC = () => {
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
-      { label: t("modules.opname.list.title"), path: "/opname/sessions" },
-      { label: t("modules.opname.read.breadcrumb"), path: "" },
+      { label: t("modules.opname.list.title"), path: "/opname" },
+      { label: data?.name ?? id ?? "", path: "" },
     ]);
   }, [t]);
 
@@ -35,6 +35,7 @@ export const ReadWrapper: FC = () => {
       apiAxios
         .get(`/opname/sessions/${id}/items`)
         .then((res) => {
+          console.log(res.data.data)
           setItems(res.data.data.result ?? []);
           setLoadingSub(false);
         })

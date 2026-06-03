@@ -22,9 +22,14 @@ const UpdatePage: FC = () => {
       return;
     }
     try {
-      await updateAsync({ id, url: moduleName, body: data });
+      await updateAsync({
+        id,
+        url: "opname/sessions",
+        body: data,
+        queryKey: ["opname/sessions"],
+      });
       enqueueSnackbar("Opname session updated", { variant: "success" });
-      navigate(`/${moduleName}`);
+      navigate(`/opname`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
       enqueueSnackbar(message, { variant: "error" });

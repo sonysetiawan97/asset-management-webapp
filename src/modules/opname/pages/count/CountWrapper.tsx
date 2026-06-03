@@ -59,8 +59,8 @@ export const CountWrapper: FC = () => {
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
-      { label: t("modules.opname.list.title"), path: "/opname/sessions" },
-      { label: session?.name ?? id ?? "", path: `/opname/sessions/${id}` },
+      { label: t("modules.opname.list.title"), path: "/opname" },
+      { label: session?.name ?? id ?? "", path: `/opname/read/${id}` },
       { label: t("modules.opname.count.title_short"), path: "" },
     ]);
   }, [t, session, id]);
@@ -146,7 +146,7 @@ export const CountWrapper: FC = () => {
     if (!id) return;
     setSubmittingId(itemId);
     try {
-      await apiAxios.patch(`/opname/sessions/${id}/items/${itemId}/count`, {
+      await apiAxios.patch(`/opname/items/${itemId}/count`, {
         counted_status: countedStatus,
         counted_location_id: countedLocationId,
         counted_condition: countedCondition,

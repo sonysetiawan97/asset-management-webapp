@@ -60,22 +60,46 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/checkouts">
-            <SidebarMenuItem url="/checkouts" title={t("sidebar.assets_management.menu.checkouts")} icon={<CheckoutsIcon />} />
+            <SidebarMenuItem
+              url="/checkouts"
+              title={t("sidebar.assets_management.menu.checkouts")}
+              icon={<CheckoutsIcon />}
+            />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/transfers">
-            <SidebarMenuItem url="/transfers" title={t("sidebar.assets_management.menu.transfers")} icon={<TransfersIcon />} />
+            <SidebarMenuItem
+              url="/transfers"
+              title={t("sidebar.assets_management.menu.transfers")}
+              icon={<TransfersIcon />}
+            />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/maintenance">
-            <SidebarMenuItem url="/maintenance" title={t("sidebar.assets_management.menu.maintenance")} icon={<MaintenanceIcon />} />
+            <SidebarMenuItem
+              url="/maintenance"
+              title={t("sidebar.assets_management.menu.maintenance")}
+              icon={<MaintenanceIcon />}
+            />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/reports">
-            <SidebarMenuItem url="/reports" title={t("sidebar.assets_management.menu.report")} icon={<ReportsIcon />} />
+            <SidebarMenuItem
+              url="/reports"
+              title={t("sidebar.assets_management.menu.report")}
+              icon={<ReportsIcon />}
+            />
           </AuthPrivilegesChecker>
-          <AuthPrivilegesChecker link="/opname/sessions">
-            <SidebarMenuItem url="/opname/sessions" title={t("sidebar.assets_management.menu.opname")} icon={<OpnameIcon />} />
+          <AuthPrivilegesChecker link="/opname">
+            <SidebarMenuItem
+              url="/opname"
+              title={t("sidebar.assets_management.menu.opname")}
+              icon={<OpnameIcon />}
+            />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/scan">
-            <SidebarMenuItem url="/scan" title={t("sidebar.assets_management.menu.scan")} icon={<ScanIcon />} />
+            <SidebarMenuItem
+              url="/scan"
+              title={t("sidebar.assets_management.menu.scan")}
+              icon={<ScanIcon />}
+            />
           </AuthPrivilegesChecker>
 
           {/* Master Data */}
@@ -127,7 +151,10 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
           </AuthPrivilegesChecker>
 
           {/* System */}
-          <SidebarMenuTitle title={t("sidebar.system.title")} links={["/sysparams"]} />
+          <SidebarMenuTitle
+            title={t("sidebar.system.title")}
+            links={["/sysparams"]}
+          />
           <AuthPrivilegesChecker link="/sysparams">
             <SidebarMenuItem
               url="/sysparams"
@@ -138,7 +165,7 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default Sidebar;

@@ -667,6 +667,15 @@
         "filter_by_status": "Filter by status",
         "empty": "No transfer requests yet.",
         "requested_by": "Requested By",
+        "transfer_type": "Type",
+        "transfer_type_short": {
+          "inter_department": "Inter-Dept",
+          "inter_location": "Inter-Loc",
+          "combined": "Combined"
+        },
+        "from_label": "From",
+        "to_label": "To",
+        "no_value": "—",
         "notification": {
           "approved": "Transfer approved.",
           "rejected": "Transfer rejected."
@@ -676,11 +685,22 @@
         "title": "Initiate Transfer",
         "form": {
           "asset": "Asset",
+          "transfer_type": "Transfer Type",
+          "transfer_type_options": {
+            "inter_department": "Inter-Department",
+            "inter_location": "Inter-Location",
+            "combined": "Combined"
+          },
+          "section_source": "Source (from selected asset)",
+          "section_destination": "Destination",
           "from_location": "From Location",
           "to_location": "To Location",
+          "from_department": "From Department",
+          "to_department": "To Department",
           "from_custodian": "From Custodian",
           "to_custodian": "To Custodian",
-          "reason": "Reason"
+          "reason": "Reason",
+          "notes": "Notes (optional)"
         },
         "notification": {
           "success": "Transfer request submitted.",
@@ -693,8 +713,8 @@
     },
     "maintenance": {
       "list": {
-        "title": "Maintenance Logs",
-        "total_logs": "Total Logs",
+        "title": "Maintenance",
+        "total_logs": "Total",
         "open": "Open",
         "completed": "Completed",
         "total_cost": "Total Cost",

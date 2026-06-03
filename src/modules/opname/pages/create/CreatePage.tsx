@@ -13,14 +13,14 @@ import { useNavigate } from "react-router-dom";
 const CreatePage: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { handleSubmit } = useFormContext<CreateModel>();
-  const { createAsync, isLoading } = useCreate<CreateModel>(moduleName);
+  const { createAsync, isLoading } = useCreate<CreateModel>("opname/sessions");
   const navigate = useNavigate();
 
   const onSubmit = async (data: CreateModel) => {
     try {
-      await createAsync({ url: moduleName, body: data });
+      await createAsync({ url: "opname/sessions", body: data });
       enqueueSnackbar("Opname session created", { variant: "success" });
-      navigate(`/${moduleName}`);
+      navigate(`/opname`);
     } catch (error: unknown) {
       const { message } = error as AxiosError;
       enqueueSnackbar(message, { variant: "error" });

@@ -11,21 +11,23 @@ import { useFindOneById } from "@hooks/request/useFindOneById";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
 import { useFindAll } from "@hooks/request/useFindAll";
-import { FormFields } from "../../components/FormFields";
+import { FormFields, type TransferAsset } from "../../components/FormFields";
 
 const ReadPage: FC = () => {
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
+  const { data: assetsData } = useFindAll<TransferAsset>("assets", "assets");
   const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "locations");
+  const { data: departmentsData } = useFindAll<{ id: string; name: string }>("departments", "departments");
   const { data: usersData } = useFindAll<{ id: number; first_name: string; last_name: string }>("users", "users");
 
   const assets = assetsData?.result ?? [];
   const locations = locationsData?.result ?? [];
+  const departments = departmentsData?.result ?? [];
   const users = usersData?.result ?? [];
 
-  if (!assetsData || !locationsData || !usersData) return <ContentLoader />;
+  if (!assetsData || !locationsData || !departmentsData || !usersData) return <ContentLoader />;
   return (
     <form className="row g-3">
-      <div className="col-12"><FormFields readOnly={true} assets={assets} locations={locations} users={users} /></div>
+      <div className="col-12"><FormFields readOnly={true} assets={assets} locations={locations} departments={departments} users={users} /></div>
       <div className="col-12"><div className="d-flex gap-2 mt-2"><BackButton /></div></div>
     </form>
   );
