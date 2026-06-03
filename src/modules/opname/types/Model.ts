@@ -59,6 +59,7 @@ export interface OpnameItem {
   };
   expected_location?: { id: string; name: string };
   counted_location?: { id: string; name: string };
+  countedByUser?: { id: string; first_name: string; last_name: string };
 }
 
 export const OPNAME_STATUSES: { value: OpnameStatus; label: string; className: string }[] = [

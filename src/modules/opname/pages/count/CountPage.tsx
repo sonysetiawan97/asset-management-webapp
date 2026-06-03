@@ -66,7 +66,7 @@ const CountForm: FC<CountFormProps> = ({ item, submittingId, onCount, onCancel }
           <div className="col-4">
             <label className="form-label small fw-semibold">{t("modules.opname.count.expected_location")}</label>
             <div className="p-2 bg-light rounded text-truncate">
-              <small>{(item as unknown as Record<string, unknown>)["expected_location"] ? String((item as unknown as Record<string, unknown>)["expected_location"]) : "—"}</small>
+              <small>{item.expected_location?.name ?? "—"}</small>
             </div>
           </div>
           <div className="col-4">
@@ -219,7 +219,7 @@ export const Count: FC<CountPageProps> = ({
         <div className="card-body py-2">
           <div className="d-flex align-items-center justify-content-between flex-wrap gap-2">
             <div>
-              <h5 className="mb-0 fw-bold">{t("modules.opname.count.title")}</h5>
+              <h5 className="mb-0 fw-bold">{t("modules.opname.count.title_short")}</h5>
               <small className="text-muted">{session.name}</small>
             </div>
             <div className="d-flex align-items-center gap-3">
@@ -396,11 +396,7 @@ export const Count: FC<CountPageProps> = ({
                             <span className="text-muted text-truncate">{item.asset?.name ?? "—"}</span>
                           </div>
                           <div className="small text-muted">
-                            {(item as unknown as Record<string, unknown>)["expected_location"]
-                              ? String((item as unknown as Record<string, unknown>)["expected_location"])
-                              : (item as unknown as Record<string, unknown>)["expectedLocation"]
-                              ? String((item as unknown as Record<string, unknown>)["expectedLocation"])
-                              : "—"}
+                            {item.expected_location?.name ?? "—"}
                           </div>
                         </div>
                         {isCounted ? (

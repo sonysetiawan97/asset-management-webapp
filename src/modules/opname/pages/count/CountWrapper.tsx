@@ -60,7 +60,7 @@ export const CountWrapper: FC = () => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
       { label: t("modules.opname.list.title"), path: "/opname" },
-      { label: session?.name ?? id ?? "", path: `/opname/read/${id}` },
+      { label: session?.name ?? id ?? "", path: `/opname/${id}` },
       { label: t("modules.opname.count.title_short"), path: "" },
     ]);
   }, [t, session, id]);

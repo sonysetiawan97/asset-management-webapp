@@ -522,6 +522,12 @@
       }
     },
     "assets": {
+      "condition": {
+        "new": "New",
+        "good": "Good",
+        "fair": "Fair",
+        "poor": "Poor"
+      },
       "list": {
         "title": "List Assets",
         "total_assets": "Total Assets",

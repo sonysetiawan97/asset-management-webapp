@@ -500,6 +500,12 @@
       }
     },
     "assets": {
+      "condition": {
+        "new": "Baru",
+        "good": "Baik",
+        "fair": "Cukup",
+        "poor": "Buruk"
+      },
       "list": {
         "title": "Daftar Aset",
         "total_assets": "Total Aset",

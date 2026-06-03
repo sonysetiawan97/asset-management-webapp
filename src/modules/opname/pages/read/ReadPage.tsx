@@ -52,9 +52,7 @@ const ItemRow: FC<{ item: OpnameItem }> = ({ item }) => {
         <span className="badge" style={{ backgroundColor: sc.bg, color: sc.text }}>{sc.label}</span>
       </td>
       <td>{item.counted_at ? formatDate(item.counted_at) : "—"}</td>
-      <td>{(item as unknown as Record<string, unknown>)["counted_by_user"]
-        ? String((item as unknown as Record<string, unknown>)["counted_by_user"])
-        : "—"}</td>
+      <td>{item.countedByUser ? `${item.countedByUser.first_name} ${item.countedByUser.last_name}`.trim() || "—" : "—"}</td>
       <td>
         {item.notes ? (
           <small className="text-muted text-truncate d-inline-block" style={{ maxWidth: 120 }}>
