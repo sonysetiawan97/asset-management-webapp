@@ -20,7 +20,7 @@ export const ListWrapper: FC = () => {
     <List
       data={data?.data?.result ?? []}
       count={data?.data?.count ?? 0}
-      countByStatus={data?.data?.count_by_status}
+      countByStatus={data?.data?.count_by_status as CountByTransferStatus | undefined}
       isLoading={isLoading}
     />
   );
