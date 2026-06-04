@@ -49,9 +49,7 @@ const CreateWrapper: FC = () => {
   return (
     <FormProvider {...methods}>
       <TitleBarWithIcon title={t("modules.maintenance.create.title")}>
-        <svg height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-          <path d="M440-280v-80h80v80h-80Zm160 0v-80h80v80h-80Z" />
-        </svg>
+        <i className="bi bi-wrench"></i>
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="col-12">

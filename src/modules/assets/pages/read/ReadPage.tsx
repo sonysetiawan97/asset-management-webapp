@@ -60,9 +60,7 @@ const ReadPage = (_props: ReadPageProps) => {
                 className="btn btn-primary"
                 onClick={() => setShowCheckoutModal(true)}
               >
-                <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" className="me-1">
-                  <path d="M240-160q-33 0-56.5-23.5T160-240v-560q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v560q0 33-23.5 56.5T720-160H240Z" />
-                </svg>
+                <i className="bi bi-send me-1"></i>
                 {t("modules.checkout.create.title")}
               </button>
             )}

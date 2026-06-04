@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { useList } from "@hooks/list/useList";
-import { type Notification, moduleName, NOTIFICATION_TYPE_LABELS, NOTIFICATION_TYPE_ICONS } from "../../types/Model";
+import { type Notification, moduleName, NOTIFICATION_TYPE_LABELS } from "../../types/Model";
 import { useMarkRead } from "../../services/useNotificationPoll";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
@@ -28,6 +28,20 @@ const formatDate = (dateStr: string | undefined) => {
   if (diffHours < 24) return `${diffHours}h ago`;
   if (diffDays < 7) return `${diffDays}d ago`;
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
+
+const getNotifIcon = (type: string): string => {
+  const icons: Record<string, string> = {
+    warranty_expiry: "bi bi-bell",
+    license_expiry: "bi bi-file-text",
+    maintenance_due: "bi bi-wrench",
+    overdue_checkin: "bi bi-clock",
+    asset_lost: "bi bi-exclamation-triangle",
+    checkout_approved: "bi bi-check-circle",
+    transfer_approved: "bi bi-check-circle",
+    transfer_rejected: "bi bi-x-circle",
+  };
+  return icons[type] || "bi bi-bell";
 };
 
 export const List: FC<ListProps> = ({ filterRead }) => {
@@ -84,9 +98,7 @@ export const List: FC<ListProps> = ({ filterRead }) => {
       {/* Header + Tabs */}
       <div className="module-list-header">
         <div className="module-list-title">
-          <svg width="20" height="20" viewBox="0 -960 960 960" fill="#1a1a2e">
-            <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
-          </svg>
+          <i className="bi bi-bell fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.notifications.list.title")}</h2>
         </div>
         {unreadCount > 0 && (
@@ -117,9 +129,7 @@ export const List: FC<ListProps> = ({ filterRead }) => {
         {allNotifications.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
-              <svg width="48" height="48" viewBox="0 -960 960 960" fill="#d1d5db">
-                <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
-              </svg>
+              <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
             <p className="empty-state__text">{t("modules.notifications.list.empty")}</p>
           </div>
@@ -132,9 +142,7 @@ export const List: FC<ListProps> = ({ filterRead }) => {
               onClick={() => !notification.is_read && handleMarkRead(notification.id)}
             >
               <div className={`notification-icon ${!notification.is_read ? "unread" : ""}`}>
-                <svg width="18" height="18" viewBox="0 -960 960 960" fill="currentColor">
-                  <path d={NOTIFICATION_TYPE_ICONS[notification.type] || NOTIFICATION_TYPE_ICONS.checkout_approved} />
-                </svg>
+                <i className={getNotifIcon(notification.type)}></i>
               </div>
               <div className="notification-content">
                 <div className="notification-header">

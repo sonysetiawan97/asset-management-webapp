@@ -138,10 +138,15 @@ a {
   transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
-.sidebar-menu-icon svg {
+.sidebar-menu-icon svg,
+.sidebar-menu-icon i {
   width: 18px;
   height: 18px;
   fill: currentColor;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .app-sidebar .list-group-item:hover .sidebar-menu-icon {

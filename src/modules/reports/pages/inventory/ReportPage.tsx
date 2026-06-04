@@ -33,15 +33,11 @@ export const InventoryReport: FC = () => {
 
       <div className="module-list-header">
         <div className="module-list-title">
-          <svg width="20" height="20" viewBox="0 -960 960 960" fill="#1a1a2e">
-            <path d="M520-120q-17 0-28.5-11.5T480-160q0-17 11.5-28.5T520-200h320q17 0 28.5 11.5T880-160q0 17-11.5 28.5T840-120H520Z" />
-          </svg>
+          <i className="bi bi-plus-lg"></i>
           <h2>{t("modules.reports.inventory.title")}</h2>
         </div>
         <button className="btn-create" onClick={() => window.print()}>
-          <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
-            <path d="M760-160q-33 0-56.5-23.5T680-240v-320h120v-120H240v120h120v320q0 33-23.5 56.5T300-160H760Zm-40-280v-200H280v200H240v-240q0-33 23.5-56.5T300-680h440q33 0 56.5 23.5T820-600v240H720Zm40 40v-80h280v80H760Z" />
-          </svg>
+          <i className="bi bi-info-circle"></i>
           {t("modules.reports.export_csv")}
         </button>
       </div>

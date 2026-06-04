@@ -67,9 +67,7 @@ const ReadWrapper: FC = () => {
   return (
     <FormProvider {...methods}>
       <TitleBarWithIcon title={t("modules.checkout.update.title")}>
-        <svg height="24" width="24" viewBox="0 -960 960 960" fill="#000">
-          <path d="M386-194q22-22 51-34t60-12h110v-100H537q-36 0-60 24.5T453-280v-140q0-36-24-60t-60-24H209v100h140v100H179q-36 0-60 24t-24 60v140q0 36 24 60t60 24h110q33 0 60-12t51-34Z" />
-        </svg>
+        <i className="bi bi-send"></i>
       </TitleBarWithIcon>
 
       {/* Asset Info Card */}

@@ -99,15 +99,11 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
       {/* Header */}
       <div className="module-list-header">
         <div className="module-list-title">
-          <svg width="20" height="20" viewBox="0 -960 960 960" fill="#1a1a2e">
-            <path d="M520-80q-17 0-28.5-11.5T480-120q0-17 11.5-28.5T520-160h320q17 0 28.5 11.5T880-120q0 17-11.5 28.5T840-80H520Z" />
-          </svg>
+          <i className="bi bi-arrow-left-right fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.transfers.list.title")}</h2>
         </div>
         <Link to={`/${moduleName}/create`} className="btn-create">
-          <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
-            <path d="M720-160q-33 0-56.5-23.5T640-240v-480q0-33 23.5-56.5T720-800h240q33 0 56.5 23.5T1040-720v480q0 33-23.5 56.5T960-160H720Z" />
-          </svg>
+          <i className="bi bi-plus-lg"></i>
           {t("button.create")}
         </Link>
       </div>
@@ -117,9 +113,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
         {filteredData.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
-              <svg width="48" height="48" viewBox="0 -960 960 960" fill="#d1d5db">
-                <path d="M520-80q-17 0-28.5-11.5T480-120q0-17 11.5-28.5T520-160h320q17 0 28.5 11.5T880-120q0 17-11.5 28.5T840-80H520Z" />
-              </svg>
+              <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
             <p className="empty-state__text">{t("modules.transfers.list.empty")}</p>
           </div>
@@ -143,21 +137,15 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
 
                   <div className="transfer-route">
                     <div className="transfer-route__from">
-                      <svg width="12" height="12" viewBox="0 -960 960 960" fill="#ef4444">
-                        <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
-                      </svg>
+                      <i className="bi bi-geo-alt-fill" style={{ color: "#ef4444" }}></i>
                       <span>{transfer.from_location_name ?? "—"}</span>
                       {transfer.from_custodian_name && <small>{transfer.from_custodian_name}</small>}
                     </div>
                     <div className="transfer-route__arrow">
-                      <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
-                        <path d="m424-296-56-56 120-120H120v-80h312L368-712l56-56 184 184-184 184Z" />
-                      </svg>
+                      <i className="bi bi-arrow-right"></i>
                     </div>
                     <div className="transfer-route__to">
-                      <svg width="12" height="12" viewBox="0 -960 960 960" fill="#10b981">
-                        <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
-                      </svg>
+                      <i className="bi bi-geo-alt-fill" style={{ color: "#10b981" }}></i>
                       <span>{transfer.to_location_name ?? "—"}</span>
                       {transfer.to_custodian_name && <small>{transfer.to_custodian_name}</small>}
                     </div>
@@ -183,7 +171,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
                           onClick={() => handleApprove(transfer.id)}
                           disabled={workflowMutation.isPending}
                         >
-                          <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d={"M382-202 144-440l56-56 182 182 350-350 56 56-406 406Z"} /></svg>
+                          <i className="bi bi-check-lg"></i>
                         </button>
                         <button
                           className="btn-action btn-action--danger"
@@ -191,12 +179,12 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
                           onClick={() => handleReject(transfer.id)}
                           disabled={workflowMutation.isPending}
                         >
-                          <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d={"M336-285 168-453l56-56 168 168 168-168 56 56-168 168 168 168-56 56-168-168-168 168-56-56 168-168Z"} /></svg>
+                          <i className="bi bi-x-lg"></i>
                         </button>
                       </>
                     )}
                     <Link to={`/${moduleName}/${transfer.id}`} className="btn-action" title="View">
-                      <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor"><path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z" /></svg>
+                      <i className="bi bi-eye"></i>
                     </Link>
                   </div>
                 </div>

@@ -215,9 +215,7 @@ const ReadWrapper: FC = () => {
   return (
     <>
       <TitleBarWithIcon title={t("modules.disposals.read.title")}>
-        <svg className="d-flex" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#373737">
-          <path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z" />
-        </svg>
+        <i className="bi bi-eye"></i>
       </TitleBarWithIcon>
       <ReadPage data={data} />
     </>

@@ -115,15 +115,11 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
       {/* ── Header Bar ── */}
       <div className="module-list-header">
         <div className="module-list-title">
-          <svg width="20" height="20" viewBox="0 -960 960 960" fill="#1a1a2e">
-            <path d="M520-120q-17 0-28.5-11.5T480-160q0-17 11.5-28.5T520-200h320q17 0 28.5 11.5T880-160q0 17-11.5 28.5T840-120H520Zm0-160q-17 0-28.5-11.5T480-360q0-17 11.5-28.5T520-400h320q17 0 28.5 11.5T880-360q0 17-11.5 28.5T840-320H520Z" />
-          </svg>
+          <i className="bi bi-box-seam fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.assets.list.title")}</h2>
         </div>
         <Link to={`/${moduleName}/create`} className="btn-create">
-          <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
-            <path d="M720-160q-33 0-56.5-23.5T640-240v-480q0-33 23.5-56.5T720-800h240q33 0 56.5 23.5T1040-720v480q0 33-23.5 56.5T960-160H720Zm0-160v-100h80v100h100v80h-100v100h-80v-100H640v-80h80Zm-320-80v-240H160v-80h240v-240h80v240h240v80H400v240h-80v-80H160v80h80Z" />
-          </svg>
+          <i className="bi bi-plus-lg"></i>
           {t("button.create")}
         </Link>
       </div>
@@ -133,9 +129,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
         {data.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
-              <svg width="48" height="48" viewBox="0 -960 960 960" fill="#d1d5db">
-                <path d="M520-120q-17 0-28.5-11.5T480-160q0-17 11.5-28.5T520-200h320q17 0 28.5 11.5T880-160q0 17-11.5 28.5T840-120H520Z" />
-              </svg>
+              <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
             <p className="empty-state__text">{t("modules.assets.list.empty")}</p>
             <Link to={`/${moduleName}/create`} className="btn-create-empty">
@@ -181,25 +175,19 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
                   <div className="asset-meta">
                     {categoryName && (
                       <div className="asset-meta__item">
-                        <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                          <path d="M560-160q-17 0-28.5-11.5T520-200q0-17 11.5-28.5T560-240h320q17 0 28.5 11.5T920-200q0 17-11.5 28.5T880-160H560Z" />
-                        </svg>
+                        <i className="bi bi-tag"></i>
                         {categoryName}
                       </div>
                     )}
                     {locationName && (
                       <div className="asset-meta__item">
-                        <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                          <path d="M280-120q-33 0-56.5-23.5T200-200v-560q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v560q0 33-23.5 56.5T680-120H280Z" />
-                        </svg>
+                        <i className="bi bi-geo-alt"></i>
                         {locationName}
                       </div>
                     )}
                     {asset.serial_number && (
                       <div className="asset-meta__item">
-                        <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                          <path d="M140-160q-17 0-28.5-11.5T100-200v-560q0-17 11.5-28.5T140-800h680q17 0 28.5 11.5T860-760v560q0 17-11.5 28.5T820-160H140Z" />
-                        </svg>
+                        <i className="bi bi-upc-scan"></i>
                         {asset.serial_number}
                       </div>
                     )}
@@ -240,14 +228,10 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
                   )}
                   <div className="asset-actions">
                     <Link to={`/${moduleName}/${asset.id}/update`} className="btn-action" title="Edit">
-                      <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-                        <path d="M200-200h50.46l409.46-409.46-50.46-50.46L200-250.46V-200Zm-60 60v-135.38l527.62-527.39q9.07-8.24 20.03-12.73 10.97-4.5 23-4.5t23.3 4.27q11.28 4.27 19.97 13.58l48.85 49.46q9.31 8.69 13.27 20 3.96 11.31 3.96 22.62 0 12.07-4.12 23.03-4.12 10.97-13.11 20.04L275.38-140H140Z" />
-                      </svg>
+                      <i className="bi bi-pencil"></i>
                     </Link>
                     <Link to={`/${moduleName}/${asset.id}`} className="btn-action" title="View">
-                      <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-                        <path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Zm0-72q-40 0-68-28t-28-68q0-40 28-68t68-28q40 0 68 28t28 68q0 40-28 68t-68 28Zm0 192q-142.6 0-259.8-78.5Q103-349 48-480q55-131 172.2-209.5Q337.4-768 480-768q142.6 0 259.8 78.5Q857-611 912-480q-55 131-172.2 209.5Q622.6-192 480-192Zm0-288Zm0 216q112 0 207-58t146-158q-51-100-146-158t-207-58q-112 0-207 58T127-480q51 100 146 158t207 58Z" />
-                      </svg>
+                      <i className="bi bi-eye"></i>
                     </Link>
                   </div>
                 </div>
@@ -261,9 +245,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
       {count > limit && (
         <div className="module-pagination">
           <button className="btn-pagination" onClick={() => setSkip(Math.max(0, skip - limit))} disabled={skip === 0}>
-            <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-              <path d="m480-344-240 240 240 240 56-56-168-168 168-168-56-56Z" />
-            </svg>
+            <i className="bi bi-chevron-left"></i>
             {t("pagination.prev")}
           </button>
           <span className="pagination-info">
@@ -271,9 +253,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
           </span>
           <button className="btn-pagination" onClick={() => setSkip(skip + limit)} disabled={skip + limit >= count}>
             {t("pagination.next")}
-            <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-              <path d="m424-296 56-56-168-168-168 168-56-56 240-240 240 240Z" />
-            </svg>
+            <i className="bi bi-chevron-right"></i>
           </button>
         </div>
       )}

@@ -72,9 +72,7 @@ const UpdateWrapper: FC = () => {
   return (
     <FormProvider {...methods}>
       <TitleBarWithIcon title={t("modules.maintenance.update.title")}>
-        <svg height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-          <path d="M382-202 144-440l56-56 182 182 350-350 56 56-406 406Z" />
-        </svg>
+        <i className="bi bi-pencil"></i>
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="col-12"><FormFields readOnly assets={assets} users={users} /></div>

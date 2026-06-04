@@ -63,15 +63,11 @@ export const List = ({
       {/* ── Header Bar ── */}
       <div className="module-list-header">
         <div className="module-list-title">
-          <svg width="20" height="20" viewBox="0 -960 960 960" fill="#1a1a2e">
-            <path d="M280-120q-33 0-56.5-23.5T200-200v-560q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v560q0 33-23.5 56.5T680-120H280Z" />
-          </svg>
+          <i className="bi bi-geo-alt fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.locations.list.title")}</h2>
         </div>
         <Link to={`/${moduleName}/create`} className="btn-create">
-          <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
-            <path d="M720-160q-33 0-56.5-23.5T640-240v-480q0-33 23.5-56.5T720-800h240q33 0 56.5 23.5T1040-720v480q0 33-23.5 56.5T960-160H720Zm0-160v-100h80v100h100v80h-100v100h-80v-100H640v-80h80Zm-320-80v-240H160v-80h240v-240h80v240h240v80H400v240h-80v-80H160v80h80Z" />
-          </svg>
+          <i className="bi bi-plus-lg"></i>
           {t("button.create")}
         </Link>
       </div>
@@ -109,9 +105,7 @@ export const List = ({
         {filteredData.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
-              <svg width="48" height="48" viewBox="0 -960 960 960" fill="#d1d5db">
-                <path d="M280-120q-33 0-56.5-23.5T200-200v-560q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v560q0 33-23.5 56.5T680-120H280Z" />
-              </svg>
+              <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
             <p className="empty-state__text">{t("modules.locations.list.empty")}</p>
             <Link to={`/${moduleName}/create`} className="btn-create-empty">
@@ -171,14 +165,10 @@ export const List = ({
                     <td>
                       <div className="d-flex gap-2 justify-content-center">
                         <Link to={`/${moduleName}/${location.id}/update`} className="btn-action" title="Edit">
-                          <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-                            <path d="M200-200h50.46l409.46-409.46-50.46-50.46L200-250.46V-200Zm-60 60v-135.38l527.62-527.39q9.07-8.24 20.03-12.73 10.97-4.5 23-4.5t23.3 4.27q11.28 4.27 19.97 13.58l48.85 49.46q9.31 8.69 13.27 20 3.96 11.31 3.96 22.62 0 12.07-4.12 23.03-4.12 10.97-13.11 20.04L275.38-140H140Z" />
-                          </svg>
+                            <i className="bi bi-pencil"></i>
                         </Link>
                         <Link to={`/${moduleName}/${location.id}`} className="btn-action" title="View">
-                          <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-                            <path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Zm0-72q-40 0-68-28t-28-68q0-40 28-68t68-28q40 0 68 28t28 68q0 40-28 68t-68 28Zm0 192q-142.6 0-259.8-78.5Q103-349 48-480q55-131 172.2-209.5Q337.4-768 480-768q142.6 0 259.8 78.5Q857-611 912-480q-55 131-172.2 209.5Q622.6-192 480-192Zm0-288Zm0 216q112 0 207-58t146-158q-51-100-146-158t-207-58q-112 0-207 58T127-480q51 100 146 158t207 58Z" />
-                          </svg>
+                            <i className="bi bi-eye"></i>
                         </Link>
                       </div>
                     </td>
@@ -198,9 +188,7 @@ export const List = ({
             onClick={() => setSkip(Math.max(0, skip - limit))}
             disabled={skip === 0}
           >
-            <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-              <path d="m480-344-240 240 240 240 56-56-168-168 168-168-56-56Z" />
-            </svg>
+            <i className="bi bi-chevron-left"></i>
             {t("pagination.prev")}
           </button>
           <span className="pagination-info">
@@ -212,9 +200,7 @@ export const List = ({
             disabled={skip + limit >= count}
           >
             {t("pagination.next")}
-            <svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor">
-              <path d="m424-296 56-56-168-168-168 168-56-56 240-240 240 240Z" />
-            </svg>
+            <i className="bi bi-chevron-right"></i>
           </button>
         </div>
       )}

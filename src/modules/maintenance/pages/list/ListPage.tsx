@@ -53,15 +53,11 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
       {/* Header */}
       <div className="module-list-header">
         <div className="module-list-title">
-          <svg width="20" height="20" viewBox="0 -960 960 960" fill="#1a1a2e">
-            <path d="M440-280v-80h80v80h-80Zm160 0v-80h80v80h-80ZM360-280v-80h80v80h-80Zm0 160v-80h80v80h-80ZM280-280v-80h80v80h-80Zm0 160v-80h80v80h-80Zm160-160v-80h80v80h-80Zm0 160v-80h80v80h-80Z" />
-          </svg>
+          <i className="bi bi-wrench fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.maintenance.list.title")}</h2>
         </div>
         <Link to={`/${moduleName}/create`} className="btn-create">
-          <svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor">
-            <path d="M720-160q-33 0-56.5-23.5T640-240v-480q0-33 23.5-56.5T720-800h240q33 0 56.5 23.5T1040-720v480q0 33-23.5 56.5T960-160H720Z" />
-          </svg>
+          <i className="bi bi-plus-lg"></i>
           {t("button.create")}
         </Link>
       </div>
@@ -71,9 +67,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
         {data.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
-              <svg width="48" height="48" viewBox="0 -960 960 960" fill="#d1d5db">
-                <path d="M440-280v-80h80v80h-80Zm160 0v-80h80v80h-80Z" />
-              </svg>
+              <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
             <p className="empty-state__text">{t("modules.maintenance.list.empty")}</p>
           </div>
@@ -108,32 +102,24 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
                   <p className="workflow-description">{log.description}</p>
                   <div className="workflow-meta">
                     <div className="workflow-meta__item">
-                      <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                        <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
-                      </svg>
+                      <i className="bi bi-calendar"></i>
                       {t("modules.maintenance.list.performed_on")}: {formatDate(log.date_performed)}
                     </div>
                     {log.performed_by_name && (
                       <div className="workflow-meta__item">
-                        <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                          <path d="M240-160q-33 0-56.5-23.5T160-240v-560q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v560q0 33-23.5 56.5T720-160H240Z" />
-                        </svg>
+                        <i className="bi bi-person"></i>
                         {log.performed_by_name}
                       </div>
                     )}
                     {log.cost && (
                       <div className="workflow-meta__item">
-                        <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                          <path d="M520-80q-17 0-28.5-11.5T480-120q0-17 11.5-28.5T520-160h320q17 0 28.5 11.5T880-120q0 17-11.5 28.5T840-80H520Z" />
-                        </svg>
+                        <i className="bi bi-currency-dollar"></i>
                         {formatCurrency(log.cost)}
                       </div>
                     )}
                     {log.next_maintenance_date && (
                       <div className="workflow-meta__item">
-                        <svg width="12" height="12" viewBox="0 -960 960 960" fill="currentColor">
-                          <path d="M480-80q18 0 33-6.5t27-18.5q-12-10-24-17.5t-36-7.5q-29 0-48.5-19.5T400-160q0-23 13-40.5t33-26.5q-17-11-27.5-28.5T405-300q0-35 24.5-59.5T489-384q35 0 59.5 24.5T573-300q0 20-10.5 37.5T535-235q20 9 33 26.5t13 40.5q0 24-19.5 43.5T480-96q-18 0-36 7.5t-24 17.5q12 12 27 18.5t33 6.5Z" />
-                        </svg>
+                        <i className="bi bi-calendar"></i>
                         {t("modules.maintenance.list.next")}: {formatDate(log.next_maintenance_date)}
                       </div>
                     )}
@@ -144,15 +130,11 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
                   <div className="workflow-actions">
                     {log.status !== "completed" && (
                       <Link to={`/${moduleName}/${log.id}/update`} className="btn-action btn-action--primary" title="Complete">
-                        <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor">
-                          <path d="M382-202 144-440l56-56 182 182 350-350 56 56-406 406Z" />
-                        </svg>
+                        <i className="bi bi-check-lg"></i>
                       </Link>
                     )}
                     <Link to={`/${moduleName}/${log.id}`} className="btn-action" title="View">
-                      <svg width="14" height="14" viewBox="0 -960 960" fill="currentColor">
-                        <path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z" />
-                      </svg>
+                      <i className="bi bi-eye"></i>
                     </Link>
                   </div>
                 </div>

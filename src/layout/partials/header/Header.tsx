@@ -38,24 +38,8 @@ const Header: FC<ToggleMenuMobile> = ({ onToggle, isActive }) => {
             onClick={handleToggle}
             className={isActive ? "ps-0 active" : "ps-0"}
           >
-            <svg
-              className="icon-close-sidebar"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#555"
-            >
-              <path d="M366.92-213.46 100-480.38l266.92-266.93 41.77 41.77-194.54 195.16h646.23v59.99H214.54l195.15 195.16-42.77 41.77Z" />
-            </svg>
-            <svg
-              className="icon-show-sidebar"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#666666"
-            >
-              <path d="M380-254.62v-59.99h440v59.99H380ZM380-450v-60h440v60H380ZM140-645.39v-59.99h680v59.99H140Z" />
-            </svg>
+            <i className="bi bi-list"></i>
+            <i className="bi bi-list"></i>
           </div>
         </div>
         {/* end::Sidebar mobile toggle */}

@@ -4,23 +4,6 @@ import { useTranslation } from "react-i18next";
 import { SidebarMenuItem } from "@components/menu/SidebarMenuItem";
 import { SidebarMenuTitle } from "@components/menu/SidebarMenuTitle";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
-import {
-  DashboardIcon,
-  AssetsIcon,
-  CheckoutsIcon,
-  TransfersIcon,
-  MaintenanceIcon,
-  ReportsIcon,
-  OpnameIcon,
-  ScanIcon,
-  DepartmentsIcon,
-  CategoriesIcon,
-  LocationsIcon,
-  UsersIcon,
-  PrivilegesIcon,
-  RolesIcon,
-  SysparamsIcon,
-} from "@components/icons/Icons";
 
 type ToggleMenuSidebar = {
   isActive: boolean;
@@ -49,56 +32,56 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
             <SidebarMenuItem
               url="/dashboard"
               title={t("sidebar.assets_management.menu.dashboard")}
-              icon={<DashboardIcon />}
+              icon={<i className="bi bi-grid" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/assets">
             <SidebarMenuItem
               url="/assets"
               title={t("sidebar.assets_management.menu.assets")}
-              icon={<AssetsIcon />}
+              icon={<i className="bi bi-box-seam" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/checkouts">
             <SidebarMenuItem
               url="/checkouts"
               title={t("sidebar.assets_management.menu.checkouts")}
-              icon={<CheckoutsIcon />}
+              icon={<i className="bi bi-send" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/transfers">
             <SidebarMenuItem
               url="/transfers"
               title={t("sidebar.assets_management.menu.transfers")}
-              icon={<TransfersIcon />}
+              icon={<i className="bi bi-arrow-left-right" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/maintenance">
             <SidebarMenuItem
               url="/maintenance"
               title={t("sidebar.assets_management.menu.maintenance")}
-              icon={<MaintenanceIcon />}
+              icon={<i className="bi bi-wrench" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/reports">
             <SidebarMenuItem
               url="/reports"
               title={t("sidebar.assets_management.menu.report")}
-              icon={<ReportsIcon />}
+              icon={<i className="bi bi-file-text" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/opname">
             <SidebarMenuItem
               url="/opname"
               title={t("sidebar.assets_management.menu.opname")}
-              icon={<OpnameIcon />}
+              icon={<i className="bi bi-clipboard-check" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/scan">
             <SidebarMenuItem
               url="/scan"
               title={t("sidebar.assets_management.menu.scan")}
-              icon={<ScanIcon />}
+              icon={<i className="bi bi-qr-code-scan" />}
             />
           </AuthPrivilegesChecker>
 
@@ -108,21 +91,21 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
             <SidebarMenuItem
               url="/departments"
               title={t("sidebar.master_data.menu.departments")}
-              icon={<DepartmentsIcon />}
+              icon={<i className="bi bi-diagram-3" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/categories">
             <SidebarMenuItem
               url="/categories"
               title={t("sidebar.master_data.menu.categories")}
-              icon={<CategoriesIcon />}
+              icon={<i className="bi bi-tags" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/locations">
             <SidebarMenuItem
               url="/locations"
               title={t("sidebar.master_data.menu.locations")}
-              icon={<LocationsIcon />}
+              icon={<i className="bi bi-geo-alt" />}
             />
           </AuthPrivilegesChecker>
 
@@ -132,21 +115,21 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
             <SidebarMenuItem
               url="/users"
               title={t("sidebar.user-management.menu.user")}
-              icon={<UsersIcon size={22} />}
+              icon={<i className="bi bi-people" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/privileges">
             <SidebarMenuItem
               url="/privileges"
               title={t("sidebar.user-management.menu.privilege")}
-              icon={<PrivilegesIcon />}
+              icon={<i className="bi bi-shield-lock" />}
             />
           </AuthPrivilegesChecker>
           <AuthPrivilegesChecker link="/roles">
             <SidebarMenuItem
               url="/roles"
               title={t("sidebar.user-management.menu.role")}
-              icon={<RolesIcon />}
+              icon={<i className="bi bi-person-badge" />}
             />
           </AuthPrivilegesChecker>
 
@@ -159,7 +142,7 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
             <SidebarMenuItem
               url="/sysparams"
               title={t("sidebar.system.menu.sysparams")}
-              icon={<SysparamsIcon />}
+              icon={<i className="bi bi-gear-wide-connected" />}
             />
           </AuthPrivilegesChecker>
         </div>

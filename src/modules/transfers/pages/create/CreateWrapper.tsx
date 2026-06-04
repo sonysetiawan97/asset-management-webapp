@@ -53,9 +53,7 @@ const CreateWrapper: FC = () => {
   return (
     <FormProvider {...methods}>
       <TitleBarWithIcon title={t("modules.transfers.create.title")}>
-        <svg height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-          <path d="M520-80q-17 0-28.5-11.5T480-120q0-17 11.5-28.5T520-160h320q17 0 28.5 11.5T880-120q0 17-11.5 28.5T840-80H520Z" />
-        </svg>
+        <i className="bi bi-arrow-left-right"></i>
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="col-12">
