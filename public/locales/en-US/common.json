@@ -673,6 +673,10 @@
         "filter_by_status": "Filter by status",
         "empty": "No transfer requests yet.",
         "requested_by": "Requested By",
+        "all": "All",
+        "approve": "Approve",
+        "reject": "Reject",
+        "view": "View",
         "transfer_type": "Type",
         "transfer_type_short": {
           "inter_department": "Inter-Dept",
@@ -697,8 +701,10 @@
             "inter_location": "Inter-Location",
             "combined": "Combined"
           },
-          "section_source": "Source (from selected asset)",
-          "section_destination": "Destination",
+          "section": {
+            "from": "Source (from selected asset)",
+            "to": "Destination"
+          },
           "from_location": "From Location",
           "to_location": "To Location",
           "from_department": "From Department",
@@ -714,7 +720,17 @@
         }
       },
       "read": {
-        "title": "Transfer Detail"
+        "title": "Transfer Detail",
+        "approve": "Approve",
+        "reject": "Reject",
+        "approved_by": "Approved by",
+        "rejected_by": "Rejected by",
+        "rejection_reason": "Rejection Reason",
+        "reject_modal_title": "Reject Transfer",
+        "rejection_reason_label": "Rejection Reason",
+        "rejection_reason_placeholder": "Enter reason for rejection...",
+        "reject_confirm": "Reject",
+        "reject_cancel": "Cancel"
       }
     },
     "maintenance": {
@@ -726,7 +742,11 @@
         "total_cost": "Total Cost",
         "empty": "No maintenance records yet.",
         "performed_on": "Performed On",
-        "next": "Next Maintenance"
+        "next": "Next Maintenance",
+        "filter_type_all": "All",
+        "filter_by_type": "Filter by Type",
+        "complete_modal_title": "Complete Maintenance",
+        "complete_modal_body": "Mark this maintenance as complete? The asset status will change to available."
       },
       "create": {
         "title": "Log Maintenance",
@@ -806,6 +826,23 @@
     "reports": {
       "inventory": {
         "title": "Inventory Report"
+      },
+      "maintenance": {
+        "title": "Maintenance Report",
+        "total_logs": "Total Records",
+        "open": "Open",
+        "completed": "Completed",
+        "total_cost": "Total Cost",
+        "filter_by_type": "Filter by Type",
+        "filter_type_all": "All",
+        "filter_by_status": "Filter by Status",
+        "filter_status_all": "All",
+        "search_placeholder": "Search asset name or code...",
+        "date_from": "From",
+        "date_to": "To",
+        "export_csv": "Export CSV",
+        "created_time": "Created",
+        "empty": "No maintenance records found."
       },
       "export_csv": "Export CSV"
     },

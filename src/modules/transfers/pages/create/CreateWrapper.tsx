@@ -21,7 +21,7 @@ const CreateWrapper: FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { createAsync, isLoading } = useCreate<CreateTransferModel>(moduleName);
-  const { data: assetsData } = useFindAll<TransferAsset>("assets", "assets");
+  const { data: assetsData } = useFindAll<TransferAsset>("assets", "assets", { "!limit": 9999 });
   const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "locations");
   const { data: departmentsData } = useFindAll<{ id: string; name: string }>("departments", "departments");
   const { data: usersData } = useFindAll<{ id: number; first_name: string; last_name: string }>("users", "users");

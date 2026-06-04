@@ -27,6 +27,7 @@ export interface TransferRequest {
   approved_by?: string;
   approved_by_name?: string;
   approved_at?: string;
+  rejection_reason?: string;
   created_by: string;
   created_by_name?: string;
   created_time: string;

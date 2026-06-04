@@ -4,6 +4,7 @@ import { setPageTitle } from "@stores/PageHeaderStore";
 
 const ErrorRoutes = lazy(() => import("@modules/errors/ErrorRoutes"));
 const InventoryReport = lazy(() => import("./pages/inventory/ReportPage"));
+const MaintenanceReport = lazy(() => import("./pages/maintenance/ReportPage"));
 const ByCategory = lazy(() => import("./pages/by-category/ReportPage"));
 const ByLocation = lazy(() => import("./pages/by-location/ReportPage"));
 const Depreciation = lazy(() => import("./pages/depreciation/ReportPage"));
@@ -14,6 +15,7 @@ const PrivateRoutes: FC = () => {
     <Routes>
         <Route element={<Outlet />}>
           <Route index element={<InventoryReport />} />
+          <Route path="maintenance" element={<MaintenanceReport />} />
           <Route path="by-category" element={<ByCategory />} />
           <Route path="by-location" element={<ByLocation />} />
           <Route path="depreciation" element={<Depreciation />} />

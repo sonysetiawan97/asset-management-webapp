@@ -1,8 +1,12 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiAxios } from "@/utils/apiAxios";
 import { moduleName, type MaintenanceLog, MAINTENANCE_TYPES } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { useSnackbar } from "notistack";
+import { Modal } from "@components/Modal";
 
 interface ListProps {
   data: MaintenanceLog[];
@@ -23,10 +27,34 @@ const formatCurrency = (value: number | undefined) => {
 export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
+  const [completeTargetId, setCompleteTargetId] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState("all");
 
-  const openLogs = data.filter((l) => l.status === "open");
-  const completedLogs = data.filter((l) => l.status === "completed");
-  const totalCost = data.reduce((acc, l) => acc + (l.cost || 0), 0);
+  const completeMutation = useMutation({
+    mutationFn: (id: string) => apiAxios.post(`/${moduleName}/${id}/complete`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [moduleName] });
+      enqueueSnackbar(t("modules.maintenance.update.notification.success"), { variant: "success" });
+    },
+    onError: () => {
+      enqueueSnackbar(t("modules.maintenance.update.notification.error"), { variant: "error" });
+    },
+    onSettled: () => setCompleteTargetId(null),
+  });
+
+  const handleConfirmComplete = () => {
+    if (!completeTargetId) return;
+    completeMutation.mutate(completeTargetId);
+  };
+
+  const typeCounts = data.reduce<Record<string, number>>((acc, l) => {
+    acc[l.type] = (acc[l.type] || 0) + 1;
+    return acc;
+  }, {});
+
+  const filteredData = selectedType === "all" ? data : data.filter((l) => l.type === selectedType);
 
   return (
     <div className="module-list-container">
@@ -36,17 +64,38 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
           <span className="stat-value">{count}</span>
           <span className="stat-label">{t("modules.maintenance.list.total_logs")}</span>
         </div>
-        <div className="stat-item" style={{ borderLeftColor: "#f59e0b" }}>
-          <span className="stat-value" style={{ color: "#f59e0b" }}>{openLogs.length}</span>
-          <span className="stat-label">{t("modules.maintenance.list.open")}</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-value">{completedLogs.length}</span>
-          <span className="stat-label">{t("modules.maintenance.list.completed")}</span>
-        </div>
+        {MAINTENANCE_TYPES.map((type) => (
+          <div key={type.value} className="stat-item" style={{ borderLeftColor: "#3b82f6" }}>
+            <span className="stat-value" style={{ color: "#3b82f6" }}>{typeCounts[type.value] ?? 0}</span>
+            <span className="stat-label">{type.label}</span>
+          </div>
+        ))}
         <div className="stat-item" style={{ borderLeftColor: "#10b981" }}>
-          <span className="stat-value" style={{ color: "#10b981" }}>{formatCurrency(totalCost)}</span>
+          <span className="stat-value" style={{ color: "#10b981" }}>{formatCurrency(data.reduce((acc, l) => acc + (l.cost || 0), 0))}</span>
           <span className="stat-label">{t("modules.maintenance.list.total_cost")}</span>
+        </div>
+      </div>
+
+      {/* Type Filter */}
+      <div className="status-filter-bar">
+        <span className="status-filter-bar__label">{t("modules.maintenance.list.filter_by_type")}</span>
+        <div className="status-filter-bar__chips">
+          <button
+            className={`status-chip ${selectedType === "all" ? "active" : ""}`}
+            onClick={() => setSelectedType("all")}
+          >
+            <span className="status-chip__label">{t("modules.maintenance.list.filter_type_all")}</span>
+          </button>
+          {MAINTENANCE_TYPES.map((type) => (
+            <button
+              key={type.value}
+              className={`status-chip ${selectedType === type.value ? "active" : ""}`}
+              onClick={() => setSelectedType(type.value)}
+            >
+              <span className="status-chip__label">{type.label}</span>
+              <span className="status-chip__count">{typeCounts[type.value] ?? 0}</span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -64,7 +113,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
 
       {/* Cards */}
       <div className="workflow-grid animate-fade-slide-up">
-        {data.length === 0 ? (
+        {filteredData.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
@@ -72,7 +121,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
             <p className="empty-state__text">{t("modules.maintenance.list.empty")}</p>
           </div>
         ) : (
-          data.map((log, index) => {
+          filteredData.map((log, index) => {
             const typeMeta = MAINTENANCE_TYPES.find((t) => t.value === log.type);
             return (
               <div key={log.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
@@ -119,7 +168,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
                     )}
                     {log.next_maintenance_date && (
                       <div className="workflow-meta__item">
-                        <i className="bi bi-calendar"></i>
+                        <i className="bi bi-calendar-check"></i>
                         {t("modules.maintenance.list.next")}: {formatDate(log.next_maintenance_date)}
                       </div>
                     )}
@@ -129,9 +178,13 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
                 <div className="workflow-card__footer">
                   <div className="workflow-actions">
                     {log.status !== "completed" && (
-                      <Link to={`/${moduleName}/${log.id}/update`} className="btn-action btn-action--primary" title="Complete">
+                      <button
+                        className="btn-action btn-action--primary"
+                        title={t("modules.maintenance.read.complete")}
+                        onClick={() => setCompleteTargetId(log.id)}
+                      >
                         <i className="bi bi-check-lg"></i>
-                      </Link>
+                      </button>
                     )}
                     <Link to={`/${moduleName}/${log.id}`} className="btn-action" title="View">
                       <i className="bi bi-eye"></i>
@@ -143,6 +196,40 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
           })
         )}
       </div>
+
+      {/* Complete Confirmation Modal */}
+      <Modal
+        isOpen={!!completeTargetId}
+        closeModal={() => setCompleteTargetId(null)}
+        title={t("modules.maintenance.list.complete_modal_title")}
+      >
+        <div className="modal-body">
+          <p>{t("modules.maintenance.list.complete_modal_body")}</p>
+        </div>
+        <div className="modal-footer">
+          <button
+            className="btn btn-secondary"
+            onClick={() => setCompleteTargetId(null)}
+            disabled={completeMutation.isPending}
+          >
+            {t("button.cancel")}
+          </button>
+          <button
+            className="btn btn-success"
+            onClick={handleConfirmComplete}
+            disabled={completeMutation.isPending}
+          >
+            {completeMutation.isPending ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-1" />
+                {t("modules.maintenance.read.complete")}
+              </>
+            ) : (
+              t("modules.maintenance.read.complete")
+            )}
+          </button>
+        </div>
+      </Modal>
 
       {/* Pagination */}
       {count > limit && (

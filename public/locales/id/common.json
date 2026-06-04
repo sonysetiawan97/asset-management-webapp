@@ -651,6 +651,10 @@
         "filter_by_status": "Filter berdasarkan status",
         "empty": "Belum ada permintaan transfer.",
         "requested_by": "Diminta Oleh",
+        "all": "Semua",
+        "approve": "Setujui",
+        "reject": "Tolak",
+        "view": "Lihat",
         "transfer_type": "Tipe",
         "transfer_type_short": {
           "inter_department": "Antar-Dept",
@@ -675,8 +679,10 @@
             "inter_location": "Antar-Lokasi",
             "combined": "Gabung"
           },
-          "section_source": "Sumber (dari aset terpilih)",
-          "section_destination": "Tujuan",
+          "section": {
+            "from": "Sumber (dari aset terpilih)",
+            "to": "Tujuan"
+          },
           "from_location": "Dari Lokasi",
           "to_location": "Ke Lokasi",
           "from_department": "Dari Departemen",
@@ -692,7 +698,17 @@
         }
       },
       "read": {
-        "title": "Detail Transfer"
+        "title": "Detail Transfer",
+        "approve": "Setujui",
+        "reject": "Tolak",
+        "approved_by": "Disetujui oleh",
+        "rejected_by": "Ditolak oleh",
+        "rejection_reason": "Alasan Penolakan",
+        "reject_modal_title": "Tolak Transfer",
+        "rejection_reason_label": "Alasan Penolakan",
+        "rejection_reason_placeholder": "Masukkan alasan penolakan...",
+        "reject_confirm": "Tolak",
+        "reject_cancel": "Batal"
       }
     },
     "maintenance": {
@@ -704,7 +720,11 @@
         "total_cost": "Total Biaya",
         "empty": "Belum ada catatan perawatan.",
         "performed_on": "Dilakukan Pada",
-        "next": "Perawatan Berikutnya"
+        "next": "Perawatan Berikutnya",
+        "filter_type_all": "Semua",
+        "filter_by_type": "Filter berdasarkan Tipe",
+        "complete_modal_title": "Selesaikan Perawatan",
+        "complete_modal_body": "Tandai perawatan ini selesai? Status aset akan berubah menjadi tersedia."
       },
       "create": {
         "title": "Catat Perawatan",
@@ -784,6 +804,23 @@
     "reports": {
       "inventory": {
         "title": "Laporan Inventaris"
+      },
+      "maintenance": {
+        "title": "Laporan Perawatan",
+        "total_logs": "Total Catatan",
+        "open": "Terbuka",
+        "completed": "Selesai",
+        "total_cost": "Total Biaya",
+        "filter_by_type": "Filter berdasarkan Tipe",
+        "filter_type_all": "Semua",
+        "filter_by_status": "Filter berdasarkan Status",
+        "filter_status_all": "Semua",
+        "search_placeholder": "Cari nama atau kode aset...",
+        "date_from": "Dari",
+        "date_to": "Sampai",
+        "export_csv": "Ekspor CSV",
+        "created_time": "Dibuat",
+        "empty": "Tidak ada catatan perawatan."
       },
       "export_csv": "Ekspor CSV"
     },

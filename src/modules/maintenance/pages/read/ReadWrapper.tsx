@@ -1,9 +1,8 @@
-import { type FC } from "react";
+import { type FC, useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { moduleName, type ReadMaintenanceModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
 import { CompleteButton } from "@components/buttons/CompleteButton";
@@ -56,6 +55,7 @@ const ReadWrapper: FC = () => {
   const { reset } = methods;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const [isCompleting, setIsCompleting] = useState(false);
 
   useEffect(() => {
     if (data) reset(data);
@@ -67,11 +67,13 @@ const ReadWrapper: FC = () => {
 
   const handleComplete = async () => {
     if (!id) return;
+    setIsCompleting(true);
     try {
-      await apiAxios.post(`/api/v1/maintenance/${id}/complete`);
+      await apiAxios.post(`/maintenance/${id}/complete`);
       enqueueSnackbar(t("modules.maintenance.update.notification.success"), { variant: "success" });
       navigate(`/${moduleName}`);
     } catch (error: unknown) {
+      setIsCompleting(false);
       enqueueSnackbar(extractErrors(error).join(", "), { variant: "error" });
     }
   };
@@ -84,7 +86,7 @@ const ReadWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.maintenance.read.title")}>
         <i className="bi bi-eye"></i>
       </TitleBarWithIcon>
-      <ReadPage assets={assets} users={users} status={data.status ?? "open"} onComplete={handleComplete} isCompleting={false} />
+      <ReadPage assets={assets} users={users} status={data.status ?? "open"} onComplete={handleComplete} isCompleting={isCompleting} />
     </FormProvider>
   );
 };

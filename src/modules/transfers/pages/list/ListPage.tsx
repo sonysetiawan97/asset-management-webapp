@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
+import { Modal } from "@components/Modal";
 
 interface ListProps {
   data: TransferRequest[];
@@ -26,10 +27,12 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
+  const [rejectTargetId, setRejectTargetId] = useState<string | null>(null);
+  const [rejectionReason, setRejectionReason] = useState("");
 
   const workflowMutation = useMutation({
-    mutationFn: ({ id, action }: { id: string; action: "approve" | "reject" }) =>
-      apiAxios.patch(`${moduleName}/${id}/${action}`),
+    mutationFn: ({ id, action, reason }: { id: string; action: "approve" | "reject"; reason?: string }) =>
+      apiAxios.patch(`${moduleName}/${id}/${action}`, action === "reject" ? { reason } : undefined),
     onSuccess: (_, { action }) => {
       queryClient.invalidateQueries({ queryKey: [moduleName] });
       enqueueSnackbar(
@@ -46,7 +49,24 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
   });
 
   const handleApprove = (id: string) => workflowMutation.mutate({ id, action: "approve" });
-  const handleReject = (id: string) => workflowMutation.mutate({ id, action: "reject" });
+
+  const handleReject = (id: string) => {
+    setRejectTargetId(id);
+    setRejectionReason("");
+  };
+
+  const closeRejectModal = () => {
+    setRejectTargetId(null);
+    setRejectionReason("");
+  };
+
+  const handleConfirmReject = () => {
+    if (!rejectTargetId) return;
+    workflowMutation.mutate(
+      { id: rejectTargetId, action: "reject", reason: rejectionReason },
+      { onSettled: closeRejectModal }
+    );
+  };
 
   const statusCounts = TRANSFER_STATUSES.map((s) => ({
     ...s,
@@ -80,7 +100,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
             className={`status-chip ${selectedStatus === "all" ? "active" : ""}`}
             onClick={() => { setSelectedStatus("all"); setSkip(0); }}
           >
-            <span className="status-chip__label">All</span>
+            <span className="status-chip__label">{t("modules.transfers.list.all")}</span>
           </button>
           {statusCounts.map((s) => (
             <button
@@ -167,7 +187,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
                       <>
                         <button
                           className="btn-action btn-action--success"
-                          title="Approve"
+                          title={t("modules.transfers.list.approve")}
                           onClick={() => handleApprove(transfer.id)}
                           disabled={workflowMutation.isPending}
                         >
@@ -175,7 +195,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
                         </button>
                         <button
                           className="btn-action btn-action--danger"
-                          title="Reject"
+                          title={t("modules.transfers.list.reject")}
                           onClick={() => handleReject(transfer.id)}
                           disabled={workflowMutation.isPending}
                         >
@@ -183,7 +203,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
                         </button>
                       </>
                     )}
-                    <Link to={`/${moduleName}/${transfer.id}`} className="btn-action" title="View">
+                    <Link to={`/${moduleName}/${transfer.id}`} className="btn-action" title={t("modules.transfers.list.view")}>
                       <i className="bi bi-eye"></i>
                     </Link>
                   </div>
@@ -193,6 +213,38 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
           })
         )}
       </div>
+
+      {/* Rejection Reason Modal */}
+      <Modal
+        isOpen={rejectTargetId !== null}
+        closeModal={closeRejectModal}
+        title={t("modules.transfers.read.reject_modal_title")}
+      >
+        <div className="modal-body">
+          <div className="form-group">
+            <label className="form-label">{t("modules.transfers.read.rejection_reason_label")}</label>
+            <textarea
+              className="form-control"
+              rows={3}
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+              placeholder={t("modules.transfers.read.rejection_reason_placeholder")}
+            />
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="btn btn-secondary" onClick={closeRejectModal} disabled={workflowMutation.isPending}>
+            {t("modules.transfers.read.reject_cancel")}
+          </button>
+          <button
+            className="btn btn-danger"
+            onClick={handleConfirmReject}
+            disabled={workflowMutation.isPending || !rejectionReason.trim()}
+          >
+            {t("modules.transfers.read.reject_confirm")}
+          </button>
+        </div>
+      </Modal>
 
       {/* Pagination */}
       {count > limit && (
