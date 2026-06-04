@@ -10,6 +10,9 @@ interface FindAllProps<T> {
 interface DataFindAllProps<T> {
   result: T[];
   count: number;
+  count_by_status?: Record<string, number>;
+  count_by_level?: Record<string, number>;
+  count_by_type?: Record<string, number>;
 }
 function customEncode(obj: Record<string, unknown>): string {
   return Object.entries(obj)
