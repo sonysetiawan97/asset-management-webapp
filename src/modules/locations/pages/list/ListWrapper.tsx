@@ -43,6 +43,7 @@ export const ListWrapper: FC = () => {
       locations={locationsData?.result ?? []}
       selectedType={selectedType}
       onTypeChange={setSelectedType}
+      countByType={data?.data.count_by_type ?? {}}
     />
   );
 };

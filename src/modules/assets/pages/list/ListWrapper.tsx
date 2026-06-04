@@ -13,6 +13,11 @@ export const ListWrapper: FC = () => {
   const { query } = useSearch();
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
+  const [unfilteredCounts, setUnfilteredCounts] = useState<{
+    count: number;
+    countByStatus: Record<string, number>;
+  } | null>(null);
+
   const params = {
     "!search": query,
     "!sort[id]": -1,
@@ -38,13 +43,23 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
+  useEffect(() => {
+    if (!selectedStatus && data?.data) {
+      setUnfilteredCounts({
+        count: data.data.count,
+        countByStatus: data.data.count_by_status || {},
+      });
+    }
+  }, [selectedStatus, data?.data.count, data?.data.count_by_status]);
+
   if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <ListPage
       data={data?.data.result || []}
-      count={data?.data.count || 0}
+      count={unfilteredCounts?.count ?? data?.data.count ?? 0}
+      countByStatus={unfilteredCounts?.countByStatus ?? data?.data.count_by_status ?? {}}
       isLoading={isLoading}
       categories={categories}
       locations={locations}

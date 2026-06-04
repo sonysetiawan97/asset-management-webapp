@@ -15,6 +15,7 @@ interface ListProps {
   locations: Model[];
   selectedType: string | null;
   onTypeChange: (type: string | null) => void;
+  countByType?: Record<string, number>;
 }
 
 const TYPE_DOT_COLORS: Record<LocationType, string> = {
@@ -38,13 +39,14 @@ export const List = ({
   locations: _locations,
   selectedType,
   onTypeChange,
+  countByType = {},
 }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
   const typeStats = LOCATION_TYPES.map((type) => ({
     ...type,
-    count: data.filter((loc) => loc.type === type.value).length,
+    count: countByType[type.value] ?? 0,
   }));
 
   const filteredData = selectedType
@@ -83,7 +85,7 @@ export const List = ({
             onClick={() => onTypeChange(null)}
           >
             <span className="status-chip__label">{t("modules.locations.list.filter_all")}</span>
-            <span className="status-chip__count">{count}</span>
+            <span className="status-chip__count">{countByType.all ?? 0}</span>
           </button>
           {typeStats.map((s) => (
             <button

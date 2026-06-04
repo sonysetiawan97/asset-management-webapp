@@ -9,6 +9,7 @@ import { StatusBadge } from "@/components/list/StatusBadge";
 interface ListProps {
   data: OpnameSession[];
   count: number;
+  countByStatus: Record<string, number>;
   isLoading: boolean;
   selectedStatus: string | null;
   onStatusChange: (status: string | null) => void;
@@ -34,13 +35,13 @@ const formatStatusLabel = (status: string) => {
   return map[status] ?? status;
 };
 
-export const List: FC<ListProps> = ({ data, count, isLoading, selectedStatus, onStatusChange }) => {
+export const List: FC<ListProps> = ({ data, count, countByStatus, isLoading, selectedStatus, onStatusChange }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
   const statusStats = OPNAME_STATUSES.map((s) => ({
     ...s,
-    count: data.filter((x) => x.status === s.value).length,
+    count: countByStatus[s.value] ?? 0,
   }));
 
   const getStatusColor = (status: string) => STATUS_COLORS[status as keyof typeof STATUS_COLORS] || STATUS_COLORS.draft;

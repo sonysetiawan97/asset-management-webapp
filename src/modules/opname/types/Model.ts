@@ -18,6 +18,7 @@ export interface OpnameSession {
   created_by: string;
   created_time: string;
   updated_time: string;
+  count_by_status?: Record<string, number>;
 }
 
 export interface CreateModel {

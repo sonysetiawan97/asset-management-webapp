@@ -2,7 +2,7 @@ import { type FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiAxios } from "@/utils/apiAxios";
-import { moduleName, type TransferRequest, TRANSFER_STATUSES } from "../../types/Model";
+import { moduleName, type TransferRequest, type CountByTransferStatus, TRANSFER_STATUSES } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { useSnackbar } from "notistack";
@@ -11,6 +11,7 @@ import type { AxiosError } from "axios";
 interface ListProps {
   data: TransferRequest[];
   count: number;
+  countByStatus?: CountByTransferStatus;
   isLoading: boolean;
 }
 
@@ -19,7 +20,7 @@ const formatDate = (dateStr: string | undefined) => {
   return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 };
 
-export const List: FC<ListProps> = ({ data, count }) => {
+export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -49,11 +50,11 @@ export const List: FC<ListProps> = ({ data, count }) => {
 
   const statusCounts = TRANSFER_STATUSES.map((s) => ({
     ...s,
-    count: data.filter((r) => r.status === s.value).length,
+    count: countByStatus?.[s.value] ?? 0,
   }));
 
   const filteredData =
-    selectedStatus === "all" ? data : data.filter((r) => r.status === selectedStatus);
+    selectedStatus === "all" ? data : data.filter((r) => r.transfer_status === selectedStatus);
 
   return (
     <div className="module-list-container">
@@ -124,7 +125,7 @@ export const List: FC<ListProps> = ({ data, count }) => {
           </div>
         ) : (
           filteredData.map((transfer, index) => {
-            const statusMeta = TRANSFER_STATUSES.find((s) => s.value === transfer.status);
+            const statusMeta = TRANSFER_STATUSES.find((s) => s.value === transfer.transfer_status);
             return (
               <div key={transfer.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
                 <div className="workflow-card__header">
@@ -174,7 +175,7 @@ export const List: FC<ListProps> = ({ data, count }) => {
 
                 <div className="workflow-card__footer">
                   <div className="workflow-actions">
-                    {transfer.status === "pending" && (
+                    {transfer.transfer_status === "pending" && (
                       <>
                         <button
                           className="btn-action btn-action--success"

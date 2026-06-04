@@ -17,6 +17,7 @@ interface ListProps {
   locations: { id: string; name: string }[];
   selectedStatus: string | null;
   onStatusChange: (status: string | null) => void;
+  countByStatus: Record<string, number>;
 }
 
 // Format currency
@@ -40,19 +41,19 @@ const formatDate = (dateStr: string | undefined) => {
   });
 };
 
-const List = ({ data, count, isLoading: _isLoading, categories, locations, selectedStatus, onStatusChange }: ListProps) => {
+const List = ({ data, count, isLoading: _isLoading, categories, locations, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
-  // Count by status
+  // Count by status (from backend, respects all active filters)
   const statusStats = ASSET_STATUSES.map((s) => ({
     ...s,
-    count: data.filter((a) => a.asset_status === s.value).length,
+    count: countByStatus[s.value] ?? 0,
   }));
 
   const totalValue = data.reduce((acc, a) => acc + (Number(a.purchase_price) || 0), 0);
-  const availableCount = data.filter((a) => a.asset_status === "available").length;
-  const inUseCount = data.filter((a) => a.asset_status === "in_use").length;
+  const availableCount = countByStatus["available"] ?? 0;
+  const inUseCount = countByStatus["in_use"] ?? 0;
 
   return (
     <div className="module-list-container">

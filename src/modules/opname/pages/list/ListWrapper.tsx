@@ -25,6 +25,11 @@ export const ListWrapper: FC = () => {
     params,
   });
 
+  const [unfilteredCounts, setUnfilteredCounts] = useState<{
+    count: number;
+    countByStatus: Record<string, number>;
+  } | null>(null);
+
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", path: "/" },
@@ -32,13 +37,23 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
+  useEffect(() => {
+    if (!selectedStatus && data?.data) {
+      setUnfilteredCounts({
+        count: data.data.count,
+        countByStatus: data.data.count_by_status || {},
+      });
+    }
+  }, [selectedStatus, data?.data.count, data?.data.count_by_status]);
+
   if (isLoading) return <LoadingPage />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <List
       data={data?.data.result || []}
-      count={data?.data.count || 0}
+      count={unfilteredCounts?.count ?? data?.data.count ?? 0}
+      countByStatus={unfilteredCounts?.countByStatus ?? data?.data.count_by_status ?? {}}
       isLoading={isLoading}
       selectedStatus={selectedStatus}
       onStatusChange={setSelectedStatus}

@@ -21,7 +21,7 @@ export interface TransferRequest {
   from_custodian_name?: string;
   to_custodian_id?: string;
   to_custodian_name?: string;
-  status: TransferStatus;
+  transfer_status: TransferStatus;
   reason: string;
   notes?: string;
   approved_by?: string;
@@ -48,6 +48,14 @@ export interface CreateTransferModel {
 export interface UpdateTransferModel extends CreateTransferModel {}
 
 export interface ReadTransferModel extends TransferRequest {}
+
+export interface CountByTransferStatus {
+  all: number;
+  pending: number;
+  approved: number;
+  rejected: number;
+  [key: string]: number;
+}
 
 export const TRANSFER_STATUSES: { value: TransferStatus; label: string; className: string; dot: string }[] = [
   { value: "pending", label: "Pending", className: "transfer-badge--pending", dot: "#f59e0b" },

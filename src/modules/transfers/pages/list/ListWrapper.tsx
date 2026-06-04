@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { moduleName, type TransferRequest } from "../../types/Model";
+import { moduleName, type TransferRequest, type CountByTransferStatus } from "../../types/Model";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { usePagination } from "@hooks/list/usePagination";
@@ -20,6 +20,7 @@ export const ListWrapper: FC = () => {
     <List
       data={data?.data?.result ?? []}
       count={data?.data?.count ?? 0}
+      countByStatus={data?.data?.count_by_status}
       isLoading={isLoading}
     />
   );
