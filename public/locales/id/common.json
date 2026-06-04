@@ -63,6 +63,30 @@
       "button": "Kembali ke halaman signin"
     }
   },
+  "modules": {
+    "dashboard": {
+      "title": "Ikhtisar Dashboard",
+      "total_assets": "Total Aset",
+      "in_use": "Digunakan",
+      "available": "Tersedia",
+      "maintenance": "Perawatan",
+      "overdue": "Terlambat",
+      "asset_status": "Distribusi Status Aset",
+      "total": "total",
+      "recent_activity": "Aktivitas Terbaru",
+      "financial_overview": "Ringkasan Keuangan",
+      "purchase_value": "Nilai Pembelian",
+      "book_value": "Nilai Buku",
+      "depreciation": "Depresiasi",
+      "pending_approvals": "Persetujuan Tertunda",
+      "transfer_requests": "Permintaan Transfer",
+      "disposal_requests": "Permintaan Disposisi",
+      "maintenance_open": "Perawatan Terbuka",
+      "top_categories": "Kategori Teratas",
+      "no_activity": "Tidak ada aktivitas terbaru",
+      "load_error": "Gagal memuat data dashboard"
+    }
+  },
   "sidebar": {
     "assets_management": {
       "title": "PENGELOLAAN ASET",

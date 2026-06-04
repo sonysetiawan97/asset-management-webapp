@@ -23,12 +23,11 @@ const Header: FC<ToggleMenuMobile> = ({ onToggle, isActive }) => {
       data-kt-sticky-offset="{default: '200px', lg: '0'}"
       data-kt-sticky-animation="false"
     >
-      {/* begin::Header container */}
       <div
-        className="app-container container-fluid d-flex align-items-stretch justify-content-between  px-4 py-3"
+        className="app-container container-fluid d-flex align-items-stretch justify-content-between px-4 py-3"
         id="kt_app_header_container"
       >
-        {/* begin::Sidebar mobile toggle */}
+        {/* Sidebar mobile toggle */}
         <div
           className="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2"
           title="Show sidebar menu"
@@ -42,16 +41,15 @@ const Header: FC<ToggleMenuMobile> = ({ onToggle, isActive }) => {
             <i className="bi bi-list"></i>
           </div>
         </div>
-        {/* end::Sidebar mobile toggle */}
-        {/* begin::Mobile logo */}
+
+        {/* Mobile logo */}
         <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
           <a href="?page=index" className="d-lg-none">
             <img alt="Logo" src={Logo} width={32} />
           </a>
         </div>
-        {/* end::Mobile logo */}
 
-        {/* begin::Header wrapper */}
+        {/* Header wrapper */}
         <div
           className="d-flex align-items-stretch justify-content-between flex-lg-grow-1 align-items-center"
           id="kt_app_header_wrapper"
@@ -59,9 +57,7 @@ const Header: FC<ToggleMenuMobile> = ({ onToggle, isActive }) => {
           <PageHeader />
           <Navbar />
         </div>
-        {/* end::Header wrapper */}
       </div>
-      {/* end::Header container */}
     </div>
   );
 };

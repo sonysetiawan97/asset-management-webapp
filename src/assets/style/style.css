@@ -952,7 +952,6 @@ a {
 /* ─── Responsive ─── */
 @media only screen and (max-width: 991.98px) {
   .app-sidebar {
-    left: 0;
     transform: translateX(-100%);
     transition: transform var(--transition-base);
   }
@@ -961,6 +960,7 @@ a {
     transform: translateX(0%);
     z-index: 999;
     position: fixed;
+    width: var(--sidebar-width);
     box-shadow: var(--shadow-xl);
   }
 
@@ -979,27 +979,6 @@ a {
 
   .app-header {
     left: 0;
-  }
-
-  #kt_app_sidebar_mobile_toggle {
-    cursor: pointer;
-  }
-
-  #kt_app_sidebar_mobile_toggle .icon-close-sidebar {
-    display: none;
-  }
-
-  #kt_app_sidebar_mobile_toggle.active .icon-close-sidebar {
-    display: inherit;
-  }
-
-  #kt_app_sidebar_mobile_toggle.active .icon-show-sidebar {
-    display: none;
-  }
-
-  #kt_app_sidebar_mobile_toggle.active {
-    position: absolute;
-    left: 275px;
   }
 
   .page-title {

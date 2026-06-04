@@ -63,6 +63,30 @@
       "button": "Go to signin page"
     }
   },
+  "modules": {
+    "dashboard": {
+      "title": "Dashboard Overview",
+      "total_assets": "Total Assets",
+      "in_use": "In Use",
+      "available": "Available",
+      "maintenance": "Maintenance",
+      "overdue": "Overdue",
+      "asset_status": "Asset Status Distribution",
+      "total": "total",
+      "recent_activity": "Recent Activity",
+      "financial_overview": "Financial Overview",
+      "purchase_value": "Purchase Value",
+      "book_value": "Book Value",
+      "depreciation": "Depreciation",
+      "pending_approvals": "Pending Approvals",
+      "transfer_requests": "Transfer Requests",
+      "disposal_requests": "Disposal Requests",
+      "maintenance_open": "Maintenance Open",
+      "top_categories": "Top Categories",
+      "no_activity": "No recent activity",
+      "load_error": "Failed to load dashboard data"
+    }
+  },
   "sidebar": {
     "assets_management": {
       "title": "ASSETS MANAGEMENT",
