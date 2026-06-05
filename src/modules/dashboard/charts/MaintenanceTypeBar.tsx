@@ -95,7 +95,7 @@ const MaintenanceTypeBar: FC<Props> = ({ data, isLoading, error }) => {
             fontSize: 12,
             background: "#fff",
           }}
-          formatter={(_: number, __: string, props: { payload: MaintenanceTypeItem }) => [
+          formatter={(_value, _name, props: any) => [
             `${props.payload.open} open · ${props.payload.completed} done`,
             props.payload.type,
           ]}

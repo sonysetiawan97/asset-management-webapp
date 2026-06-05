@@ -1,4 +1,4 @@
-import { type FC, useMemo } from "react";
+import { type FC } from "react";
 import {
   AreaChart,
   Area,
@@ -103,7 +103,7 @@ const ActivityTrend: FC<Props> = ({ data, isLoading, error }) => {
             fontSize: 12,
             background: "#fff",
           }}
-          formatter={(value: number) => [value, "Activities"]}
+          formatter={(value) => [value, "Activities"]}
           labelFormatter={(label) => label}
         />
         <Area

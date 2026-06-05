@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import ChartSkeleton from "./ChartSkeleton";
 import { STATUS_COLORS, STATUS_LABELS } from "../chartTokens";
@@ -11,8 +11,6 @@ interface Props {
 }
 
 const AssetStatusPie: FC<Props> = ({ data, total, isLoading, error }) => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
   if (error) {
     return (
       <div className="dash-card dash-card--error">
@@ -76,10 +74,6 @@ const AssetStatusPie: FC<Props> = ({ data, total, isLoading, error }) => {
             outerRadius={90}
             dataKey="value"
             strokeWidth={0}
-            activeIndex={activeIndex ?? undefined}
-            activeShape={{ outerRadius: 96 }}
-            onMouseEnter={(_, i) => setActiveIndex(i)}
-            onMouseLeave={() => setActiveIndex(null)}
           >
             {chartData.map((entry, i) => (
               <Cell key={i} fill={entry.color} />
@@ -93,7 +87,10 @@ const AssetStatusPie: FC<Props> = ({ data, total, isLoading, error }) => {
               fontSize: 12,
               background: "#fff",
             }}
-            formatter={(value: number, name: string) => [`${value} (${total > 0 ? Math.round((value / total) * 100) : 0}%)`, name]}
+            formatter={(value, name) => {
+              const v = Number(value) || 0;
+              return [`${v} (${total > 0 ? Math.round((v / total) * 100) : 0}%)`, name];
+            }}
           />
         </PieChart>
       </ResponsiveContainer>

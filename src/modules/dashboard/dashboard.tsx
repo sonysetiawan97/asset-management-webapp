@@ -1,5 +1,4 @@
-import { type FC, useEffect, useRef, useState, useCallback } from "react";
-import { useTranslation } from "react-i18next";
+import { type FC, useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiAxios } from "@/utils/apiAxios";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
@@ -94,7 +93,6 @@ const StatCard: FC<StatCardProps> = ({ icon, label, value, accent, delay }) => {
 
 /* ─── Main Dashboard ─── */
 const Dashboard: FC = () => {
-  const { t } = useTranslation();
   const [range, setRange] = useState<RangeVal>(30);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 

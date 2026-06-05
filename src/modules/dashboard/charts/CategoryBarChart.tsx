@@ -84,7 +84,7 @@ const CategoryBarChart: FC<Props> = ({ data, isLoading, error }) => {
               fontSize: 12,
               background: "#fff",
             }}
-            formatter={(value: number) => [`${value} items`, "Count"]}
+            formatter={(value) => [`${value} items`, "Count"]}
             cursor={{ fill: "transparent" }}
           />
           <Bar dataKey="count" radius={[0, 4, 4, 0]}>
