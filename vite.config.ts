@@ -15,7 +15,29 @@ export default defineConfig(({ mode }) => {
     },
 
     base: env.VITE_APP_BASE_URL || "/",
-    plugins: [react()],
+    plugins: [
+      react(),
+      {
+        name: "es-toolkit-compat-esm",
+        enforce: "pre",
+        resolveId(id) {
+          if (id.startsWith("es-toolkit/compat/") && !id.endsWith(".js") && !id.endsWith(".mjs") && !id.endsWith(".ts")) {
+            const fn = id.split("/").pop();
+            return { id: `\0es-toolkit-compat-${fn}`, external: false };
+          }
+          return null;
+        },
+        load(id) {
+          const prefix = "\0es-toolkit-compat-";
+          if (!id.startsWith(prefix)) return null;
+          const fn = id.slice(prefix.length);
+          return `export { ${fn} as default } from "es-toolkit/compat";`;
+        },
+      },
+    ],
+    optimizeDeps: {
+      exclude: ["es-toolkit"],
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
@@ -27,7 +49,7 @@ export default defineConfig(({ mode }) => {
         "@context": path.resolve(__dirname, "./src/contexts"),
         "@types": path.resolve(__dirname, "./src/types"),
       },
-      dedupe: ["react", "react-dom", "react-router-dom"],
+      dedupe: ["react", "react-dom", "react-router-dom", "react-is", "es-toolkit"],
     },
 
     server: isDev
@@ -53,6 +75,9 @@ export default defineConfig(({ mode }) => {
             if (id.includes("node_modules")) {
               if (id.includes("react") || id.includes("react-dom")) {
                 return "vendor";
+              }
+              if (id.includes("recharts") || id.includes("es-toolkit") || id.includes("d3-")) {
+                return "charts";
               }
             }
           },
