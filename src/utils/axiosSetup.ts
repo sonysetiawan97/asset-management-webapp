@@ -16,13 +16,14 @@ const refreshAccessToken = async (): Promise<boolean> => {
   refreshPromise = (async () => {
     try {
       const storedRefreshToken = getRefreshToken();
-      const { data } = await authAxios.post(
+      const response = await authAxios.post(
         "/auth/refresh",
         {},
         { headers: { Authorization: `Bearer ${storedRefreshToken}` } },
       );
-      localStorage.setItem("accessToken", data.access_token);
-      localStorage.setItem("refreshToken", data.refresh_token);
+      const { access_token, refresh_token } = response.data.data;
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
       return true;
     } catch {
       localStorage.removeItem("accessToken");

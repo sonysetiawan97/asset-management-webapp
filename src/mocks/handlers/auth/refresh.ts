@@ -13,8 +13,13 @@ export const refresh = http.post("/auth/refresh", async ({ request }) => {
 
   return HttpResponse.json(
     {
-      access_token: "mock_access_token_" + crypto.randomUUID(),
-      refresh_token: "mock_refresh_token_" + crypto.randomUUID(),
+      status: true,
+      data: {
+        access_token: "mock_access_token_" + crypto.randomUUID(),
+        refresh_token: "mock_refresh_token_" + crypto.randomUUID(),
+      },
+      message: "success",
+      code: 200,
     },
     { status: 200 }
   );
