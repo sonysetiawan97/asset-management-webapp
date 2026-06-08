@@ -20,13 +20,6 @@ export const List = ({
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
-  const filteredData =
-    selectedRoot === true
-      ? data.filter((d) => !d.parent_id)
-      : selectedRoot === false
-        ? data.filter((d) => !!d.parent_id)
-        : data;
-
   return (
     <div className="module-list-container">
       {/* ── Header Bar ── */}
@@ -71,7 +64,7 @@ export const List = ({
 
       {/* ── List Table ── */}
       <div className="module-table-container animate-fade-slide-up">
-        {filteredData.length === 0 ? (
+        {data.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
@@ -97,7 +90,7 @@ export const List = ({
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((dept, index) => {
+                {data.map((dept, index) => {
                   const parentName = dept.parent_id
                     ? data.find((d) => d.id === dept.parent_id)?.name ?? "—"
                     : "—";
