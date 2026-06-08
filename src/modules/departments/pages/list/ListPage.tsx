@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { moduleName, type Model } from "@modules/departments/types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { Pagination } from "@components/list/Pagination";
 
 interface ListProps {
   data: Model[];
   count: number;
-  isLoading: boolean;
-  departments: Model[];
   selectedRoot: boolean | null;
   onRootChange: (value: boolean | null) => void;
 }
@@ -15,16 +14,11 @@ interface ListProps {
 export const List = ({
   data,
   count,
-  isLoading: _isLoading,
-  departments: _departments,
   selectedRoot,
   onRootChange,
 }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
-
-  const rootCount = data.filter((d) => !d.parent_id).length;
-  const subCount = data.filter((d) => !!d.parent_id).length;
 
   const filteredData =
     selectedRoot === true
@@ -64,7 +58,6 @@ export const List = ({
           >
             <span className="status-chip__dot" style={{ background: "#6366f1" }} />
             <span className="status-chip__label">{t("modules.departments.list.filter_root")}</span>
-            <span className="status-chip__count">{rootCount}</span>
           </button>
           <button
             className={`status-chip ${selectedRoot === false ? "active" : ""}`}
@@ -72,7 +65,6 @@ export const List = ({
           >
             <span className="status-chip__dot" style={{ background: "#10b981" }} />
             <span className="status-chip__label">{t("modules.departments.list.filter_sub")}</span>
-            <span className="status-chip__count">{subCount}</span>
           </button>
         </div>
       </div>
@@ -150,29 +142,7 @@ export const List = ({
       </div>
 
       {/* ── Pagination ── */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(Math.max(0, skip - limit))}
-            disabled={skip === 0}
-          >
-            <i className="bi bi-chevron-left"></i>
-            {t("pagination.prev")}
-          </button>
-          <span className="pagination-info">
-            {skip + 1}–{Math.min(skip + limit, count)} {t("pagination.of")} {count}
-          </span>
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(skip + limit)}
-            disabled={skip + limit >= count}
-          >
-            {t("pagination.next")}
-            <i className="bi bi-chevron-right"></i>
-          </button>
-        </div>
-      )}
+      <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
     </div>
   );
 };

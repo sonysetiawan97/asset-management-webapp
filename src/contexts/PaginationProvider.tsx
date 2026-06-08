@@ -10,7 +10,7 @@ export const PaginationProvider = ({
   children: React.ReactNode;
 }) => {
   const [skip, setSkip] = useState<number>(0);
-  const limit = VITE_PAGE_LIMIT || 10;
+  const limit = Number(VITE_PAGE_LIMIT) || 10;
   const location = useLocation();
 
   useEffect(() => {

@@ -13,7 +13,7 @@ interface PaginationProps {
 export const Pagination: FC<PaginationProps> = ({
   count,
   skip,
-  limit = VITE_PAGE_LIMIT || 10,
+  limit = Number(VITE_PAGE_LIMIT) || 10,
   onPageChange,
 }) => {
   const { t } = useTranslation();
