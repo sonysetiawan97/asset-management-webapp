@@ -63,7 +63,8 @@ export const ListWrapper: FC = () => {
   return (
     <ListPage
       data={data?.data.result || []}
-      count={selectedStatus ? (data?.data.count ?? 0) : (unfilteredCounts?.count ?? data?.data.count ?? 0)}
+      count={data?.data.count ?? 0}
+      allCount={unfilteredCounts?.count ?? data?.data.count ?? 0}
       countByStatus={unfilteredCounts?.countByStatus ?? data?.data.count_by_status ?? {}}
       categories={categories}
       locations={locations}

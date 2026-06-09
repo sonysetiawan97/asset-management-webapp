@@ -14,6 +14,7 @@ import { Pagination } from "@components/list/Pagination";
 interface ListProps {
   data: Model[];
   count: number;
+  allCount: number;
   categories: { id: string; name: string }[];
   locations: { id: string; name: string }[];
   selectedStatus: string | null;
@@ -42,7 +43,7 @@ const formatDate = (dateStr: string | undefined) => {
   });
 };
 
-const List = ({ data, count, categories, locations, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
+const List = ({ data, count, allCount, categories, locations, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
@@ -61,7 +62,7 @@ const List = ({ data, count, categories, locations, selectedStatus, onStatusChan
       {/* ── Stat Bar ── */}
       <div className="module-stat-bar">
         <div className="stat-item">
-          <span className="stat-value">{count}</span>
+          <span className="stat-value">{allCount}</span>
           <span className="stat-label">{t("modules.assets.list.total_assets")}</span>
         </div>
         <div className="stat-item" style={{ borderLeftColor: "#10b981" }}>
@@ -90,7 +91,7 @@ const List = ({ data, count, categories, locations, selectedStatus, onStatusChan
             onClick={() => onStatusChange(null)}
           >
             <span className="status-chip__label">{t("modules.assets.list.filter_all")}</span>
-            <span className="status-chip__count">{count}</span>
+            <span className="status-chip__count">{allCount}</span>
           </button>
           {statusStats.map((s) => {
             const colors = STATUS_COLORS[s.value] ?? { dot: "#6b7280" };
