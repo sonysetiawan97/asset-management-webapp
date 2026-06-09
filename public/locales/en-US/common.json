@@ -560,8 +560,16 @@
         "total_value": "Total Value",
         "filter_by_status": "Filter by status",
         "filter_all": "All",
-        "empty": "No assets yet. Register your first one.",
-        "create_first": "Register First Asset",
+        "empty": "No assets yet.",
+        "empty_by_status": {
+          "available": "No available assets.",
+          "in_use": "No assets currently in use.",
+          "under_maintenance": "No assets under maintenance.",
+          "reserved": "No reserved assets.",
+          "lost": "No lost assets.",
+          "disposed": "No disposed assets.",
+          "pending_transfer": "No assets pending transfer."
+        },
         "purchase_price": "Purchase",
         "book_value": "Book Value",
         "purchase_date": "Purchased",

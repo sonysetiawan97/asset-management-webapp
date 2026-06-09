@@ -538,8 +538,16 @@
         "total_value": "Nilai Total",
         "filter_by_status": "Filter berdasarkan status",
         "filter_all": "Semua",
-        "empty": "Belum ada aset. Daftarkan yang pertama.",
-        "create_first": "Daftarkan Aset Pertama",
+        "empty": "Belum ada aset.",
+        "empty_by_status": {
+          "available": "Tidak ada aset yang tersedia.",
+          "in_use": "Tidak ada aset yang sedang dipakai.",
+          "under_maintenance": "Tidak ada aset yang sedang dirawat.",
+          "reserved": "Tidak ada aset yang direservasi.",
+          "lost": "Tidak ada aset yang hilang.",
+          "disposed": "Tidak ada aset yang sudah dibuang.",
+          "pending_transfer": "Tidak ada aset yang menunggu transfer."
+        },
         "purchase_price": "Pembelian",
         "book_value": "Nilai Buku",
         "purchase_date": "Tgl Pembelian",

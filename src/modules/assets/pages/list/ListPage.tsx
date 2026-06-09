@@ -132,10 +132,11 @@ const List = ({ data, count, categories, locations, selectedStatus, onStatusChan
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
-            <p className="empty-state__text">{t("modules.assets.list.empty")}</p>
-            <Link to={`/${moduleName}/create`} className="btn-create-empty">
-              {t("modules.assets.list.create_first")}
-            </Link>
+            <p className="empty-state__text">
+              {selectedStatus
+                ? t(`modules.assets.list.empty_by_status.${selectedStatus}`)
+                : t("modules.assets.list.empty")}
+            </p>
           </div>
         ) : (
           data.map((asset, index) => {
