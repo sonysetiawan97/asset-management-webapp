@@ -10,7 +10,7 @@ import { useFindAll } from "@hooks/request/useFindAll";
 
 export const ListWrapper: FC = () => {
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const { skip, limit } = usePagination();
+  const { skip, limit, setSkip } = usePagination();
   const { query } = useSearch();
   const { data, isLoading, error } = useList<Model>({
     module: moduleName,
@@ -32,6 +32,11 @@ export const ListWrapper: FC = () => {
     ]);
   }, []);
 
+  const handleTypeChange = (value: string | null) => {
+    setSelectedType(value);
+    setSkip(0);
+  };
+
   if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -39,10 +44,9 @@ export const ListWrapper: FC = () => {
     <List
       data={data?.data.result || []}
       count={data?.data.count || 0}
-      isLoading={isLoading}
       locations={locationsData?.result ?? []}
       selectedType={selectedType}
-      onTypeChange={setSelectedType}
+      onTypeChange={handleTypeChange}
       countByType={data?.data.count_by_type ?? {}}
     />
   );

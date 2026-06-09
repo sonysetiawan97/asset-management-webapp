@@ -7,11 +7,11 @@ import {
 } from "@modules/locations/types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { Pagination } from "@components/list/Pagination";
 
 interface ListProps {
   data: Model[];
   count: number;
-  isLoading: boolean;
   locations: Model[];
   selectedType: string | null;
   onTypeChange: (type: string | null) => void;
@@ -35,8 +35,7 @@ const TYPE_LABELS: Record<LocationType, string> = {
 export const List = ({
   data,
   count,
-  isLoading: _isLoading,
-  locations: _locations,
+  locations,
   selectedType,
   onTypeChange,
   countByType = {},
@@ -49,13 +48,9 @@ export const List = ({
     count: countByType[type.value] ?? 0,
   }));
 
-  const filteredData = selectedType
-    ? data.filter((loc) => loc.type === selectedType)
-    : data;
-
   const getParentName = (parentId: string | null): string => {
     if (!parentId) return "—";
-    return data.find((loc) => loc.id === parentId)?.name ?? "—";
+    return locations.find((loc) => loc.id === parentId)?.name ?? "—";
   };
 
   return (
@@ -102,7 +97,7 @@ export const List = ({
 
       {/* ── List Table ── */}
       <div className="module-table-container animate-fade-slide-up">
-        {filteredData.length === 0 ? (
+        {data.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
@@ -126,7 +121,7 @@ export const List = ({
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((location, index) => (
+                {data.map((location, index) => (
                   <tr key={location.id} style={{ animationDelay: `${index * 20}ms` }} className="animate-fade-slide-up">
                     <td className="text-muted" style={{ textAlign: "center" }}>
                       {skip + index + 1}
@@ -181,29 +176,7 @@ export const List = ({
       </div>
 
       {/* ── Pagination ── */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(Math.max(0, skip - limit))}
-            disabled={skip === 0}
-          >
-            <i className="bi bi-chevron-left"></i>
-            {t("pagination.prev")}
-          </button>
-          <span className="pagination-info">
-            {skip + 1}–{Math.min(skip + limit, count)} {t("pagination.of")} {count}
-          </span>
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(skip + limit)}
-            disabled={skip + limit >= count}
-          >
-            {t("pagination.next")}
-            <i className="bi bi-chevron-right"></i>
-          </button>
-        </div>
-      )}
+      <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
     </div>
   );
 };
