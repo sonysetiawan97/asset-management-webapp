@@ -6,6 +6,7 @@ import { useSearch } from "@hooks/list/useSearch";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
+import { useFindAll } from "@hooks/request/useFindAll";
 
 export const ListWrapper: FC = () => {
   const [selectedRoot, setSelectedRoot] = useState<boolean | null>(null);
@@ -32,6 +33,7 @@ export const ListWrapper: FC = () => {
       ...filterParams,
     },
   });
+  const { data: allDepartmentsData } = useFindAll<Model>("departments-all", "departments");
 
   useEffect(() => {
     setBreadcrumbs([
@@ -53,6 +55,7 @@ export const ListWrapper: FC = () => {
       data={data?.data.result || []}
       count={data?.data.count || 0}
       countByLevel={data?.data.count_by_level ?? {}}
+      allDepartments={allDepartmentsData?.result ?? []}
       selectedRoot={selectedRoot}
       onRootChange={handleRootChange}
     />

@@ -8,6 +8,7 @@ interface ListProps {
   data: Model[];
   count: number;
   countByLevel?: Record<string, number>;
+  allDepartments: Model[];
   selectedRoot: boolean | null;
   onRootChange: (value: boolean | null) => void;
 }
@@ -16,6 +17,7 @@ export const List = ({
   data,
   count,
   countByLevel = {},
+  allDepartments,
   selectedRoot,
   onRootChange,
 }: ListProps) => {
@@ -96,7 +98,7 @@ export const List = ({
               <tbody>
                 {data.map((dept, index) => {
                   const parentName = dept.parent_id
-                    ? data.find((d) => d.id === dept.parent_id)?.name ?? "—"
+                    ? allDepartments.find((d) => d.id === dept.parent_id)?.name ?? "—"
                     : "—";
                   return (
                     <tr key={dept.id} style={{ animationDelay: `${index * 20}ms` }} className="animate-fade-slide-up">
