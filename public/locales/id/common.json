@@ -639,6 +639,13 @@
         "returned": "Dikembalikan",
         "overdue": "Terlambat",
         "empty": "Belum ada catatan check-out.",
+        "empty_by_status": {
+          "active": "Tidak ada check-out aktif.",
+          "overdue": "Tidak ada check-out yang terlambat.",
+          "returned": "Tidak ada check-out yang dikembalikan."
+        },
+        "filter_by_status": "Filter berdasarkan status",
+        "filter_all": "Semua",
         "assigned_to": "Ditugaskan Ke",
         "checked_out": "Di-check-out",
         "expected_return": "Tgl Kembali Rencana",

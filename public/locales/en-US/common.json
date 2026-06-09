@@ -661,6 +661,13 @@
         "returned": "Returned",
         "overdue": "Overdue",
         "empty": "No checkout records yet.",
+        "empty_by_status": {
+          "active": "No active checkouts.",
+          "overdue": "No overdue checkouts.",
+          "returned": "No returned checkouts."
+        },
+        "filter_by_status": "Filter by status",
+        "filter_all": "All",
         "assigned_to": "Assigned To",
         "checked_out": "Checked Out",
         "expected_return": "Expected Return",

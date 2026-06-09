@@ -2,6 +2,20 @@ export const moduleName = "checkouts";
 
 export type CheckoutCondition = "new" | "good" | "fair" | "poor";
 
+export type CheckoutStatus = "active" | "overdue" | "returned";
+
+export const CHECKOUT_FILTER_STATUSES: { value: CheckoutStatus; label: string }[] = [
+  { value: "active", label: "Active" },
+  { value: "overdue", label: "Overdue" },
+  { value: "returned", label: "Returned" },
+];
+
+export const CHECKOUT_STATUS_COLORS: Record<CheckoutStatus, { dot: string }> = {
+  active: { dot: "#3b82f6" },
+  overdue: { dot: "#ef4444" },
+  returned: { dot: "#10b981" },
+};
+
 export interface CheckoutLog {
   id: string;
   asset_id: string;

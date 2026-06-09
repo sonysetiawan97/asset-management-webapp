@@ -1,13 +1,23 @@
 import { type FC } from "react";
 import { Link } from "react-router-dom";
-import { moduleName, type CheckoutLog } from "../../types/Model";
+import {
+  moduleName,
+  type CheckoutLog,
+  type CheckoutStatus,
+  CHECKOUT_FILTER_STATUSES,
+  CHECKOUT_STATUS_COLORS,
+} from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { Pagination } from "@components/list/Pagination";
 
 interface ListProps {
   data: CheckoutLog[];
   count: number;
-  isLoading: boolean;
+  allCount: number;
+  countByStatus: Record<string, number>;
+  selectedStatus: CheckoutStatus | null;
+  onStatusChange: (status: CheckoutStatus | null) => void;
 }
 
 const formatDate = (dateStr: string | undefined) => {
@@ -24,33 +34,72 @@ const isOverdue = (expectedReturn: string | undefined, returnDate: string | unde
   return new Date(expectedReturn) < new Date();
 };
 
-export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
+export const List: FC<ListProps> = ({
+  data,
+  count,
+  allCount,
+  countByStatus,
+  selectedStatus,
+  onStatusChange,
+}) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
-  const activeLogs = data.filter((l) => !l.return_date);
-  const returnedLogs = data.filter((l) => !!l.return_date);
-  const overdueCount = activeLogs.filter((l) => isOverdue(l.expected_return_date, l.return_date)).length;
+  const statusStats = CHECKOUT_FILTER_STATUSES.map((s) => ({
+    ...s,
+    count: countByStatus[s.value] ?? 0,
+  }));
 
   return (
     <div className="module-list-container">
       {/* Stat Bar */}
       <div className="module-stat-bar">
         <div className="stat-item">
-          <span className="stat-value">{count}</span>
+          <span className="stat-value">{allCount}</span>
           <span className="stat-label">{t("modules.checkout.list.total_checkouts")}</span>
         </div>
         <div className="stat-item" style={{ borderLeftColor: "#3b82f6" }}>
-          <span className="stat-value" style={{ color: "#3b82f6" }}>{activeLogs.length}</span>
+          <span className="stat-value" style={{ color: "#3b82f6" }}>{countByStatus["active"] ?? 0}</span>
           <span className="stat-label">{t("modules.checkout.list.active")}</span>
         </div>
-        <div className="stat-item" style={{ borderLeftColor: overdueCount > 0 ? "#ef4444" : "#e5e7eb" }}>
-          <span className="stat-value" style={{ color: overdueCount > 0 ? "#ef4444" : undefined }}>{overdueCount}</span>
+        <div className="stat-item" style={{ borderLeftColor: "#ef4444" }}>
+          <span className="stat-value" style={{ color: "#ef4444" }}>{countByStatus["overdue"] ?? 0}</span>
           <span className="stat-label">{t("modules.checkout.list.overdue")}</span>
         </div>
         <div className="stat-item">
-          <span className="stat-value">{returnedLogs.length}</span>
+          <span className="stat-value">{countByStatus["returned"] ?? 0}</span>
           <span className="stat-label">{t("modules.checkout.list.returned")}</span>
+        </div>
+      </div>
+
+      {/* Filter Chips */}
+      <div className="status-filter-bar">
+        <span className="status-filter-bar__label">{t("modules.checkout.list.filter_by_status")}</span>
+        <div className="status-filter-bar__chips">
+          <button
+            className={`status-chip ${selectedStatus === null ? "active" : ""}`}
+            onClick={() => onStatusChange(null)}
+          >
+            <span className="status-chip__label">{t("modules.checkout.list.filter_all")}</span>
+            <span className="status-chip__count">{allCount}</span>
+          </button>
+          {statusStats.map((s) => {
+            const colors = CHECKOUT_STATUS_COLORS[s.value];
+            return (
+              <button
+                key={s.value}
+                className={`status-chip ${selectedStatus === s.value ? "active" : ""}`}
+                onClick={() => onStatusChange(s.value)}
+              >
+                <span
+                  className="status-chip__dot"
+                  style={{ background: colors.dot }}
+                />
+                <span className="status-chip__label">{s.label}</span>
+                <span className="status-chip__count">{s.count}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -69,7 +118,11 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
-            <p className="empty-state__text">{t("modules.checkout.list.empty")}</p>
+            <p className="empty-state__text">
+              {selectedStatus
+                ? t(`modules.checkout.list.empty_by_status.${selectedStatus}`)
+                : t("modules.checkout.list.empty")}
+            </p>
           </div>
         ) : (
           data.map((log, index) => {
@@ -128,27 +181,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
       </div>
 
       {/* Pagination */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(Math.max(0, skip - limit))}
-            disabled={skip === 0}
-          >
-            {t("pagination.prev")}
-          </button>
-          <span className="pagination-info">
-            {skip + 1}–{Math.min(skip + limit, count)} / {count}
-          </span>
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(skip + limit)}
-            disabled={skip + limit >= count}
-          >
-            {t("pagination.next")}
-          </button>
-        </div>
-      )}
+      <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
     </div>
   );
 };
