@@ -7,6 +7,7 @@ import { Pagination } from "@components/list/Pagination";
 interface ListProps {
   data: Model[];
   count: number;
+  countByLevel?: Record<string, number>;
   selectedRoot: boolean | null;
   onRootChange: (value: boolean | null) => void;
 }
@@ -14,6 +15,7 @@ interface ListProps {
 export const List = ({
   data,
   count,
+  countByLevel = {},
   selectedRoot,
   onRootChange,
 }: ListProps) => {
@@ -43,7 +45,7 @@ export const List = ({
             onClick={() => onRootChange(null)}
           >
             <span className="status-chip__label">{t("modules.categories.list.filter_all")}</span>
-            <span className="status-chip__count">{count}</span>
+            <span className="status-chip__count">{countByLevel.all ?? count}</span>
           </button>
           <button
             className={`status-chip ${selectedRoot === true ? "active" : ""}`}
@@ -51,6 +53,7 @@ export const List = ({
           >
             <span className="status-chip__dot" style={{ background: "#6366f1" }} />
             <span className="status-chip__label">{t("modules.categories.list.filter_root")}</span>
+            <span className="status-chip__count">{countByLevel.root ?? 0}</span>
           </button>
           <button
             className={`status-chip ${selectedRoot === false ? "active" : ""}`}
@@ -58,6 +61,7 @@ export const List = ({
           >
             <span className="status-chip__dot" style={{ background: "#10b981" }} />
             <span className="status-chip__label">{t("modules.categories.list.filter_sub")}</span>
+            <span className="status-chip__count">{countByLevel.sub ?? 0}</span>
           </button>
         </div>
       </div>

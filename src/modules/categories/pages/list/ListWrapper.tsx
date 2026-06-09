@@ -52,6 +52,7 @@ export const ListWrapper: FC = () => {
     <ListPage
       data={data?.data.result || []}
       count={data?.data.count || 0}
+      countByLevel={data?.data.count_by_level ?? {}}
       selectedRoot={selectedRoot}
       onRootChange={handleRootChange}
     />
