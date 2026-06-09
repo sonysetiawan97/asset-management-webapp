@@ -3,16 +3,17 @@ import {
   moduleName,
   type Model,
   ASSET_STATUSES,
+  ASSET_FILTER_STATUSES,
   STATUS_COLORS,
   CONDITION_COLORS,
 } from "@modules/assets/types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { Pagination } from "@components/list/Pagination";
 
 interface ListProps {
   data: Model[];
   count: number;
-  isLoading: boolean;
   categories: { id: string; name: string }[];
   locations: { id: string; name: string }[];
   selectedStatus: string | null;
@@ -41,12 +42,12 @@ const formatDate = (dateStr: string | undefined) => {
   });
 };
 
-const List = ({ data, count, isLoading: _isLoading, categories, locations, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
+const List = ({ data, count, categories, locations, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
   // Count by status (from backend, respects all active filters)
-  const statusStats = ASSET_STATUSES.map((s) => ({
+  const statusStats = ASSET_FILTER_STATUSES.map((s) => ({
     ...s,
     count: countByStatus[s.value] ?? 0,
   }));
@@ -242,21 +243,7 @@ const List = ({ data, count, isLoading: _isLoading, categories, locations, selec
       </div>
 
       {/* ── Pagination ── */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button className="btn-pagination" onClick={() => setSkip(Math.max(0, skip - limit))} disabled={skip === 0}>
-            <i className="bi bi-chevron-left"></i>
-            {t("pagination.prev")}
-          </button>
-          <span className="pagination-info">
-            {skip + 1}–{Math.min(skip + limit, count)} {t("pagination.of")} {count}
-          </span>
-          <button className="btn-pagination" onClick={() => setSkip(skip + limit)} disabled={skip + limit >= count}>
-            {t("pagination.next")}
-            <i className="bi bi-chevron-right"></i>
-          </button>
-        </div>
-      )}
+      <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
     </div>
   );
 };

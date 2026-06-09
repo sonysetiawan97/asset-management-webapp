@@ -9,7 +9,7 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useFindAll } from "@hooks/request/useFindAll";
 
 export const ListWrapper: FC = () => {
-  const { skip, limit } = usePagination();
+  const { skip, limit, setSkip } = usePagination();
   const { query } = useSearch();
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ export const ListWrapper: FC = () => {
   const { data, isLoading, error } = useList<Model>({
     module: moduleName,
     skip,
-    limit,
+    limit: 12,
     params,
   });
 
@@ -52,6 +52,11 @@ export const ListWrapper: FC = () => {
     }
   }, [selectedStatus, data?.data.count, data?.data.count_by_status]);
 
+  const handleStatusChange = (value: string | null) => {
+    setSelectedStatus(value);
+    setSkip(0);
+  };
+
   if (isLoading) return <ContentLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -60,11 +65,10 @@ export const ListWrapper: FC = () => {
       data={data?.data.result || []}
       count={unfilteredCounts?.count ?? data?.data.count ?? 0}
       countByStatus={unfilteredCounts?.countByStatus ?? data?.data.count_by_status ?? {}}
-      isLoading={isLoading}
       categories={categories}
       locations={locations}
       selectedStatus={selectedStatus}
-      onStatusChange={setSelectedStatus}
+      onStatusChange={handleStatusChange}
     />
   );
 };

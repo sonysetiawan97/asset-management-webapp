@@ -89,6 +89,16 @@ export const ASSET_STATUSES: { value: AssetStatus; label: string; className: str
   { value: "pending_transfer", label: "Pending Transfer", className: "status-badge--pending" },
 ];
 
+export const ASSET_FILTER_STATUSES: { value: AssetStatus; label: string }[] = [
+  { value: "available", label: "Available" },
+  { value: "in_use", label: "In Use" },
+  { value: "under_maintenance", label: "Maintenance" },
+  { value: "reserved", label: "Reserved" },
+  { value: "lost", label: "Lost" },
+  { value: "disposed", label: "Disposed" },
+  { value: "pending_transfer", label: "Pending Transfer" },
+];
+
 export const ASSET_CONDITIONS: { value: AssetCondition; label: string; className: string }[] = [
   { value: "new", label: "New", className: "condition-badge--new" },
   { value: "good", label: "Good", className: "condition-badge--good" },

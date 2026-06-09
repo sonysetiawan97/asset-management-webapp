@@ -18,6 +18,9 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
   const { t } = useTranslation();
   const totalPages = Math.ceil(count / limit);
+
+  if (totalPages <= 1) return null;
+
   const currentPage = totalPages === 0 ? 0 : Math.floor(skip / limit) + 1;
 
   const handlePageChange = (page: number) => {
