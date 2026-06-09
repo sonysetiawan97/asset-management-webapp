@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { moduleName, type Model } from "@modules/categories/types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { Pagination } from "@components/list/Pagination";
 
 interface ListProps {
   data: Model[];
   count: number;
-  isLoading: boolean;
-  categories: Model[];
   selectedRoot: boolean | null;
   onRootChange: (value: boolean | null) => void;
 }
@@ -15,23 +14,11 @@ interface ListProps {
 export const List = ({
   data,
   count,
-  isLoading: _isLoading,
-  categories: _categories,
   selectedRoot,
   onRootChange,
 }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
-
-  const rootCount = data.filter((c) => !c.parent_id).length;
-  const subCount = data.filter((c) => !!c.parent_id).length;
-
-  const filteredData =
-    selectedRoot === true
-      ? data.filter((c) => !c.parent_id)
-      : selectedRoot === false
-        ? data.filter((c) => !!c.parent_id)
-        : data;
 
   return (
     <div className="module-list-container">
@@ -64,7 +51,6 @@ export const List = ({
           >
             <span className="status-chip__dot" style={{ background: "#6366f1" }} />
             <span className="status-chip__label">{t("modules.categories.list.filter_root")}</span>
-            <span className="status-chip__count">{rootCount}</span>
           </button>
           <button
             className={`status-chip ${selectedRoot === false ? "active" : ""}`}
@@ -72,14 +58,13 @@ export const List = ({
           >
             <span className="status-chip__dot" style={{ background: "#10b981" }} />
             <span className="status-chip__label">{t("modules.categories.list.filter_sub")}</span>
-            <span className="status-chip__count">{subCount}</span>
           </button>
         </div>
       </div>
 
       {/* ── List Table ── */}
       <div className="module-table-container animate-fade-slide-up">
-        {filteredData.length === 0 ? (
+        {data.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
@@ -107,7 +92,7 @@ export const List = ({
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((cat, index) => {
+                {data.map((cat, index) => {
                   const parentName = cat.parent_id
                     ? data.find((c) => c.id === cat.parent_id)?.name ?? "—"
                     : "—";
@@ -148,29 +133,7 @@ export const List = ({
       </div>
 
       {/* ── Pagination ── */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(Math.max(0, skip - limit))}
-            disabled={skip === 0}
-          >
-            <i className="bi bi-chevron-left"></i>
-            {t("pagination.prev")}
-          </button>
-          <span className="pagination-info">
-            {skip + 1}–{Math.min(skip + limit, count)} {t("pagination.of")} {count}
-          </span>
-          <button
-            className="btn-pagination"
-            onClick={() => setSkip(skip + limit)}
-            disabled={skip + limit >= count}
-          >
-            {t("pagination.next")}
-            <i className="bi bi-chevron-right"></i>
-          </button>
-        </div>
-      )}
+      <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
     </div>
   );
 };
