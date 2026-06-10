@@ -1,27 +1,67 @@
-import { type FC } from "react";
-import { moduleName, type TransferRequest, type CountByTransferStatus } from "../../types/Model";
+import { useEffect, useState, type FC } from "react";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
-import { usePagination } from "@hooks/list/usePagination";
+import { moduleName, type TransferRequest, type TransferStatus } from "../../types/Model";
+import { useSearch } from "@hooks/list/useSearch";
 import { ContentLoader } from "@components/loadings/ContentLoader";
+import { usePagination } from "@hooks/list/usePagination";
+import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 
 export const ListWrapper: FC = () => {
-  const { skip, limit } = usePagination();
-  const { data, isLoading } = useList<TransferRequest>({
+  const { skip, limit, setSkip } = usePagination();
+  const { query } = useSearch();
+  const [selectedStatus, setSelectedStatus] = useState<TransferStatus | null>(null);
+
+  const [unfilteredCounts, setUnfilteredCounts] = useState<{
+    count: number;
+    countByStatus: Record<string, number>;
+  } | null>(null);
+
+  const params = {
+    "!search": query,
+    "!sort[id]": -1,
+    ...(selectedStatus && { status: selectedStatus }),
+  };
+
+  const { data, isLoading, error } = useList<TransferRequest>({
     module: moduleName,
     skip,
-    limit,
-    params: {},
+    limit: 12,
+    params,
   });
 
+  useEffect(() => {
+    setBreadcrumbs([
+      { label: "Home", path: "/" },
+      { label: "Transfers", path: `/${moduleName}` },
+    ]);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedStatus && data?.data) {
+      setUnfilteredCounts({
+        count: data.data.count,
+        countByStatus: data.data.count_by_status || {},
+      });
+    }
+  }, [selectedStatus, data?.data?.count, data?.data?.count_by_status]);
+
+  const handleStatusChange = (value: TransferStatus | null) => {
+    setSelectedStatus(value);
+    setSkip(0);
+  };
+
   if (isLoading) return <ContentLoader />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <List
-      data={data?.data?.result ?? []}
+      data={data?.data?.result || []}
       count={data?.data?.count ?? 0}
-      countByStatus={data?.data?.count_by_status as CountByTransferStatus | undefined}
-      isLoading={isLoading}
+      allCount={unfilteredCounts?.count ?? data?.data?.count ?? 0}
+      countByStatus={unfilteredCounts?.countByStatus ?? data?.data?.count_by_status ?? {}}
+      selectedStatus={selectedStatus}
+      onStatusChange={handleStatusChange}
     />
   );
 };

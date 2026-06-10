@@ -58,6 +58,18 @@ export interface CountByTransferStatus {
   [key: string]: number;
 }
 
+export const TRANSFER_FILTER_STATUSES: { value: TransferStatus; label: string }[] = [
+  { value: "pending", label: "Pending" },
+  { value: "approved", label: "Approved" },
+  { value: "rejected", label: "Rejected" },
+];
+
+export const TRANSFER_STATUS_COLORS: Record<TransferStatus, { dot: string }> = {
+  pending: { dot: "#f59e0b" },
+  approved: { dot: "#10b981" },
+  rejected: { dot: "#ef4444" },
+};
+
 export const TRANSFER_STATUSES: { value: TransferStatus; label: string; className: string; dot: string }[] = [
   { value: "pending", label: "Pending", className: "transfer-badge--pending", dot: "#f59e0b" },
   { value: "approved", label: "Approved", className: "transfer-badge--approved", dot: "#10b981" },

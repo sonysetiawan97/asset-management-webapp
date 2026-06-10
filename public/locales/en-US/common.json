@@ -711,6 +711,11 @@
         "total_transfers": "Total Transfers",
         "filter_by_status": "Filter by status",
         "empty": "No transfer requests yet.",
+        "empty_by_status": {
+          "pending": "No pending transfer requests.",
+          "approved": "No approved transfer requests.",
+          "rejected": "No rejected transfer requests."
+        },
         "requested_by": "Requested By",
         "all": "All",
         "approve": "Approve",
@@ -734,7 +739,9 @@
         "title": "Initiate Transfer",
         "form": {
           "asset": "Asset",
+          "asset_placeholder": "Search asset by name or code...",
           "transfer_type": "Transfer Type",
+          "transfer_type_placeholder": "Select transfer type...",
           "transfer_type_options": {
             "inter_department": "Inter-Department",
             "inter_location": "Inter-Location",
@@ -746,10 +753,13 @@
           },
           "from_location": "From Location",
           "to_location": "To Location",
+          "to_location_placeholder": "Search location...",
           "from_department": "From Department",
           "to_department": "To Department",
+          "to_department_placeholder": "Search department...",
           "from_custodian": "From Custodian",
           "to_custodian": "To Custodian",
+          "to_custodian_placeholder": "Search custodian...",
           "reason": "Reason",
           "notes": "Notes (optional)"
         },

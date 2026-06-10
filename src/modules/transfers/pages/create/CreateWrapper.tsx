@@ -12,24 +12,12 @@ import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { useFindAll } from "@hooks/request/useFindAll";
-import { ContentLoader } from "@components/loadings/ContentLoader";
-import type { TransferAsset } from "../../components/FormFields";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateTransferModel>({ mode: "onBlur" });
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { createAsync, isLoading } = useCreate<CreateTransferModel>(moduleName);
-  const { data: assetsData } = useFindAll<TransferAsset>("assets", "assets", { "!limit": 9999 });
-  const { data: locationsData } = useFindAll<{ id: string; name: string }>("locations", "locations");
-  const { data: departmentsData } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: usersData } = useFindAll<{ id: number; first_name: string; last_name: string }>("users", "users");
-
-  const assets = assetsData?.result ?? [];
-  const locations = locationsData?.result ?? [];
-  const departments = departmentsData?.result ?? [];
-  const users = usersData?.result ?? [];
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -48,8 +36,6 @@ const CreateWrapper: FC = () => {
     }
   };
 
-  if (!assets || !locations || !departments || !users) return <ContentLoader />;
-
   return (
     <FormProvider {...methods}>
       <TitleBarWithIcon title={t("modules.transfers.create.title")}>
@@ -57,7 +43,7 @@ const CreateWrapper: FC = () => {
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="col-12">
-          <FormFields assets={assets} locations={locations} departments={departments} users={users} />
+          <FormFields control={methods.control} />
         </div>
         <div className="col-12">
           <div className="d-flex gap-3">

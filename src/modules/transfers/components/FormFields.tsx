@@ -1,10 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
-import SelectInput from "@components/form/select/SelectInput";
+import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { Text } from "@components/form/inputs/Text";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
 import { TRANSFER_TYPES } from "@modules/transfers/types/Model";
+import { useAssetTransferOptions } from "@modules/transfers/hooks/useAssetTransferOptions";
+import { useDepartmentOptions } from "@modules/transfers/hooks/useDepartmentOptions";
+import { useLocationOptions } from "@modules/transfers/hooks/useLocationOptions";
+import { useUserOptions } from "@modules/transfers/hooks/useUserOptions";
+import { useFindOneById } from "@hooks/request/useFindOneById";
+import type { SelectOption } from "@/types/SelectOption";
 
 export interface TransferAsset {
   id: string;
@@ -21,10 +27,7 @@ export interface TransferAsset {
 
 interface FormFieldsProps {
   readOnly?: boolean;
-  assets: TransferAsset[];
-  locations: { id: string; name: string }[];
-  departments: { id: string; name: string }[];
-  users: { id: number; first_name: string; last_name: string }[];
+  control: ReturnType<typeof useFormContext>["control"];
 }
 
 const formatUserName = (u?: { first_name?: string; last_name?: string } | null): string => {
@@ -32,26 +35,30 @@ const formatUserName = (u?: { first_name?: string; last_name?: string } | null):
   return `${u.first_name ?? ""} ${u.last_name ?? ""}`.trim() || "—";
 };
 
-export const FormFields = ({ readOnly = false, assets, locations, departments, users }: FormFieldsProps) => {
+export const FormFields = ({ readOnly = false, control }: FormFieldsProps) => {
   const { t } = useTranslation();
   const { setValue } = useFormContext();
 
-  const watchedAssetId = useWatch({ name: "asset_id" });
+  const watchedAssetId = useWatch({ name: "asset_id" }) as string | undefined;
   const watchedTransferType = useWatch({ name: "transfer_type" });
-  const watchedFromLocation = useWatch({ name: "from_location_id" });
-  const watchedFromCustodian = useWatch({ name: "from_custodian_id" });
-  const watchedFromDepartment = useWatch({ name: "from_department_id" });
+  const watchedFromLocation = useWatch({ name: "from_location_id" }) as string | undefined;
+  const watchedFromDepartment = useWatch({ name: "from_department_id" }) as string | undefined;
 
-  const selectedAsset = assets.find((a) => a.id === watchedAssetId);
+  const { data: assetDetails } = useFindOneById<TransferAsset>("assets", watchedAssetId);
 
-  // Auto-populate from-* fields from the selected asset
+  const loadAssetOptions = useAssetTransferOptions();
+  const loadDepartmentOptions = useDepartmentOptions();
+  const loadLocationOptions = useLocationOptions();
+  const loadUserOptions = useUserOptions();
+
+  // Auto-populate from-* fields when asset is selected
   useEffect(() => {
-    if (selectedAsset) {
-      setValue("from_location_id", selectedAsset.location_id ?? "", { shouldValidate: true });
-      setValue("from_custodian_id", selectedAsset.custodian_id ?? "", { shouldValidate: false });
-      setValue("from_department_id", selectedAsset.department_id ?? "", { shouldValidate: true });
+    if (assetDetails) {
+      setValue("from_location_id", assetDetails.location_id ?? "", { shouldValidate: true });
+      setValue("from_custodian_id", assetDetails.custodian_id ?? "", { shouldValidate: false });
+      setValue("from_department_id", assetDetails.department_id ?? "", { shouldValidate: true });
     }
-  }, [selectedAsset, setValue]);
+  }, [assetDetails, setValue]);
 
   // Reset to_department_id when switching to a type that doesn't need it
   useEffect(() => {
@@ -63,47 +70,49 @@ export const FormFields = ({ readOnly = false, assets, locations, departments, u
     }
   }, [watchedTransferType, setValue]);
 
-  const assetOptions = assets.map((a) => ({ value: a.id, label: `${a.name} (${a.asset_code})` }));
-  const locationOptions = locations.map((l) => ({ value: l.id, label: l.name }));
-  const departmentOptions = departments.map((d) => ({ value: d.id, label: d.name }));
   const typeOptions = TRANSFER_TYPES.map((tt) => ({ value: tt.value, label: t(`modules.transfers.create.form.transfer_type_options.${tt.value}`) }));
-  const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: String(u.id), label: `${u.first_name} ${u.last_name}`.trim() }))];
 
-  const fromLocationName = selectedAsset?.location_name
-    ?? locations.find((l) => l.id === watchedFromLocation)?.name
-    ?? "—";
-  const fromCustodianName = selectedAsset
+  const fromLocationName = assetDetails?.location_name ?? "—";
+  const fromCustodianName = assetDetails
     ? formatUserName({
-        first_name: selectedAsset.custodian_first_name,
-        last_name: selectedAsset.custodian_last_name,
+        first_name: assetDetails.custodian_first_name,
+        last_name: assetDetails.custodian_last_name,
       })
-    : watchedFromCustodian
-    ? formatUserName(users.find((u) => String(u.id) === watchedFromCustodian))
     : "—";
-  const fromDepartmentName = selectedAsset?.department_name
-    ?? departments.find((d) => d.id === watchedFromDepartment)?.name
-    ?? "—";
+  const fromDepartmentName = assetDetails?.department_name ?? "—";
 
   const showToDepartment = watchedTransferType === "inter_department" || watchedTransferType === "combined";
   const showToLocation = watchedTransferType === "inter_location" || watchedTransferType === "combined";
+
+  const isDepartmentDisabled = (option: SelectOption) => {
+    return watchedFromDepartment != null && String(option.value) === String(watchedFromDepartment);
+  };
+
+  const isLocationDisabled = (option: SelectOption) => {
+    return watchedFromLocation != null && String(option.value) === String(watchedFromLocation);
+  };
 
   return (
     <>
       <div className="row">
         <div className="col-12 col-md-6">
-          <SelectInput
+          <SelectReferenceInput
             name="asset_id"
+            control={control}
+            loadOptions={loadAssetOptions}
             label={t("modules.transfers.create.form.asset")}
-            options={assetOptions}
+            placeholder={t("modules.transfers.create.form.asset_placeholder")}
             readOnly={readOnly}
             required={true}
           />
         </div>
         <div className="col-12 col-md-6">
-          <SelectInput
+          <SelectReferenceInput
             name="transfer_type"
+            control={control}
+            loadOptions={async () => ({ options: typeOptions, hasMore: false })}
             label={t("modules.transfers.create.form.transfer_type")}
-            options={typeOptions}
+            placeholder={t("modules.transfers.create.form.transfer_type_placeholder")}
             readOnly={readOnly}
             required={true}
           />
@@ -146,31 +155,39 @@ export const FormFields = ({ readOnly = false, assets, locations, departments, u
         </div>
         {showToDepartment && (
           <div className="col-12 col-md-6">
-            <SelectInput
+            <SelectReferenceInput
               name="to_department_id"
+              control={control}
+              loadOptions={loadDepartmentOptions}
               label={t("modules.transfers.create.form.to_department")}
-              options={departmentOptions}
+              placeholder={t("modules.transfers.create.form.to_department_placeholder")}
               readOnly={readOnly}
               required={true}
+              isOptionDisabled={isDepartmentDisabled}
             />
           </div>
         )}
         {showToLocation && (
           <div className="col-12 col-md-6">
-            <SelectInput
+            <SelectReferenceInput
               name="to_location_id"
+              control={control}
+              loadOptions={loadLocationOptions}
               label={t("modules.transfers.create.form.to_location")}
-              options={locationOptions}
+              placeholder={t("modules.transfers.create.form.to_location_placeholder")}
               readOnly={readOnly}
               required={true}
+              isOptionDisabled={isLocationDisabled}
             />
           </div>
         )}
         <div className="col-12 col-md-6">
-          <SelectInput
+          <SelectReferenceInput
             name="to_custodian_id"
+            control={control}
+            loadOptions={loadUserOptions}
             label={t("modules.transfers.create.form.to_custodian")}
-            options={userOptions}
+            placeholder={t("modules.transfers.create.form.to_custodian_placeholder")}
             readOnly={readOnly}
           />
         </div>

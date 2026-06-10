@@ -27,6 +27,7 @@ interface Props {
   required?: boolean;
   readOnly?: boolean;
   initialValue?: SelectOption | undefined;
+  isOptionDisabled?: (option: SelectOption) => boolean;
 }
 
 const SelectReferenceInput: FC<Props> = ({
@@ -39,6 +40,7 @@ const SelectReferenceInput: FC<Props> = ({
   required = false,
   readOnly = false,
   initialValue,
+  isOptionDisabled,
 }) => {
   const {
     trigger,
@@ -112,6 +114,7 @@ const SelectReferenceInput: FC<Props> = ({
             placeholder={placeholder}
             isClearable
             isDisabled={readOnly}
+            isOptionDisabled={isOptionDisabled}
             className={`react-select-async-paginate ${
               errors[name] ? "is-invalid" : ""
             }`}

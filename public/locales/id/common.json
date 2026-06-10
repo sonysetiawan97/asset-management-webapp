@@ -689,6 +689,11 @@
         "total_transfers": "Total Transfer",
         "filter_by_status": "Filter berdasarkan status",
         "empty": "Belum ada permintaan transfer.",
+        "empty_by_status": {
+          "pending": "Tidak ada transfer yang menunggu persetujuan.",
+          "approved": "Tidak ada transfer yang disetujui.",
+          "rejected": "Tidak ada transfer yang ditolak."
+        },
         "requested_by": "Diminta Oleh",
         "all": "Semua",
         "approve": "Setujui",
@@ -712,7 +717,9 @@
         "title": "Mulai Transfer",
         "form": {
           "asset": "Aset",
+          "asset_placeholder": "Cari aset berdasarkan nama atau kode...",
           "transfer_type": "Tipe Transfer",
+          "transfer_type_placeholder": "Pilih tipe transfer...",
           "transfer_type_options": {
             "inter_department": "Antar-Departemen",
             "inter_location": "Antar-Lokasi",
@@ -724,10 +731,13 @@
           },
           "from_location": "Dari Lokasi",
           "to_location": "Ke Lokasi",
+          "to_location_placeholder": "Cari lokasi...",
           "from_department": "Dari Departemen",
           "to_department": "Ke Departemen",
+          "to_department_placeholder": "Cari departemen...",
           "from_custodian": "Dari Penanggung Jawab",
           "to_custodian": "Ke Penanggung Jawab",
+          "to_custodian_placeholder": "Cari penanggung jawab...",
           "reason": "Alasan",
           "notes": "Catatan (opsional)"
         },

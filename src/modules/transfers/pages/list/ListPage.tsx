@@ -2,9 +2,17 @@ import { type FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiAxios } from "@/utils/apiAxios";
-import { moduleName, type TransferRequest, type CountByTransferStatus, TRANSFER_STATUSES } from "../../types/Model";
+import {
+  moduleName,
+  type TransferRequest,
+  type TransferStatus,
+  TRANSFER_FILTER_STATUSES,
+  TRANSFER_STATUS_COLORS,
+  TRANSFER_STATUSES,
+} from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
+import { Pagination } from "@components/list/Pagination";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { Modal } from "@components/Modal";
@@ -12,21 +20,33 @@ import { Modal } from "@components/Modal";
 interface ListProps {
   data: TransferRequest[];
   count: number;
-  countByStatus?: CountByTransferStatus;
-  isLoading: boolean;
+  allCount: number;
+  countByStatus: Record<string, number>;
+  selectedStatus: TransferStatus | null;
+  onStatusChange: (status: TransferStatus | null) => void;
 }
 
 const formatDate = (dateStr: string | undefined) => {
   if (!dateStr) return "—";
-  return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 };
 
-export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
+export const List: FC<ListProps> = ({
+  data,
+  count,
+  allCount,
+  countByStatus,
+  selectedStatus,
+  onStatusChange,
+}) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [rejectTargetId, setRejectTargetId] = useState<string | null>(null);
   const [rejectionReason, setRejectionReason] = useState("");
 
@@ -68,25 +88,22 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
     );
   };
 
-  const statusCounts = TRANSFER_STATUSES.map((s) => ({
+  const statusStats = TRANSFER_FILTER_STATUSES.map((s) => ({
     ...s,
-    count: countByStatus?.[s.value] ?? 0,
+    count: countByStatus[s.value] ?? 0,
   }));
-
-  const filteredData =
-    selectedStatus === "all" ? data : data.filter((r) => r.transfer_status === selectedStatus);
 
   return (
     <div className="module-list-container">
       {/* Stat Bar */}
       <div className="module-stat-bar">
         <div className="stat-item">
-          <span className="stat-value">{count}</span>
+          <span className="stat-value">{allCount}</span>
           <span className="stat-label">{t("modules.transfers.list.total_transfers")}</span>
         </div>
-        {statusCounts.map((s) => (
+        {statusStats.map((s) => (
           <div key={s.value} className="stat-item">
-            <span className="stat-value" style={{ color: s.dot }}>{s.count}</span>
+            <span className="stat-value" style={{ color: TRANSFER_STATUS_COLORS[s.value]?.dot }}>{s.count}</span>
             <span className="stat-label">{s.label}</span>
           </div>
         ))}
@@ -97,22 +114,29 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
         <span className="status-filter-bar__label">{t("modules.transfers.list.filter_by_status")}</span>
         <div className="status-filter-bar__chips">
           <button
-            className={`status-chip ${selectedStatus === "all" ? "active" : ""}`}
-            onClick={() => { setSelectedStatus("all"); setSkip(0); }}
+            className={`status-chip ${selectedStatus === null ? "active" : ""}`}
+            onClick={() => onStatusChange(null)}
           >
             <span className="status-chip__label">{t("modules.transfers.list.all")}</span>
+            <span className="status-chip__count">{allCount}</span>
           </button>
-          {statusCounts.map((s) => (
-            <button
-              key={s.value}
-              className={`status-chip ${selectedStatus === s.value ? "active" : ""}`}
-              onClick={() => { setSelectedStatus(s.value); setSkip(0); }}
-            >
-              <span className="status-chip__dot" style={{ background: s.dot }} />
-              <span className="status-chip__label">{s.label}</span>
-              <span className="status-chip__count">{s.count}</span>
-            </button>
-          ))}
+          {statusStats.map((s) => {
+            const colors = TRANSFER_STATUS_COLORS[s.value];
+            return (
+              <button
+                key={s.value}
+                className={`status-chip ${selectedStatus === s.value ? "active" : ""}`}
+                onClick={() => onStatusChange(s.value)}
+              >
+                <span
+                  className="status-chip__dot"
+                  style={{ background: colors.dot }}
+                />
+                <span className="status-chip__label">{s.label}</span>
+                <span className="status-chip__count">{s.count}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -130,15 +154,19 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
 
       {/* Cards */}
       <div className="workflow-grid animate-fade-slide-up">
-        {filteredData.length === 0 ? (
+        {data.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
-            <p className="empty-state__text">{t("modules.transfers.list.empty")}</p>
+            <p className="empty-state__text">
+              {selectedStatus
+                ? t(`modules.transfers.list.empty_by_status.${selectedStatus}`)
+                : t("modules.transfers.list.empty")}
+            </p>
           </div>
         ) : (
-          filteredData.map((transfer, index) => {
+          data.map((transfer, index) => {
             const statusMeta = TRANSFER_STATUSES.find((s) => s.value === transfer.transfer_status);
             return (
               <div key={transfer.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
@@ -247,13 +275,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus }) => {
       </Modal>
 
       {/* Pagination */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button className="btn-pagination" onClick={() => setSkip(Math.max(0, skip - limit))} disabled={skip === 0}>{t("pagination.prev")}</button>
-          <span className="pagination-info">{skip + 1}–{Math.min(skip + limit, count)} / {count}</span>
-          <button className="btn-pagination" onClick={() => setSkip(skip + limit)} disabled={skip + limit >= count}>{t("pagination.next")}</button>
-        </div>
-      )}
+      <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
     </div>
   );
 };
