@@ -801,9 +801,12 @@
         "title": "Log Maintenance",
         "form": {
           "asset": "Asset",
+          "asset_placeholder": "Search asset by name...",
           "type": "Type",
+          "type_placeholder": "Select type...",
           "date_performed": "Date Performed",
           "performed_by": "Performed By",
+          "performed_by_placeholder": "Search technician by name...",
           "description": "Description",
           "cost": "Cost",
           "next_maintenance": "Next Maintenance Date",

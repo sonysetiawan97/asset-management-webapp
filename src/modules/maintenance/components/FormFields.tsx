@@ -1,40 +1,46 @@
 import { useTranslation } from "react-i18next";
-import SelectInput from "@components/form/select/SelectInput";
+import { useFormContext } from "react-hook-form";
+import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { DateInput } from "@components/form/inputs/DateInput";
 import { NumberInput } from "@components/form/inputs/NumberInput";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
 import { MAINTENANCE_TYPES } from "@modules/maintenance/types/Model";
+import { useAssetOptions } from "@modules/maintenance/hooks/useAssetOptions";
+import { useUserOptions } from "@modules/maintenance/hooks/useUserOptions";
 
 interface FormFieldsProps {
   readOnly?: boolean;
-  assets: { id: string; name: string; asset_code: string }[];
-  users: { id: string; first_name: string; last_name: string }[];
+  control: ReturnType<typeof useFormContext>["control"];
 }
 
-export const FormFields = ({ readOnly = false, assets, users }: FormFieldsProps) => {
+export const FormFields = ({ readOnly = false, control }: FormFieldsProps) => {
   const { t } = useTranslation();
+  const loadAssetOptions = useAssetOptions();
+  const loadUserOptions = useUserOptions();
 
-  const assetOptions = assets.map((a) => ({ value: String(a.id), label: `${a.name} (${a.asset_code})` }));
-  const typeOptions = MAINTENANCE_TYPES.map((t) => ({ value: t.value, label: t.label }));
-  const performedByOptions = users.map((u) => ({ value: String(u.id), label: `${u.first_name} ${u.last_name}`.trim() }));
+  const typeOptions = MAINTENANCE_TYPES.map((mt) => ({ value: mt.value, label: mt.label }));
 
   return (
     <>
       <div className="row">
         <div className="col-12 col-md-6">
-          <SelectInput
+          <SelectReferenceInput
             name="asset_id"
+            control={control}
+            loadOptions={loadAssetOptions}
             label={t("modules.maintenance.create.form.asset")}
-            options={assetOptions}
+            placeholder={t("modules.maintenance.create.form.asset_placeholder")}
             readOnly={readOnly}
             required={true}
           />
         </div>
         <div className="col-12 col-md-6">
-          <SelectInput
+          <SelectReferenceInput
             name="type"
+            control={control}
+            loadOptions={async () => ({ options: typeOptions, hasMore: false })}
             label={t("modules.maintenance.create.form.type")}
-            options={typeOptions}
+            placeholder={t("modules.maintenance.create.form.type_placeholder")}
             readOnly={readOnly}
             required={true}
           />
@@ -48,10 +54,12 @@ export const FormFields = ({ readOnly = false, assets, users }: FormFieldsProps)
           />
         </div>
         <div className="col-12 col-md-6">
-          <SelectInput
+          <SelectReferenceInput
             name="performed_by"
+            control={control}
+            loadOptions={loadUserOptions}
             label={t("modules.maintenance.create.form.performed_by")}
-            options={performedByOptions}
+            placeholder={t("modules.maintenance.create.form.performed_by_placeholder")}
             readOnly={readOnly}
           />
         </div>

@@ -1,9 +1,8 @@
-import { type FC } from "react";
+import { type FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { moduleName, type CreateMaintenanceModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
 import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
 import { FormFields } from "../../components/FormFields";
 import { CancelButton } from "@components/buttons/CancelButton";
@@ -11,8 +10,6 @@ import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
-import { useFindAll } from "@hooks/request/useFindAll";
-import { ContentLoader } from "@components/loadings/ContentLoader";
 import { useNavigate } from "react-router-dom";
 
 const CreateWrapper: FC = () => {
@@ -20,12 +17,6 @@ const CreateWrapper: FC = () => {
   const { t } = useTranslation();
   const { createAsync, isLoading } = useCreate<CreateMaintenanceModel>(moduleName);
   const navigate = useNavigate();
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
-  const { data: usersData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
-
-  const assets = assetsData?.result ?? [];
-  const users = usersData?.result ?? [];
-
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -44,8 +35,6 @@ const CreateWrapper: FC = () => {
     }
   };
 
-  if (!assets || !users) return <ContentLoader />;
-
   return (
     <FormProvider {...methods}>
       <TitleBarWithIcon title={t("modules.maintenance.create.title")}>
@@ -53,7 +42,7 @@ const CreateWrapper: FC = () => {
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="col-12">
-          <FormFields assets={assets} users={users} />
+          <FormFields control={methods.control} />
         </div>
         <div className="col-12">
           <div className="d-flex gap-3">

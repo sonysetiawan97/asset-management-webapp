@@ -11,25 +11,22 @@ import { CancelButton } from "@components/buttons/CancelButton";
 import { useFindOneById } from "@hooks/request/useFindOneById";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
-import { useFindAll } from "@hooks/request/useFindAll";
 import { FormFields } from "../../components/FormFields";
 import { apiAxios } from "@/utils/apiAxios";
 import { useSnackbar } from "notistack";
 import { extractErrors } from "@/utils/extractError";
 
 const ReadPage: FC<{
-  assets: { id: string; name: string; asset_code: string }[];
-  users: { id: string; first_name: string; last_name: string }[];
+  control: ReturnType<typeof useForm>["control"];
   status: "open" | "completed";
   onComplete: () => void;
   isCompleting: boolean;
-}> = ({ assets, users, status, onComplete, isCompleting }) => {
-  if (!assets) return <ContentLoader />;
+}> = ({ control, status, onComplete, isCompleting }) => {
   const isOpen = status === "open";
 
   return (
     <form className="row g-3">
-      <div className="col-12"><FormFields readOnly={true} assets={assets} users={users} /></div>
+      <div className="col-12"><FormFields readOnly={true} control={control} /></div>
       <div className="col-12">
         <div className="d-flex gap-2 mt-2">
           <BackButton />
@@ -49,8 +46,6 @@ const ReadWrapper: FC = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data, error, isLoading } = useFindOneById<ReadMaintenanceModel>(moduleName, id);
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
-  const { data: usersData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
   const methods = useForm<ReadMaintenanceModel>({ mode: "onBlur" });
   const { reset } = methods;
   const navigate = useNavigate();
@@ -61,9 +56,6 @@ const ReadWrapper: FC = () => {
     if (data) reset(data);
     setBreadcrumbs([{ label: "Home", path: "/" }, { label: "Maintenance", path: `/${moduleName}` }, { label: data?.asset_name ?? "Read" }]);
   }, [data, reset]);
-
-  const assets = assetsData?.result ?? [];
-  const users = usersData?.result ?? [];
 
   const handleComplete = async () => {
     if (!id) return;
@@ -78,7 +70,7 @@ const ReadWrapper: FC = () => {
     }
   };
 
-  if (isLoading || !assetsData) return <ContentLoader />;
+  if (isLoading) return <ContentLoader />;
   if (!data || error) return <NotFound />;
 
   return (
@@ -86,7 +78,7 @@ const ReadWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.maintenance.read.title")}>
         <i className="bi bi-eye"></i>
       </TitleBarWithIcon>
-      <ReadPage assets={assets} users={users} status={data.status ?? "open"} onComplete={handleComplete} isCompleting={isCompleting} />
+      <ReadPage control={methods.control} status={data.status ?? "open"} onComplete={handleComplete} isCompleting={isCompleting} />
     </FormProvider>
   );
 };

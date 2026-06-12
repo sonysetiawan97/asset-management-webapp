@@ -1,9 +1,8 @@
-import { type FC } from "react";
+import { type FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { moduleName, type ReadMaintenanceModel, type UpdateMaintenanceModel } from "../../types/Model";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
 import { BackButton } from "@components/buttons/BackButton";
@@ -14,7 +13,6 @@ import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
-import { useFindAll } from "@hooks/request/useFindAll";
 import { FormFields } from "../../components/FormFields";
 
 const UpdateWrapper: FC = () => {
@@ -26,14 +24,9 @@ const UpdateWrapper: FC = () => {
   const { updateAsync, isLoading: isUpdating } = useUpdate<UpdateMaintenanceModel>();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
-  const { data: usersData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
-
-  const assets = assetsData?.result ?? [];
-  const users = usersData?.result ?? [];
 
   useEffect(() => {
-    if (!data || !users.length) return;
+    if (!data) return;
     reset({
       asset_id: data.asset_id,
       type: data.type,
@@ -44,7 +37,7 @@ const UpdateWrapper: FC = () => {
       next_maintenance_date: data.next_maintenance_date,
     });
     setBreadcrumbs([{ label: "Home", path: "/" }, { label: "Maintenance", path: `/${moduleName}` }, { label: data?.asset_name ?? "Complete" }]);
-  }, [data, users.length, reset]);
+  }, [data, reset]);
 
   const onSubmit = async (formData: UpdateMaintenanceModel) => {
     if (!id) {
@@ -75,7 +68,7 @@ const UpdateWrapper: FC = () => {
         <i className="bi bi-pencil"></i>
       </TitleBarWithIcon>
       <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="col-12"><FormFields readOnly assets={assets} users={users} /></div>
+        <div className="col-12"><FormFields readOnly control={methods.control} /></div>
         <div className="col-12">
           <div className="d-flex gap-2">
             <BackButton />

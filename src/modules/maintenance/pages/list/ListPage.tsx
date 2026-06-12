@@ -2,16 +2,16 @@ import { type FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiAxios } from "@/utils/apiAxios";
-import { moduleName, type MaintenanceLog, MAINTENANCE_TYPES } from "../../types/Model";
+import { moduleName, type MaintenanceLog, MAINTENANCE_TYPES, type MaintenanceType } from "../../types/Model";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { useSnackbar } from "notistack";
 import { Modal } from "@components/Modal";
+import { Pagination } from "@components/list/Pagination";
 
 interface ListProps {
   data: MaintenanceLog[];
   count: number;
-  isLoading: boolean;
 }
 
 const formatDate = (dateStr: string | undefined) => {
@@ -19,12 +19,19 @@ const formatDate = (dateStr: string | undefined) => {
   return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 };
 
+const TYPE_DOT_COLORS: Record<MaintenanceType, string> = {
+  scheduled: "#6366f1",
+  corrective: "#ef4444",
+  preventive: "#10b981",
+  inspection: "#f59e0b",
+};
+
 const formatCurrency = (value: number | undefined) => {
   if (value === undefined || value === null) return "—";
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(value);
 };
 
-export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
+export const List: FC<ListProps> = ({ data, count }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -71,7 +78,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
           </div>
         ))}
         <div className="stat-item" style={{ borderLeftColor: "#10b981" }}>
-          <span className="stat-value" style={{ color: "#10b981" }}>{formatCurrency(data.reduce((acc, l) => acc + (l.cost || 0), 0))}</span>
+          <span className="stat-value" style={{ color: "#10b981" }}>{formatCurrency(filteredData.reduce((acc, l) => acc + (Number(l.cost) || 0), 0))}</span>
           <span className="stat-label">{t("modules.maintenance.list.total_cost")}</span>
         </div>
       </div>
@@ -85,6 +92,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
             onClick={() => setSelectedType("all")}
           >
             <span className="status-chip__label">{t("modules.maintenance.list.filter_type_all")}</span>
+            <span className="status-chip__count">{data.length}</span>
           </button>
           {MAINTENANCE_TYPES.map((type) => (
             <button
@@ -92,6 +100,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
               className={`status-chip ${selectedType === type.value ? "active" : ""}`}
               onClick={() => setSelectedType(type.value)}
             >
+              <span className="status-chip__dot" style={{ background: TYPE_DOT_COLORS[type.value] }} />
               <span className="status-chip__label">{type.label}</span>
               <span className="status-chip__count">{typeCounts[type.value] ?? 0}</span>
             </button>
@@ -232,12 +241,8 @@ export const List: FC<ListProps> = ({ data, count, isLoading: _isLoading }) => {
       </Modal>
 
       {/* Pagination */}
-      {count > limit && (
-        <div className="module-pagination">
-          <button className="btn-pagination" onClick={() => setSkip(Math.max(0, skip - limit))} disabled={skip === 0}>{t("pagination.prev")}</button>
-          <span className="pagination-info">{skip + 1}–{Math.min(skip + limit, count)} / {count}</span>
-          <button className="btn-pagination" onClick={() => setSkip(skip + limit)} disabled={skip + limit >= count}>{t("pagination.next")}</button>
-        </div>
+      {filteredData.length > limit && (
+        <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
       )}
     </div>
   );

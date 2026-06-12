@@ -779,9 +779,12 @@
         "title": "Catat Perawatan",
         "form": {
           "asset": "Aset",
+          "asset_placeholder": "Cari aset berdasarkan nama...",
           "type": "Tipe",
+          "type_placeholder": "Pilih tipe...",
           "date_performed": "Tgl Perawatan",
           "performed_by": "Teknisi",
+          "performed_by_placeholder": "Cari teknisi berdasarkan nama...",
           "description": "Deskripsi",
           "cost": "Biaya",
           "next_maintenance": "Tgl Perawatan Berikutnya",

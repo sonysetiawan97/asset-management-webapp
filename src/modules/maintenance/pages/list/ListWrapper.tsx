@@ -3,15 +3,20 @@ import { moduleName, type MaintenanceLog } from "../../types/Model";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { usePagination } from "@hooks/list/usePagination";
+import { useSearch } from "@hooks/list/useSearch";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 
 export const ListWrapper: FC = () => {
-  const { skip, limit } = usePagination();
+  const { skip } = usePagination();
+  const { query } = useSearch();
   const { data, isLoading } = useList<MaintenanceLog>({
     module: moduleName,
     skip,
-    limit,
-    params: {},
+    limit: 12,
+    params: {
+      "!search": query,
+      "!sort[id]": -1,
+    },
   });
 
   if (isLoading) return <ContentLoader />;
@@ -20,7 +25,6 @@ export const ListWrapper: FC = () => {
     <List
       data={data?.data?.result ?? []}
       count={data?.data?.count ?? 0}
-      isLoading={isLoading}
     />
   );
 };
