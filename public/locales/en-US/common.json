@@ -1088,6 +1088,16 @@
         "start_date": "Start Date",
         "end_date": "End Date (optional)",
         "notes": "Notes"
+      },
+      "preview": {
+        "title": "Asset Preview",
+        "count": "{{count}} asset will be inventoried",
+        "count_other": "{{count}} assets will be inventoried",
+        "all": "All",
+        "empty_title": "Assets to be inventoried",
+        "empty_desc": "Select a department and/or location above to preview the assets that will be included in this opname session.",
+        "no_assets": "No assets found for the selected filters.",
+        "loading_more": "Loading more assets..."
       }
     }
   }

@@ -5,6 +5,7 @@ import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { FormFields } from "../../components/FormFields";
+import { AssetPreviewPanel } from "../../components/AssetPreviewPanel";
 import { CancelButton } from "@components/buttons/CancelButton";
 import { SubmitButton } from "@components/buttons/SubmitButton";
 import { ResetButton } from "@components/buttons/ResetButton";
@@ -28,15 +29,18 @@ const CreatePage: FC = () => {
   };
 
   return (
-    <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
-      <div className="col-12">
+    <form className="row g-4" onSubmit={handleSubmit(onSubmit)}>
+      <div className="col-12 col-lg-4">
         <FormFields />
-      </div>
-      <div className="col-12">
-        <div className="d-flex gap-3">
+        <div className="d-flex gap-3 mt-2">
           <CancelButton to={`/${moduleName}`} />
           <ResetButton />
           <SubmitButton isLoading={isLoading} />
+        </div>
+      </div>
+      <div className="col-12 col-lg-8">
+        <div className="opname-preview-column">
+          <AssetPreviewPanel />
         </div>
       </div>
     </form>

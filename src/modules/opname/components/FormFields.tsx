@@ -45,7 +45,7 @@ const FormFields = () => {
 
   return (
     <>
-      <div className="col-12 col-md-6">
+      <div className="col-12">
         <Text
           name="name"
           label={t("modules.opname.form.name")}
@@ -53,7 +53,7 @@ const FormFields = () => {
         />
       </div>
 
-      <div className="col-12 col-md-6">
+      <div className="col-12">
         <SelectReferenceInput
           name="department_id"
           control={control}
@@ -63,7 +63,7 @@ const FormFields = () => {
         />
       </div>
 
-      <div className="col-12 col-md-6">
+      <div className="col-12">
         <SelectReferenceInput
           name="location_id"
           control={control}
@@ -73,33 +73,34 @@ const FormFields = () => {
         />
       </div>
 
-      <div className="col-12 col-md-6">
-        <Controller
-          name="start_date"
-          control={control}
-          render={({ field }) => (
-            <DateInput
-              {...field}
-              name="start_date"
-              label={t("modules.opname.form.start_date")}
-              required
-            />
-          )}
-        />
-      </div>
-
-      <div className="col-12 col-md-6">
-        <Controller
-          name="end_date"
-          control={control}
-          render={({ field }) => (
-            <DateInput
-              {...field}
-              name="end_date"
-              label={t("modules.opname.form.end_date")}
-            />
-          )}
-        />
+      <div className="row g-3">
+        <div className="col-12 col-md-6">
+          <Controller
+            name="start_date"
+            control={control}
+            render={({ field }) => (
+              <DateInput
+                {...field}
+                name="start_date"
+                label={t("modules.opname.form.start_date")}
+                required
+              />
+            )}
+          />
+        </div>
+        <div className="col-12 col-md-6">
+          <Controller
+            name="end_date"
+            control={control}
+            render={({ field }) => (
+              <DateInput
+                {...field}
+                name="end_date"
+                label={t("modules.opname.form.end_date")}
+              />
+            )}
+          />
+        </div>
       </div>
 
       <div className="col-12">

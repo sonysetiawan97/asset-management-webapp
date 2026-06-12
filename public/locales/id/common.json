@@ -1066,6 +1066,16 @@
         "start_date": "Tanggal Mulai",
         "end_date": "Tanggal Selesai (opsional)",
         "notes": "Catatan"
+      },
+      "preview": {
+        "title": "Pratinjau Aset",
+        "count": "{{count}} aset akan diopname",
+        "count_other": "{{count}} aset akan diopname",
+        "all": "Semua",
+        "empty_title": "Aset yang akan diopname",
+        "empty_desc": "Pilih departemen dan/atau lokasi di atas untuk melihat aset yang akan dimasukkan dalam sesi opname ini.",
+        "no_assets": "Tidak ada aset yang ditemukan untuk filter yang dipilih.",
+        "loading_more": "Memuat lebih banyak aset..."
       }
     }
   }
