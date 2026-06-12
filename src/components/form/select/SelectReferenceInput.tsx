@@ -2,7 +2,6 @@ import { useEffect, useState, type FC } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import {
   Controller,
-  type Control,
   useWatch,
   useFormContext,
 } from "react-hook-form";
@@ -12,7 +11,7 @@ import type { LoadOptions } from "react-select-async-paginate";
 
 interface Props {
   name: string;
-  control: Control;
+  control: any;
   loadOptions: LoadOptions<
     SelectOption,
     GroupBase<SelectOption>,

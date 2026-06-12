@@ -8,7 +8,7 @@ import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 
 export const ListWrapper: FC = () => {
-  const { skip, limit, setSkip } = usePagination();
+  const { skip, setSkip } = usePagination();
   const { query } = useSearch();
   const [selectedStatus, setSelectedStatus] = useState<TransferStatus | null>(null);
 

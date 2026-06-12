@@ -17,7 +17,7 @@ import { useSnackbar } from "notistack";
 import { extractErrors } from "@/utils/extractError";
 
 const ReadPage: FC<{
-  control: ReturnType<typeof useForm>["control"];
+  control: any;
   status: "open" | "completed";
   onComplete: () => void;
   isCompleting: boolean;

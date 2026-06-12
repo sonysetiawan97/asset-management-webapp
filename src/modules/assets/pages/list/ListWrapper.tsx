@@ -9,7 +9,7 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useFindAll } from "@hooks/request/useFindAll";
 
 export const ListWrapper: FC = () => {
-  const { skip, limit, setSkip } = usePagination();
+  const { skip, setSkip } = usePagination();
   const { query } = useSearch();
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 

@@ -27,7 +27,7 @@ export interface TransferAsset {
 
 interface FormFieldsProps {
   readOnly?: boolean;
-  control: ReturnType<typeof useFormContext>["control"];
+  control: any;
 }
 
 const formatUserName = (u?: { first_name?: string; last_name?: string } | null): string => {

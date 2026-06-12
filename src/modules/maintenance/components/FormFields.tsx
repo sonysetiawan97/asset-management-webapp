@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
 import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { DateInput } from "@components/form/inputs/DateInput";
 import { NumberInput } from "@components/form/inputs/NumberInput";
@@ -10,7 +9,7 @@ import { useUserOptions } from "@modules/maintenance/hooks/useUserOptions";
 
 interface FormFieldsProps {
   readOnly?: boolean;
-  control: ReturnType<typeof useFormContext>["control"];
+  control: any;
 }
 
 export const FormFields = ({ readOnly = false, control }: FormFieldsProps) => {
