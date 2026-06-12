@@ -9,6 +9,7 @@ import { StatusBadge } from "@/components/list/StatusBadge";
 interface ListProps {
   data: OpnameSession[];
   count: number;
+  allCount: number;
   countByStatus: Record<string, number>;
   isLoading: boolean;
   selectedStatus: string | null;
@@ -35,7 +36,7 @@ const formatStatusLabel = (status: string) => {
   return map[status] ?? status;
 };
 
-export const List: FC<ListProps> = ({ data, count, countByStatus, isLoading, selectedStatus, onStatusChange }) => {
+export const List: FC<ListProps> = ({ data, count, allCount, countByStatus, isLoading, selectedStatus, onStatusChange }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
@@ -57,7 +58,7 @@ export const List: FC<ListProps> = ({ data, count, countByStatus, isLoading, sel
             onClick={() => onStatusChange(null)}
           >
             <span className="status-chip__label">{t("modules.opname.list.filter_all")}</span>
-            <span className="status-chip__count">{count}</span>
+            <span className="status-chip__count">{allCount}</span>
           </button>
           {statusStats.map((s) => {
             const color = getStatusColor(s.value);
@@ -156,7 +157,9 @@ export const List: FC<ListProps> = ({ data, count, countByStatus, isLoading, sel
             </tbody>
           </table>
         </div>
-        <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
+        {count > limit && (
+          <Pagination count={count} skip={skip} limit={limit} onPageChange={setSkip} />
+        )}
       </div>
     </div>
   );

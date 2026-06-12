@@ -8,7 +8,7 @@ import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 
 export const ListWrapper: FC = () => {
-  const { skip, limit } = usePagination();
+  const { skip, limit, setSkip } = usePagination();
   const { query } = useSearch();
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
@@ -52,11 +52,12 @@ export const ListWrapper: FC = () => {
   return (
     <List
       data={data?.data.result || []}
-      count={unfilteredCounts?.count ?? data?.data.count ?? 0}
+      count={data?.data.count ?? 0}
+      allCount={unfilteredCounts?.count ?? data?.data.count ?? 0}
       countByStatus={unfilteredCounts?.countByStatus ?? data?.data.count_by_status ?? {}}
       isLoading={isLoading}
       selectedStatus={selectedStatus}
-      onStatusChange={setSelectedStatus}
+      onStatusChange={(status) => { setSelectedStatus(status); setSkip(0); }}
     />
   );
 };
