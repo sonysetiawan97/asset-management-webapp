@@ -86,7 +86,10 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
           </AuthPrivilegesChecker>
 
           {/* Master Data */}
-          <SidebarMenuTitle title={t("sidebar.master_data.title")} />
+          <SidebarMenuTitle
+            title={t("sidebar.master_data.title")}
+            links={["/departments", "/categories", "/locations"]}
+          />
           <AuthPrivilegesChecker link="/departments">
             <SidebarMenuItem
               url="/departments"
@@ -110,7 +113,10 @@ const Sidebar = forwardRef<HTMLDivElement, ToggleMenuSidebar>(
           </AuthPrivilegesChecker>
 
           {/* User Management */}
-          <SidebarMenuTitle title={t("sidebar.user-management.title")} />
+          <SidebarMenuTitle
+            title={t("sidebar.user-management.title")}
+            links={["/users", "/privileges", "/roles"]}
+          />
           <AuthPrivilegesChecker link="/users">
             <SidebarMenuItem
               url="/users"
