@@ -71,8 +71,7 @@ const ReadWrapper: FC = () => {
       </TitleBarWithIcon>
 
       {/* Asset Info Card */}
-      <div className="card mb-4" style={{ borderRadius: "12px", border: "1px solid #e5e7eb" }}>
-        <div className="card-body p-4">
+      <div className="form-section mb-4" style={{ borderRadius: "12px", border: "1px solid #e5e7eb" }}>
           {/* Asset header */}
           <div className="d-flex align-items-center justify-content-between mb-3">
             <div>
@@ -133,13 +132,12 @@ const ReadWrapper: FC = () => {
               <p className="mb-0" style={{ color: "#6b7280", fontSize: "14px" }}>{data.notes}</p>
             </div>
           )}
-        </div>
       </div>
 
       {/* Check-In Form */}
       {!isReturned ? (
-        <div className="card p-4" style={{ borderRadius: "12px", border: "1px solid #e5e7eb" }}>
-          <h5 className="fw-semibold mb-3" style={{ color: "#1a1a2e" }}>
+        <div className="form-section mb-4" style={{ borderRadius: "12px", border: "1px solid #e5e7eb" }}>
+          <h5 className="form-section__title" style={{ color: "#1a1a2e" }}>
             {t("modules.checkout.update.title")}
           </h5>
           <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>

@@ -128,7 +128,7 @@ export const List: FC<ListProps> = ({
           data.map((log, index) => {
             const overdue = isOverdue(log.expected_return_date, log.return_date);
             return (
-              <div key={log.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
+              <div key={log.id} className="ui-card workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
                 <div className="workflow-card__header">
                   <div className="workflow-status">
                     {log.return_date ? (

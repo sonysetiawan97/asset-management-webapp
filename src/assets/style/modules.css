@@ -29,7 +29,7 @@
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   margin-bottom: var(--space-2);
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -112,10 +112,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: var(--space-3);
-  padding: var(--space-4);
-  background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
-  border-radius: 12px;
+  /* padding: var(--space-4); */
+  /* background: var(--color-bg); */
+  /* border: 1px solid var(--color-border); */
+  /* border-radius: 12px; */
   margin-bottom: var(--space-4);
   animation: fadeSlideUp 400ms both;
 }
@@ -124,9 +124,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-surface);
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg);
+  border-radius: 12px;
   border-left: 3px solid var(--color-accent);
   animation: fadeSlideUp 500ms both;
 }
@@ -229,7 +230,7 @@
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   margin-bottom: var(--space-2);
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -288,7 +289,7 @@
 .form-section {
   padding: var(--space-5);
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
 }
 
@@ -390,7 +391,7 @@
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: var(--space-5);
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -595,7 +596,7 @@
   height: 80px;
   border-radius: 20px;
   background: var(--color-surface);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   margin-bottom: var(--space-4);
 }
 
@@ -717,7 +718,7 @@
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-family: var(--font-display);
   font-size: var(--text-sm);
@@ -896,32 +897,28 @@
   gap: var(--space-4);
 }
 
-/* ─── Asset Card ─── */
-.asset-card {
+/* ─── Shared Card Base (asset-card, workflow-card) ─── */
+.ui-card {
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.asset-card:hover {
+.ui-card:hover {
   border-color: var(--color-accent);
-  box-shadow: var(--shadow-accent);
   transform: translateY(-2px);
 }
 
-/* ── Card Header ── */
-.asset-card__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  gap: var(--space-3);
+.asset-card:hover {
+  box-shadow: var(--shadow-accent);
+}
+
+.workflow-card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .asset-status {
@@ -1040,13 +1037,22 @@
 }
 
 /* ── Card Footer ── */
+/* ── Card Header ── */
+.asset-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  gap: var(--space-3);
+}
+
+/* ── Card Footer ── */
 .asset-card__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
+  gap: var(--space-3);
 }
 
 .asset-warranty {
@@ -1070,7 +1076,7 @@
   gap: var(--space-4);
   padding: var(--space-3) var(--space-4);
   background: var(--color-surface);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -1099,7 +1105,7 @@
   gap: var(--space-2);
   padding: 5px 12px;
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 20px;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -1131,7 +1137,7 @@
 .form-section {
   padding: var(--space-5);
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   margin-bottom: var(--space-4);
 }
@@ -1637,29 +1643,11 @@
   gap: var(--space-4);
 }
 
-.workflow-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.workflow-card:hover {
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
 .workflow-card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
   gap: var(--space-3);
 }
 
@@ -1757,8 +1745,6 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
 }
 
 .workflow-condition-badge {
@@ -1834,7 +1820,7 @@
   gap: var(--space-3);
   padding: var(--space-4);
   background: var(--color-bg);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   cursor: pointer;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -1985,7 +1971,7 @@
    REPORTS MODULE
 ══════════════════════════════════════════ */
 .report-container { display: flex; flex-direction: column; gap: var(--space-4); }
-.report-table-wrap { overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--color-border); }
+.report-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--color-border); }
 .report-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: var(--text-sm); }
 .report-table th { background: var(--color-surface); padding: var(--space-3) var(--space-4); text-align: left; font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); border-bottom: 1.5px solid var(--color-border); }
 .report-table td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); }
@@ -1998,7 +1984,7 @@
    AUDIT TRAIL MODULE
 ══════════════════════════════════════════ */
 .audit-list { display: flex; flex-direction: column; gap: var(--space-2); }
-.audit-item { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-bg); border: 1.5px solid var(--color-border); border-radius: 10px; transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.audit-item { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 10px; transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 .audit-item:hover { border-color: var(--color-accent); box-shadow: var(--shadow-sm); }
 .audit-icon { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; }
 .audit-content { flex: 1; min-width: 0; }
@@ -2016,7 +2002,7 @@
 .audit-ip { font-family: var(--font-body); font-size: 10px; color: var(--color-text-muted); margin-top: var(--space-1); }
 .audit-filter-bar { display: flex; align-items: center; gap: var(--space-3); }
 .audit-filter-label { font-family: var(--font-display); font-size: var(--text-xs); font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
-.audit-filter-select { padding: var(--space-2) var(--space-3); border: 1.5px solid var(--color-border); border-radius: 8px; font-family: var(--font-body); font-size: var(--text-sm); background: var(--color-bg); color: var(--color-text-primary); cursor: pointer; }
+.audit-filter-select { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: 8px; font-family: var(--font-body); font-size: var(--text-sm); background: var(--color-bg); color: var(--color-text-primary); cursor: pointer; }
 
 /* Disposal method badges */
 .method-badge--resale { background: #d1fae5; color: #065f46; }
@@ -2102,7 +2088,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  max-width: 720px;
+  /* max-width: 720px; */
   margin: 0 auto;
 }
 

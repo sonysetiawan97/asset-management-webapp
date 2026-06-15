@@ -169,7 +169,7 @@ export const List: FC<ListProps> = ({
           data.map((transfer, index) => {
             const statusMeta = TRANSFER_STATUSES.find((s) => s.value === transfer.transfer_status);
             return (
-              <div key={transfer.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
+              <div key={transfer.id} className="ui-card workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
                 <div className="workflow-card__header">
                   <span
                     className="workflow-status-badge"

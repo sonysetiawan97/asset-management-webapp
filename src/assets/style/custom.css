@@ -1,3 +1,25 @@
+body {
+  background-color: #F4F7FE;
+}
+.app-header,
+.app-sidebar {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+.dash-stat,
+.app-header,
+.app-sidebar,
+.dash-card {
+  box-shadow: inherit;
+}
+.app-header {
+  padding:0;
+}
+
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
 /* ══════════════════════════════════════════
    COMPONENT-SPECIFIC STYLES
    Loading, date input polish, sidebar section title, 404 page
@@ -225,7 +247,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
-  padding: var(--space-4) var(--space-4) var(--space-1);
+  padding: var(--space-5) var(--space-4) var(--space-1);
   display: block;
 }
 

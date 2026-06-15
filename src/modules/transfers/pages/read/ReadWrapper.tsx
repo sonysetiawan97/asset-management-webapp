@@ -37,7 +37,7 @@ const ReadPage: FC<ReadPageProps> = ({ data, transferStatus, onApprove, onOpenRe
   return (
     <div className="workflow-detail animate-fade-slide-up">
       {/* Header Card */}
-      <div className="workflow-card">
+      <div className="ui-card workflow-card">
         <div className="workflow-card__header">
           <div className="d-flex gap-2 align-items-center">
             <span
@@ -54,14 +54,14 @@ const ReadPage: FC<ReadPageProps> = ({ data, transferStatus, onApprove, onOpenRe
           <span className="workflow-code">{data.asset_code ?? "—"}</span>
         </div>
         <div className="workflow-card__body">
-          <h2 className="workflow-name" style={{ fontSize: "1.5rem" }}>
+          <h2 className="workflow-name" >
             {data.asset_name ?? "—"}
           </h2>
         </div>
       </div>
 
       {/* Transfer Route Card */}
-      <div className="workflow-card">
+      <div className="ui-card workflow-card">
         <div className="workflow-card__body">
           <div className="transfer-route">
             <div className="transfer-route__from">
@@ -90,7 +90,7 @@ const ReadPage: FC<ReadPageProps> = ({ data, transferStatus, onApprove, onOpenRe
       </div>
 
       {/* Reason & Notes Card */}
-      <div className="workflow-card">
+      <div className="ui-card workflow-card">
         <div className="workflow-card__body">
           <div className="workflow-detail__field">
             <span className="workflow-detail__label">{t("modules.transfers.create.form.reason")}</span>
@@ -106,7 +106,7 @@ const ReadPage: FC<ReadPageProps> = ({ data, transferStatus, onApprove, onOpenRe
       </div>
 
       {/* Timeline / Metadata Card */}
-      <div className="workflow-card">
+      <div className="ui-card workflow-card">
         <div className="workflow-card__body">
           <div className="workflow-meta">
             <div className="workflow-meta__item">

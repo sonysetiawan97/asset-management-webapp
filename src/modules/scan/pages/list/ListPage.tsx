@@ -141,7 +141,7 @@ const ListPage: FC<ListPageProps> = ({
       <div className="row g-4">
         {/* Scanner Panel */}
         <div className="col-lg-6">
-          <div className="card shadow-sm h-100">
+          <div className="card h-100">
             <div className="card-header d-flex align-items-center justify-content-between">
               <h5 className="mb-0">
                 <i className="bi bi-qr-code-scan me-2" />
@@ -250,7 +250,7 @@ const ListPage: FC<ListPageProps> = ({
 
         {/* Result Panel */}
         <div className="col-lg-6">
-          <div className="card shadow-sm h-100">
+          <div className="card h-100">
             <div className="card-header">
               <h5 className="mb-0">
                 <i className="bi bi-info-circle me-2" />

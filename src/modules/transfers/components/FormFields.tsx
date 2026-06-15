@@ -119,85 +119,85 @@ export const FormFields = ({ readOnly = false, control }: FormFieldsProps) => {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-12">
-          <h6 className="form-section__title mt-2">{t("modules.transfers.create.form.section.from")}</h6>
-        </div>
-        <div className="col-12 col-md-4">
-          <Text
-            name="from_location_id"
-            label={t("modules.transfers.create.form.from_location")}
-            value={fromLocationName}
-            readOnly={true}
-          />
-        </div>
-        <div className="col-12 col-md-4">
-          <Text
-            name="from_department_id"
-            label={t("modules.transfers.create.form.from_department")}
-            value={fromDepartmentName}
-            readOnly={true}
-          />
-        </div>
-        <div className="col-12 col-md-4">
-          <Text
-            name="from_custodian_id"
-            label={t("modules.transfers.create.form.from_custodian")}
-            value={fromCustodianName}
-            readOnly={true}
-          />
+      <div className="form-section mb-4">
+        <h6 className="form-section__title mt-2">{t("modules.transfers.create.form.section.from")}</h6>
+        <div className="row">
+          <div className="col-12 col-md-4">
+            <Text
+              name="from_location_id"
+              label={t("modules.transfers.create.form.from_location")}
+              value={fromLocationName}
+              readOnly={true}
+            />
+          </div>
+          <div className="col-12 col-md-4">
+            <Text
+              name="from_department_id"
+              label={t("modules.transfers.create.form.from_department")}
+              value={fromDepartmentName}
+              readOnly={true}
+            />
+          </div>
+          <div className="col-12 col-md-4">
+            <Text
+              name="from_custodian_id"
+              label={t("modules.transfers.create.form.from_custodian")}
+              value={fromCustodianName}
+              readOnly={true}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-12">
-          <h6 className="form-section__title mt-3">{t("modules.transfers.create.form.section.to")}</h6>
-        </div>
-        {showToDepartment && (
+      <div className="form-section mb-4">
+        <h6 className="form-section__title mt-3">{t("modules.transfers.create.form.section.to")}</h6>
+        <div className="row">
+          {showToDepartment && (
+            <div className="col-12 col-md-6">
+              <SelectReferenceInput
+                name="to_department_id"
+                control={control}
+                loadOptions={loadDepartmentOptions}
+                label={t("modules.transfers.create.form.to_department")}
+                placeholder={t("modules.transfers.create.form.to_department_placeholder")}
+                readOnly={readOnly}
+                required={true}
+                isOptionDisabled={isDepartmentDisabled}
+              />
+            </div>
+          )}
+          {showToLocation && (
+            <div className="col-12 col-md-6">
+              <SelectReferenceInput
+                name="to_location_id"
+                control={control}
+                loadOptions={loadLocationOptions}
+                label={t("modules.transfers.create.form.to_location")}
+                placeholder={t("modules.transfers.create.form.to_location_placeholder")}
+                readOnly={readOnly}
+                required={true}
+                isOptionDisabled={isLocationDisabled}
+              />
+            </div>
+          )}
           <div className="col-12 col-md-6">
             <SelectReferenceInput
-              name="to_department_id"
+              name="to_custodian_id"
               control={control}
-              loadOptions={loadDepartmentOptions}
-              label={t("modules.transfers.create.form.to_department")}
-              placeholder={t("modules.transfers.create.form.to_department_placeholder")}
+              loadOptions={loadUserOptions}
+              label={t("modules.transfers.create.form.to_custodian")}
+              placeholder={t("modules.transfers.create.form.to_custodian_placeholder")}
               readOnly={readOnly}
-              required={true}
-              isOptionDisabled={isDepartmentDisabled}
             />
           </div>
-        )}
-        {showToLocation && (
-          <div className="col-12 col-md-6">
-            <SelectReferenceInput
-              name="to_location_id"
-              control={control}
-              loadOptions={loadLocationOptions}
-              label={t("modules.transfers.create.form.to_location")}
-              placeholder={t("modules.transfers.create.form.to_location_placeholder")}
+          <div className="col-12">
+            <TextAreaInput
+              name="reason"
+              label={t("modules.transfers.create.form.reason")}
               readOnly={readOnly}
               required={true}
-              isOptionDisabled={isLocationDisabled}
             />
           </div>
-        )}
-        <div className="col-12 col-md-6">
-          <SelectReferenceInput
-            name="to_custodian_id"
-            control={control}
-            loadOptions={loadUserOptions}
-            label={t("modules.transfers.create.form.to_custodian")}
-            placeholder={t("modules.transfers.create.form.to_custodian_placeholder")}
-            readOnly={readOnly}
-          />
-        </div>
-        <div className="col-12">
-          <TextAreaInput
-            name="reason"
-            label={t("modules.transfers.create.form.reason")}
-            readOnly={readOnly}
-            required={true}
-          />
         </div>
       </div>
     </>

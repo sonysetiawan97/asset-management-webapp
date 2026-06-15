@@ -40,11 +40,11 @@ const CreateWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.maintenance.create.title")}>
         <i className="bi bi-wrench"></i>
       </TitleBarWithIcon>
-      <form className="row g-3" onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="col-12">
+      <form className=" g-3 " onSubmit={methods.handleSubmit(onSubmit)}>
+        <div className="form-section">
           <FormFields control={methods.control} />
         </div>
-        <div className="col-12">
+        <div className="">
           <div className="d-flex gap-3">
             <CancelButton to={`/${moduleName}`} />
             <SubmitButton isLoading={isLoading} />

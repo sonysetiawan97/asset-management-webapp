@@ -219,7 +219,7 @@ a {
   height: 30px;
   border-radius: var(--radius-md);
   background: var(--color-surface-alt);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
   transition: all var(--transition-fast);
   cursor: pointer;
@@ -339,7 +339,7 @@ a {
   font-size: var(--text-sm);
   font-weight: 600;
   padding: var(--space-2) var(--space-4);
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
   cursor: pointer;
   transition:
     background-color var(--transition-fast),
@@ -455,7 +455,7 @@ a {
 .form-control {
   font-size: var(--text-sm);
   padding: var(--space-2) var(--space-3);
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg);
   color: var(--color-text-primary);
@@ -563,7 +563,7 @@ a {
 }
 
 .input-group.form-password button {
-  border: 1.5px solid var(--color-border);
+  border: 1px solid var(--color-border);
   border-left: 0;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   background: var(--color-surface);
@@ -592,7 +592,7 @@ a {
 .css-13cymwt-control,
 .css-t3ipsp-control {
   border-radius: var(--radius-md) !important;
-  border: 1.5px solid var(--color-border) !important;
+  border: 1px solid var(--color-border) !important;
   font-size: var(--text-sm) !important;
   min-height: 38px !important;
   transition:
@@ -644,8 +644,8 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  /* border-radius: var(--radius-full); */
   background: var(--color-bg);
   font-size: var(--text-sm);
   font-weight: 500;

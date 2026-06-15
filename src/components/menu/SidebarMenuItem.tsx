@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SideBarMenuIcon } from "./SideBarMenuIcon";
 import { useSidebarParent } from "@/contexts/SidebarParentContext";
 
@@ -25,12 +25,15 @@ export const SidebarMenuItem: FC<SidebarMenuItemProps> = ({
     : url;
 
   return (
-    <Link
+    <NavLink
       to={fullUrl}
-      className="list-group-item"
+      end
+      className={({ isActive }) =>
+        isActive ? "list-group-item active" : "list-group-item"
+      }
     >
       <SideBarMenuIcon icon={icon} />
       <span>{title}</span>
-    </Link>
+    </NavLink>
   );
 };

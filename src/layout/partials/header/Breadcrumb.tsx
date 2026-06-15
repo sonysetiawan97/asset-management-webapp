@@ -10,7 +10,7 @@ export const Breadcrumbs = () => {
   return (
     <ul
       key="breadcrumbs"
-      className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1"
+      className="breadcrumb breadcrumb-separatorless fs-7 my-0 pt-1"
     >
       {breadcrumbs.map(({ label, icon, path }, index) => (
         <li key={`${index}-${path}`} className="breadcrumb-item text-muted">

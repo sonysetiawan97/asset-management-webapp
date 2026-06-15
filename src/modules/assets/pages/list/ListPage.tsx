@@ -149,7 +149,7 @@ const List = ({ data, count, allCount, categories, locations, selectedStatus, on
             return (
               <div
                 key={asset.id}
-                className="asset-card"
+                className="ui-card asset-card"
                 style={{ animationDelay: `${index * 40}ms` }}
               >
                 {/* ── Card Header ── */}

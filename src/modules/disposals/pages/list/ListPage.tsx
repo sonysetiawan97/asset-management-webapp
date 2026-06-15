@@ -130,7 +130,7 @@ export const List: FC<ListProps> = ({ data, count }) => {
             const statusMeta = DISPOSAL_STATUSES.find((s) => s.value === disposal.disposal_status);
             const methodMeta = DISPOSAL_METHODS?.find((m) => m.value === disposal.method);
             return (
-              <div key={disposal.id} className="workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
+              <div key={disposal.id} className="ui-card workflow-card" style={{ animationDelay: `${index * 40}ms` }}>
                 <div className="workflow-card__header">
                   <span
                     className="workflow-status-badge"

@@ -25,9 +25,9 @@ const ReadPage: FC<{
   const isOpen = status === "open";
 
   return (
-    <form className="row g-3">
-      <div className="col-12"><FormFields readOnly={true} control={control} /></div>
-      <div className="col-12">
+    <form className=" g-3">
+      <div className="form-section"><FormFields readOnly={true} control={control} /></div>
+      <div className="">
         <div className="d-flex gap-2 mt-2">
           <BackButton />
           {isOpen && (
