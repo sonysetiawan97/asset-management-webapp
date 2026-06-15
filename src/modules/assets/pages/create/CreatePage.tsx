@@ -15,6 +15,7 @@ import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
 import { getAuth } from "@components/auth/AuthHelpers";
+import { useFindOneById } from "@hooks/request/useFindOneById";
 
 const CreatePage = () => {
   const { t } = useTranslation();
@@ -27,16 +28,24 @@ const CreatePage = () => {
   const roleCode = auth?.role?.role?.[0]?.code;
   const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
 
+  const { data: myDept } = useFindOneById<{ name: string }>(
+    "departments",
+    isStaffOrManager ? String(auth?.department_id) : undefined
+  );
+
   const categoryLoadOptions = useCategoryOptions();
   const locationLoadOptions = useLocationOptions();
   const departmentLoadOptions = useDepartmentOptions(isStaffOrManager);
   const userLoadOptions = useUserOptions();
 
   useEffect(() => {
-    if (isStaffOrManager && auth?.department_id) {
-      setValue("department_id", String(auth.department_id));
+    if (isStaffOrManager && myDept && auth?.department_id) {
+      (setValue as any)("department_id", {
+        value: String(auth.department_id),
+        label: myDept.name,
+      });
     }
-  }, [isStaffOrManager, auth?.department_id, setValue]);
+  }, [isStaffOrManager, myDept, auth?.department_id, setValue]);
 
   const onSubmit = async (data: CreateModel) => {
     try {

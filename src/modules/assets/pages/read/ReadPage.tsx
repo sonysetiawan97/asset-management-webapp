@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@components/buttons/BackButton";
 import { UpdateButton } from "@components/buttons/UpdateButton";
 import { FormFields } from "../../components/FormFields";
@@ -13,13 +13,14 @@ import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
 import { getAuth } from "@components/auth/AuthHelpers";
+import { useFindOneById } from "@hooks/request/useFindOneById";
 
 interface ReadPageProps {
   defaultValue?: { category_id: string; location_id: string };
 }
 
 const ReadPage = (_props: ReadPageProps) => {
-  const { watch } = useFormContext<ReadModel>();
+  const { watch, setValue } = useFormContext<ReadModel>();
   const { t } = useTranslation();
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
@@ -31,6 +32,32 @@ const ReadPage = (_props: ReadPageProps) => {
   const auth = getAuth();
   const roleCode = auth?.role?.role?.[0]?.code;
   const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
+
+  const watchedDeptId = watch("department_id");
+  const { data: deptDetail } = useFindOneById<{ name: string }>(
+    "departments",
+    isStaffOrManager && watchedDeptId && typeof watchedDeptId !== "object"
+      ? String(watchedDeptId)
+      : undefined
+  );
+
+  const resolvedDeptRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (
+      isStaffOrManager &&
+      deptDetail &&
+      watchedDeptId &&
+      typeof watchedDeptId !== "object" &&
+      resolvedDeptRef.current !== watchedDeptId
+    ) {
+      resolvedDeptRef.current = String(watchedDeptId);
+      (setValue as any)("department_id", {
+        value: String(watchedDeptId),
+        label: deptDetail.name,
+      });
+    }
+  }, [isStaffOrManager, deptDetail, watchedDeptId, setValue]);
 
   const categoryLoadOptions = useCategoryOptions();
   const locationLoadOptions = useLocationOptions();

@@ -61,17 +61,25 @@ const SelectReferenceInput: FC<Props> = ({
       return;
     }
 
-    if (selectedOption?.value !== fieldValue) {
-      setSelectedOption(
-        typeof fieldValue === "object"
-          ? fieldValue
-          : { value: fieldValue, label: String(fieldValue) }
-      );
+    if (selectedOption?.value === fieldValue) return;
+
+    if (typeof fieldValue === "object" && "value" in fieldValue) {
+      setSelectedOption(fieldValue);
+      setValue(name, fieldValue.value);
+      return;
     }
 
-    if (fieldValue && typeof fieldValue === "object" && "value" in fieldValue) {
-      setValue(name, fieldValue.value);
-    }
+    const fallback = { value: fieldValue, label: String(fieldValue) };
+    setSelectedOption(fallback);
+
+    Promise.resolve(loadOptions("", [], { skip: 0 })).then((result) => {
+      const found = result.options.find(
+        (o) => "value" in o && o.value === fieldValue
+      ) as SelectOption | undefined;
+      if (found) {
+        setSelectedOption(found);
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldValue]);
 

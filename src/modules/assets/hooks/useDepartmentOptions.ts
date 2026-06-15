@@ -16,55 +16,58 @@ export const useDepartmentOptions = (scoped = false) => {
     { skip: number }
   > = (inputValue, _prevOptions, additional = { skip: 0 }) => {
     return new Promise((resolve) => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
+      const doFetch = async () => {
+        const auth = getAuth();
+        const roleCode = auth?.role?.role?.[0]?.code;
+        const isScoped = scoped && (roleCode === "staff" || roleCode === "manager");
+        const userDeptId = auth?.department_id;
+
+        let response;
+        if (isScoped && userDeptId) {
+          response = await findAll<{ id: string; name: string }>(
+            "departments",
+            { id: String(userDeptId) }
+          );
+        } else {
+          response = await findAll<{ id: string; name: string }>(
+            "departments",
+            {
+              "name!like": inputValue,
+              "!sort[id]": -1,
+              "!limit": LIMIT,
+              "!skip": additional.skip,
+            }
+          );
+        }
+
+        const result = response?.data?.result ?? [];
+
+        const options: SelectOption[] = result.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+
+        if (!isScoped) {
+          options.unshift({ value: "", label: "-- Select Department --" });
+        }
+
+        resolve({
+          options,
+          hasMore: !isScoped && result.length === LIMIT,
+          additional: {
+            skip: isScoped ? 0 : additional.skip + LIMIT,
+          },
+        });
+      };
+
+      if (inputValue) {
+        if (debounceRef.current) {
+          clearTimeout(debounceRef.current);
+        }
+        debounceRef.current = setTimeout(doFetch, 400);
+      } else {
+        doFetch();
       }
-
-      debounceRef.current = setTimeout(() => {
-        (async () => {
-          const auth = getAuth();
-          const roleCode = auth?.role?.role?.[0]?.code;
-          const isScoped = scoped && (roleCode === "staff" || roleCode === "manager");
-          const userDeptId = auth?.department_id;
-
-          let response;
-          if (isScoped && userDeptId) {
-            response = await findAll<{ id: string; name: string }>(
-              "departments",
-              { id: String(userDeptId) }
-            );
-          } else {
-            response = await findAll<{ id: string; name: string }>(
-              "departments",
-              {
-                "name!like": inputValue,
-                "!sort[id]": -1,
-                "!limit": LIMIT,
-                "!skip": additional.skip,
-              }
-            );
-          }
-
-          const result = response?.data?.result ?? [];
-
-          const options: SelectOption[] = result.map((item) => ({
-            value: item.id,
-            label: item.name,
-          }));
-
-          if (!isScoped) {
-            options.unshift({ value: "", label: "-- Select Department --" });
-          }
-
-          resolve({
-            options,
-            hasMore: !isScoped && result.length === LIMIT,
-            additional: {
-              skip: isScoped ? 0 : additional.skip + LIMIT,
-            },
-          });
-        })();
-      }, 400);
     });
   };
 
