@@ -8,8 +8,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "@components/buttons/BackButton";
 import { useUpdate } from "@hooks/request/useUpdate";
 import { FormFields } from "../../components/FormFields";
-import { useFindAll } from "@hooks/request/useFindAll";
-import { ContentLoader } from "@components/loadings/ContentLoader";
+import { useCategoryOptions } from "../../hooks/useCategoryOptions";
+import { useLocationOptions } from "../../hooks/useLocationOptions";
+import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
+import { useUserOptions } from "../../hooks/useUserOptions";
 
 const UpdatePage = () => {
   const { t } = useTranslation();
@@ -19,18 +21,10 @@ const UpdatePage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const { data: categoryData } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
-  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
-  const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: userData } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
-
-  const categories = categoryData?.result ?? [];
-  const locations = locationData?.result ?? [];
-  const departments = departmentData?.result ?? [];
-  const users = userData?.result ?? [];
-
-  const isLoadingAny = categoryData === undefined || locationData === undefined || departmentData === undefined || userData === undefined;
-  if (isLoadingAny) return <ContentLoader />;
+  const categoryLoadOptions = useCategoryOptions();
+  const locationLoadOptions = useLocationOptions();
+  const departmentLoadOptions = useDepartmentOptions();
+  const userLoadOptions = useUserOptions();
 
   const onSubmit = async (data: UpdateModel) => {
     if (!id) {
@@ -51,10 +45,10 @@ const UpdatePage = () => {
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
         <FormFields
-          categories={categories}
-          locations={locations}
-          departments={departments}
-          users={users}
+          categoryLoadOptions={categoryLoadOptions}
+          locationLoadOptions={locationLoadOptions}
+          departmentLoadOptions={departmentLoadOptions}
+          userLoadOptions={userLoadOptions}
         />
       </div>
       <div className="col-12">

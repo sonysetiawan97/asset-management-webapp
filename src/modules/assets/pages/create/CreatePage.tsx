@@ -9,8 +9,10 @@ import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { FormFields } from "../../components/FormFields";
-import { useFindAll } from "@hooks/request/useFindAll";
-import { ContentLoader } from "@components/loadings/ContentLoader";
+import { useCategoryOptions } from "../../hooks/useCategoryOptions";
+import { useLocationOptions } from "../../hooks/useLocationOptions";
+import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
+import { useUserOptions } from "../../hooks/useUserOptions";
 
 const CreatePage = () => {
   const { t } = useTranslation();
@@ -19,18 +21,10 @@ const CreatePage = () => {
   const { createAsync, isLoading } = useCreate<CreateModel>(moduleName);
   const navigate = useNavigate();
 
-  const { data: categoriesData, isLoading: loadingCategories } = useFindAll<{ id: string; name: string; useful_life_years: number; salvage_value_pct: number }>("categories", "categories");
-  const { data: locationsData, isLoading: loadingLocations } = useFindAll<{ id: string; name: string }>("locations", "locations");
-  const { data: departmentsData, isLoading: loadingDepartments } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: usersData, isLoading: loadingUsers } = useFindAll<{ id: string; first_name: string; last_name: string }>("users", "users");
-
-  const isLoadingAny = loadingCategories || loadingLocations || loadingDepartments || loadingUsers;
-  if (isLoadingAny) return <ContentLoader />;
-
-  const categories = categoriesData?.result ?? [];
-  const locations = locationsData?.result ?? [];
-  const departments = departmentsData?.result ?? [];
-  const users = usersData?.result ?? [];
+  const categoryLoadOptions = useCategoryOptions();
+  const locationLoadOptions = useLocationOptions();
+  const departmentLoadOptions = useDepartmentOptions();
+  const userLoadOptions = useUserOptions();
 
   const onSubmit = async (data: CreateModel) => {
     try {
@@ -48,10 +42,10 @@ const CreatePage = () => {
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
         <FormFields
-          categories={categories}
-          locations={locations}
-          departments={departments}
-          users={users}
+          categoryLoadOptions={categoryLoadOptions}
+          locationLoadOptions={locationLoadOptions}
+          departmentLoadOptions={departmentLoadOptions}
+          userLoadOptions={userLoadOptions}
         />
       </div>
       <div className="col-12">

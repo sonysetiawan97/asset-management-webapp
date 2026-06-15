@@ -4,44 +4,46 @@ import { TextInput } from "@components/form/inputs/TextInput";
 import { NumberInput } from "@components/form/inputs/NumberInput";
 import { DateInput } from "@components/form/inputs/DateInput";
 import SelectInput from "@components/form/select/SelectInput";
+import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
+import { useFindOneById } from "@hooks/request/useFindOneById";
 import { ASSET_CONDITIONS } from "@modules/assets/types/Model";
+import type { LoadOptions } from "react-select-async-paginate";
+import type { GroupBase } from "react-select";
+import type { SelectOption } from "@/types/SelectOption";
 
 interface FormFieldsProps {
   readOnly?: boolean;
-  categories: { id: string; name: string; useful_life_years: number; salvage_value_pct: number }[];
-  locations: { id: string; name: string }[];
-  departments: { id: string; name: string }[];
-  users: { id: string; first_name: string; last_name: string }[];
+  categoryLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
+  locationLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
+  departmentLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
+  userLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
 }
 
 export const FormFields = ({
   readOnly = false,
-  categories,
-  locations,
-  departments,
-  users,
+  categoryLoadOptions,
+  locationLoadOptions,
+  departmentLoadOptions,
+  userLoadOptions,
 }: FormFieldsProps) => {
   const { t } = useTranslation();
-  const { setValue } = useFormContext();
+  const { control, setValue } = useFormContext();
   const watchedCategoryId = useWatch({ name: "category_id" });
 
-  // Auto-fill useful_life_years and salvage_value from selected category
-  useEffect(() => {
-    if (watchedCategoryId) {
-      const cat = categories.find((c) => c.id === watchedCategoryId);
-      if (cat) {
-        setValue("useful_life_years", cat.useful_life_years, { shouldValidate: true });
-      }
-    }
-  }, [watchedCategoryId, categories, setValue]);
+  const { data: categoryDetail } = useFindOneById<{ useful_life_years: number; salvage_value_pct: number }>(
+    "categories",
+    watchedCategoryId
+  );
 
-  const categoryOptions = categories.map((c) => ({ value: c.id, label: c.name }));
-  const locationOptions = [{ value: "", label: "-- No Location --" }, ...locations.map((l) => ({ value: l.id, label: l.name }))];
-  const departmentOptions = [{ value: "", label: "-- Select Department --" }, ...departments.map((d) => ({ value: d.id, label: d.name }))];
-  const userOptions = [{ value: "", label: "-- No Custodian --" }, ...users.map((u) => ({ value: u.id, label: `${u.first_name} ${u.last_name}`.trim() }))];
+  useEffect(() => {
+    if (categoryDetail) {
+      setValue("useful_life_years", categoryDetail.useful_life_years, { shouldValidate: true });
+    }
+  }, [categoryDetail, setValue]);
+
   const conditionOptions = ASSET_CONDITIONS.map((c) => ({ value: c.value, label: c.label }));
 
   return (
@@ -73,36 +75,40 @@ export const FormFields = ({
         <h6 className="form-section__title">{t("modules.assets.create.form.section.classification")}</h6>
         <div className="row">
           <div className="col-12 col-md-4">
-            <SelectInput
+            <SelectReferenceInput
               name="category_id"
+              control={control}
+              loadOptions={categoryLoadOptions}
               label={t("modules.assets.create.form.category")}
-              options={categoryOptions}
               readOnly={readOnly}
               required={true}
             />
           </div>
           <div className="col-12 col-md-4">
-            <SelectInput
+            <SelectReferenceInput
               name="location_id"
+              control={control}
+              loadOptions={locationLoadOptions}
               label={t("modules.assets.create.form.location")}
-              options={locationOptions}
               readOnly={readOnly}
             />
           </div>
           <div className="col-12 col-md-4">
-            <SelectInput
+            <SelectReferenceInput
               name="department_id"
+              control={control}
+              loadOptions={departmentLoadOptions}
               label={t("modules.assets.create.form.department")}
-              options={departmentOptions}
               readOnly={readOnly}
               required={true}
             />
           </div>
           <div className="col-12 col-md-4">
-            <SelectInput
+            <SelectReferenceInput
               name="custodian_id"
+              control={control}
+              loadOptions={userLoadOptions}
               label={t("modules.assets.create.form.custodian")}
-              options={userOptions}
               readOnly={readOnly}
             />
           </div>
