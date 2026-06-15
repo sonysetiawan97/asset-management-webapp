@@ -5,10 +5,15 @@ import { DateInput } from "@components/form/inputs/DateInput";
 import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { Controller, useFormContext } from "react-hook-form";
 import { useFindAll } from "@hooks/request/useFindAll";
+import { getAuth } from "@components/auth/AuthHelpers";
 
 const FormFields = () => {
   const { t } = useTranslation();
   const { control } = useFormContext();
+
+  const auth = getAuth();
+  const roleCode = auth?.role?.role?.[0]?.code;
+  const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
 
   const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
   const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
@@ -18,7 +23,10 @@ const FormFields = () => {
     _loadedOptions: unknown,
     _additional: { skip: number } | undefined
   ) => {
-    const items = departmentData?.result ?? [];
+    let items = departmentData?.result ?? [];
+    if (isStaffOrManager && auth?.department_id) {
+      items = items.filter((d) => String(d.id) === String(auth.department_id));
+    }
     const filtered = items.filter((d) =>
       d.name.toLowerCase().includes(search.toLowerCase())
     );

@@ -12,6 +12,7 @@ import { useCategoryOptions } from "../../hooks/useCategoryOptions";
 import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
+import { getAuth } from "@components/auth/AuthHelpers";
 
 interface ReadPageProps {
   defaultValue?: { category_id: string; location_id: string };
@@ -27,9 +28,13 @@ const ReadPage = (_props: ReadPageProps) => {
   const assetName = watch("name");
   const assetStatus = watch("asset_status");
 
+  const auth = getAuth();
+  const roleCode = auth?.role?.role?.[0]?.code;
+  const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
+
   const categoryLoadOptions = useCategoryOptions();
   const locationLoadOptions = useLocationOptions();
-  const departmentLoadOptions = useDepartmentOptions();
+  const departmentLoadOptions = useDepartmentOptions(isStaffOrManager);
   const userLoadOptions = useUserOptions();
 
   return (

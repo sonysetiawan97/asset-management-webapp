@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { moduleName, type CreateModel } from "../../types/Model";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -13,18 +14,29 @@ import { useCategoryOptions } from "../../hooks/useCategoryOptions";
 import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
+import { getAuth } from "@components/auth/AuthHelpers";
 
 const CreatePage = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, reset } = useFormContext<CreateModel>();
+  const { handleSubmit, setValue, reset } = useFormContext<CreateModel>();
   const { createAsync, isLoading } = useCreate<CreateModel>(moduleName);
   const navigate = useNavigate();
 
+  const auth = getAuth();
+  const roleCode = auth?.role?.role?.[0]?.code;
+  const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
+
   const categoryLoadOptions = useCategoryOptions();
   const locationLoadOptions = useLocationOptions();
-  const departmentLoadOptions = useDepartmentOptions();
+  const departmentLoadOptions = useDepartmentOptions(isStaffOrManager);
   const userLoadOptions = useUserOptions();
+
+  useEffect(() => {
+    if (isStaffOrManager && auth?.department_id) {
+      setValue("department_id", String(auth.department_id));
+    }
+  }, [isStaffOrManager, auth?.department_id, setValue]);
 
   const onSubmit = async (data: CreateModel) => {
     try {
@@ -46,6 +58,7 @@ const CreatePage = () => {
           locationLoadOptions={locationLoadOptions}
           departmentLoadOptions={departmentLoadOptions}
           userLoadOptions={userLoadOptions}
+          departmentReadOnly={isStaffOrManager}
         />
       </div>
       <div className="col-12">

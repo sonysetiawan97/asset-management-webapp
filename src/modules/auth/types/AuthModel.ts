@@ -8,4 +8,5 @@ export interface AuthModel {
     email: string;
     role: RolePrivilegeItem;
     status?: 0 | 1;
+    department_id?: number;
 }

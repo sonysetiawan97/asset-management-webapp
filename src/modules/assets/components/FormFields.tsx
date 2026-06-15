@@ -20,6 +20,7 @@ interface FormFieldsProps {
   locationLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
   departmentLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
   userLoadOptions: LoadOptions<SelectOption, GroupBase<SelectOption>, { skip: number }>;
+  departmentReadOnly?: boolean;
 }
 
 export const FormFields = ({
@@ -28,6 +29,7 @@ export const FormFields = ({
   locationLoadOptions,
   departmentLoadOptions,
   userLoadOptions,
+  departmentReadOnly = false,
 }: FormFieldsProps) => {
   const { t } = useTranslation();
   const { control, setValue } = useFormContext();
@@ -94,14 +96,14 @@ export const FormFields = ({
             />
           </div>
           <div className="col-12 col-md-4">
-            <SelectReferenceInput
-              name="department_id"
-              control={control}
-              loadOptions={departmentLoadOptions}
-              label={t("modules.assets.create.form.department")}
-              readOnly={readOnly}
-              required={true}
-            />
+          <SelectReferenceInput
+            name="department_id"
+            control={control}
+            loadOptions={departmentLoadOptions}
+            label={t("modules.assets.create.form.department")}
+            readOnly={readOnly || departmentReadOnly}
+            required={true}
+          />
           </div>
           <div className="col-12 col-md-4">
             <SelectReferenceInput

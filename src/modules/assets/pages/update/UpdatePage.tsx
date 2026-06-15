@@ -12,6 +12,7 @@ import { useCategoryOptions } from "../../hooks/useCategoryOptions";
 import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
+import { getAuth } from "@components/auth/AuthHelpers";
 
 const UpdatePage = () => {
   const { t } = useTranslation();
@@ -21,9 +22,13 @@ const UpdatePage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
+  const auth = getAuth();
+  const roleCode = auth?.role?.role?.[0]?.code;
+  const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
+
   const categoryLoadOptions = useCategoryOptions();
   const locationLoadOptions = useLocationOptions();
-  const departmentLoadOptions = useDepartmentOptions();
+  const departmentLoadOptions = useDepartmentOptions(isStaffOrManager);
   const userLoadOptions = useUserOptions();
 
   const onSubmit = async (data: UpdateModel) => {
@@ -49,6 +54,7 @@ const UpdatePage = () => {
           locationLoadOptions={locationLoadOptions}
           departmentLoadOptions={departmentLoadOptions}
           userLoadOptions={userLoadOptions}
+          departmentReadOnly={isStaffOrManager}
         />
       </div>
       <div className="col-12">

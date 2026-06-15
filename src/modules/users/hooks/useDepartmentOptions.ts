@@ -3,10 +3,11 @@ import type { LoadOptions } from "react-select-async-paginate";
 import type { GroupBase } from "react-select";
 import type { SelectOption } from "@/types/SelectOption";
 import { findAll } from "@services/findAll";
+import { getAuth } from "@components/auth/AuthHelpers";
 
 const LIMIT = 10;
 
-export const useDepartmentOptions = () => {
+export const useDepartmentOptions = (scoped = false) => {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const loadOptions: LoadOptions<
@@ -21,15 +22,28 @@ export const useDepartmentOptions = () => {
 
       debounceRef.current = setTimeout(() => {
         (async () => {
-          const response = await findAll<{ id: string; name: string }>(
-            "departments",
-            {
-              "name!like": inputValue,
-              "!sort[id]": -1,
-              "!limit": LIMIT,
-              "!skip": additional.skip,
-            }
-          );
+          const auth = getAuth();
+          const roleCode = auth?.role?.role?.[0]?.code;
+          const isScoped = scoped && (roleCode === "staff" || roleCode === "manager");
+          const userDeptId = auth?.department_id;
+
+          let response;
+          if (isScoped && userDeptId) {
+            response = await findAll<{ id: string; name: string }>(
+              "departments",
+              { id: String(userDeptId) }
+            );
+          } else {
+            response = await findAll<{ id: string; name: string }>(
+              "departments",
+              {
+                "name!like": inputValue,
+                "!sort[id]": -1,
+                "!limit": LIMIT,
+                "!skip": additional.skip,
+              }
+            );
+          }
 
           const result = response?.data?.result ?? [];
 
@@ -40,9 +54,9 @@ export const useDepartmentOptions = () => {
 
           resolve({
             options,
-            hasMore: result.length === LIMIT,
+            hasMore: !isScoped && result.length === LIMIT,
             additional: {
-              skip: additional.skip + LIMIT,
+              skip: isScoped ? 0 : additional.skip + LIMIT,
             },
           });
         })();
