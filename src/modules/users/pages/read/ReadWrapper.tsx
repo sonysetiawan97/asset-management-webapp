@@ -21,6 +21,7 @@ import {
 import { SelectOption } from "@/types/SelectOption";
 import { LoadOptions } from "react-select-async-paginate";
 import { GroupBase } from "react-select";
+import { useDepartmentOptions } from "@modules/users/hooks/useDepartmentOptions";
 
 const ReadWrapper: FC = () => {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ const ReadWrapper: FC = () => {
 
   const [dataRole, setDataRole] = useState<Role[]>([]);
   const { data: roleData } = useFindAll("", modelRole);
+  const departmentLoadOptions = useDepartmentOptions();
 
   useEffect(() => {
     if (roleData && roleData.result) {
@@ -94,7 +96,7 @@ const ReadWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.users.read.title")}>
         <i className="bi bi-eye"></i>
       </TitleBarWithIcon>
-      <ReadPage listRole={loadRoleOptions} />
+      <ReadPage listRole={loadRoleOptions} departmentLoadOptions={departmentLoadOptions} />
     </FormProvider>
   );
 };

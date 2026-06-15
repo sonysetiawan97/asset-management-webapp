@@ -17,6 +17,7 @@ import {
   useOptionRoleByCode,
   useRoleOptions,
 } from "@modules/users/hooks/useRoleOptions";
+import { useDepartmentOptions } from "@modules/users/hooks/useDepartmentOptions";
 
 const UpdateWrapper: FC = () => {
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ const UpdateWrapper: FC = () => {
   const { reset } = methods;
 
   const loadOptions = useRoleOptions();
+  const departmentLoadOptions = useDepartmentOptions();
   const { defaultValue } = useOptionRoleByCode(data?.role);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ const UpdateWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.users.update.title")}>
         <i className="bi bi-pencil"></i>
       </TitleBarWithIcon>
-      <UpdatePage listRole={loadOptions} />
+      <UpdatePage listRole={loadOptions} departmentLoadOptions={departmentLoadOptions} />
     </FormProvider>
   );
 };

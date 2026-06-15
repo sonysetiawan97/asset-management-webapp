@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { SelectOption } from "@/types/SelectOption";
 import { LoadOptions } from "react-select-async-paginate";
 import { GroupBase } from "react-select";
+import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import SelectReferenceInputRole from "./SelectReferenceInputRole";
 
 interface FormFieldsProps {
@@ -14,11 +15,17 @@ interface FormFieldsProps {
     GroupBase<SelectOption>,
     { skip: number }
   >;
+  departmentLoadOptions: LoadOptions<
+    SelectOption,
+    GroupBase<SelectOption>,
+    { skip: number }
+  >;
 }
 
 export const FormDetailFields = ({
   readOnly = false,
   listOptionRole,
+  departmentLoadOptions,
 }: FormFieldsProps) => {
   const { t } = useTranslation();
   const { control } = useFormContext();
@@ -55,6 +62,15 @@ export const FormDetailFields = ({
             label={t("modules.users.update.form.email")}
             readOnly={readOnly}
             required={true}
+          />
+        </div>
+        <div className="col-12">
+          <SelectReferenceInput
+            name="department_id"
+            control={control}
+            loadOptions={departmentLoadOptions}
+            label={t("modules.users.update.form.department")}
+            readOnly={readOnly}
           />
         </div>
         <div className="col-12">

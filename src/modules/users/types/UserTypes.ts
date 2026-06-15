@@ -10,6 +10,7 @@ export interface User {
   role?: string[];
   photo?: string;
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface UserListModel {
@@ -27,6 +28,7 @@ export interface CreateModel {
   password?: string;
   role?: string[];
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface SubmitCreateUserModel {
@@ -37,6 +39,7 @@ export interface SubmitCreateUserModel {
   password?: string;
   role?: string[];
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface UpdateUserModel {
@@ -47,6 +50,7 @@ export interface UpdateUserModel {
   role?: string[];
   photo?: string;
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface UpdateUserProfileModel {
@@ -57,6 +61,7 @@ export interface UpdateUserProfileModel {
   role?: string[];
   photo?: string;
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface SubmitUpdateUserModel {
@@ -66,6 +71,7 @@ export interface SubmitUpdateUserModel {
   email: string;
   role?: string[];
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface DetailUserModel {
@@ -76,6 +82,7 @@ export interface DetailUserModel {
   password?: string;
   role?: SelectOption;
   status?: 0 | 1;
+  department_id?: string;
 }
 
 export interface ReadUserModel {
@@ -86,4 +93,5 @@ export interface ReadUserModel {
   email: string;
   role?: string;
   status?: 0 | 1;
+  department_id?: string;
 }

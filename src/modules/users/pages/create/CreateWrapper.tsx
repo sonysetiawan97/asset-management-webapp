@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { CreateModel, moduleName } from "@/modules/users/types/UserTypes";
 import CreatePage from "./CreatePage";
 import { useRoleOptions } from "@modules/users/hooks/useRoleOptions";
+import { useDepartmentOptions } from "@modules/users/hooks/useDepartmentOptions";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateModel>({
@@ -14,6 +15,7 @@ const CreateWrapper: FC = () => {
   const { t } = useTranslation();
 
   const loadOptions = useRoleOptions();
+  const departmentLoadOptions = useDepartmentOptions();
 
   useEffect(() => {
     setBreadcrumbs([
@@ -31,7 +33,7 @@ const CreateWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.users.create.title")}>
         <i className="bi bi-people"></i>
       </TitleBarWithIcon>
-      <CreatePage listRole={loadOptions} />
+      <CreatePage listRole={loadOptions} departmentLoadOptions={departmentLoadOptions} />
     </FormProvider>
   );
 };

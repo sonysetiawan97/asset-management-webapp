@@ -250,7 +250,8 @@
           "email": "Email",
           "first_name": "First Name",
           "last_name": "Last Name",
-          "photo_profile": "Photo profile"
+          "photo_profile": "Photo profile",
+          "department": "Department"
         }
       },
       "read": {

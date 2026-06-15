@@ -247,7 +247,8 @@
           "password": "Password",
           "confirm_password": "Confirm Password",
           "first_name": "First Name",
-          "last_name": "Last Name"
+          "last_name": "Last Name",
+          "department": "Departemen"
         }
       },
       "update": {

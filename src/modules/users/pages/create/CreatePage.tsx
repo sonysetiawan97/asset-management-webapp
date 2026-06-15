@@ -23,8 +23,13 @@ interface CreatePageProps {
     GroupBase<SelectOption>,
     { skip: number }
   >;
+  departmentLoadOptions: LoadOptions<
+    SelectOption,
+    GroupBase<SelectOption>,
+    { skip: number }
+  >;
 }
-const CreatePage: FC<CreatePageProps> = ({ listRole }) => {
+const CreatePage: FC<CreatePageProps> = ({ listRole, departmentLoadOptions }) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const { handleSubmit, reset } = useFormContext<CreateModel>();
@@ -51,7 +56,7 @@ const CreatePage: FC<CreatePageProps> = ({ listRole }) => {
   return (
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
-        <FormFields listOptionRole={listRole} />
+        <FormFields listOptionRole={listRole} departmentLoadOptions={departmentLoadOptions} />
       </div>
 
       <div className="col-12">

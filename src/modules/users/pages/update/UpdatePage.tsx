@@ -22,9 +22,14 @@ interface UpdatePageProps {
     GroupBase<SelectOption>,
     { skip: number }
   >;
+  departmentLoadOptions: LoadOptions<
+    SelectOption,
+    GroupBase<SelectOption>,
+    { skip: number }
+  >;
 }
 
-const UpdatePage: FC<UpdatePageProps> = ({ listRole }) => {
+const UpdatePage: FC<UpdatePageProps> = ({ listRole, departmentLoadOptions }) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const { handleSubmit, reset } = useFormContext<UpdateUserModel>();
@@ -42,6 +47,7 @@ const UpdatePage: FC<UpdatePageProps> = ({ listRole }) => {
         email: rest.email,
         role: typeof role === 'string' ? [role] : role,
         status: rest.status,
+        department_id: rest.department_id,
       };
 
       if (!id) {
@@ -67,7 +73,7 @@ const UpdatePage: FC<UpdatePageProps> = ({ listRole }) => {
   return (
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
-        <FormDetailFields listOptionRole={listRole} />
+        <FormDetailFields listOptionRole={listRole} departmentLoadOptions={departmentLoadOptions} />
       </div>
 
       <div className="col-12">

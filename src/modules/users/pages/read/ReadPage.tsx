@@ -13,13 +13,18 @@ interface ReadPageProps {
     GroupBase<SelectOption>,
     { skip: number }
   >;
+  departmentLoadOptions: LoadOptions<
+    SelectOption,
+    GroupBase<SelectOption>,
+    { skip: number }
+  >;
 }
 
-const ReadPage: FC<ReadPageProps> = ({ listRole }) => {
+const ReadPage: FC<ReadPageProps> = ({ listRole, departmentLoadOptions }) => {
   return (
     <form className="row g-3">
       <div className="col-12">
-        <FormDetailFields readOnly={true} listOptionRole={listRole} />
+        <FormDetailFields readOnly={true} listOptionRole={listRole} departmentLoadOptions={departmentLoadOptions} />
       </div>
 
       <div className="col-12">
