@@ -8,6 +8,7 @@ import { LoadingPage } from "@components/loadings/LoadingPage";
 import { Pagination } from "@components/list/Pagination";
 import { apiAxios } from "@/utils/apiAxios";
 import { enqueueSnackbar } from "notistack";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ReadPageProps {
   data: ReadModel;
@@ -105,105 +106,121 @@ export const ReadPage: FC<ReadPageProps> = ({
   const actionButtons = {
     draft: (
       <>
-        <button
-          className="btn btn-success btn-sm"
-          onClick={() => handleAction("start")}
-          disabled={!!actionLoading}
-        >
-          {actionLoading === "start" ? (
-            <span className="spinner-border spinner-border-sm" />
-          ) : (
-            <i className="bi bi-play-fill me-1" />
-          )}
-          {t("modules.opname.read.action_start")}
-        </button>
-        <Link to={`/${moduleName}/${session.id}/update`} className="btn btn-outline-secondary btn-sm">
-          <i className="bi bi-pencil me-1" />
-          {t("button.edit", { defaultValue: "Edit" })}
-        </Link>
-        <button
-          className="btn btn-outline-danger btn-sm"
-          onClick={async () => {
-            if (confirm(t("modules.opname.read.confirm_delete") as string)) {
-              setActionLoading("delete");
-              try {
-                await apiAxios.delete(`/opname/sessions/${session.id}`);
-                enqueueSnackbar(t("modules.opname.read.notification.delete_success"), { variant: "success" });
-                window.location.href = `/${moduleName}`;
-              } catch {
-                enqueueSnackbar(t("modules.opname.read.notification.delete_failed"), { variant: "error" });
-              } finally {
-                setActionLoading(null);
+        <AuthPrivilegesChecker link="/opname/sessions/:id/start" method="PATCH">
+          <button
+            className="btn btn-success btn-sm"
+            onClick={() => handleAction("start")}
+            disabled={!!actionLoading}
+          >
+            {actionLoading === "start" ? (
+              <span className="spinner-border spinner-border-sm" />
+            ) : (
+              <i className="bi bi-play-fill me-1" />
+            )}
+            {t("modules.opname.read.action_start")}
+          </button>
+        </AuthPrivilegesChecker>
+        <AuthPrivilegesChecker link="/opname/sessions/:id" method="PUT">
+          <Link to={`/${moduleName}/${session.id}/update`} className="btn btn-outline-secondary btn-sm">
+            <i className="bi bi-pencil me-1" />
+            {t("button.edit", { defaultValue: "Edit" })}
+          </Link>
+        </AuthPrivilegesChecker>
+        <AuthPrivilegesChecker link="/opname/sessions/:id" method="DELETE">
+          <button
+            className="btn btn-outline-danger btn-sm"
+            onClick={async () => {
+              if (confirm(t("modules.opname.read.confirm_delete") as string)) {
+                setActionLoading("delete");
+                try {
+                  await apiAxios.delete(`/opname/sessions/${session.id}`);
+                  enqueueSnackbar(t("modules.opname.read.notification.delete_success"), { variant: "success" });
+                  window.location.href = `/${moduleName}`;
+                } catch {
+                  enqueueSnackbar(t("modules.opname.read.notification.delete_failed"), { variant: "error" });
+                } finally {
+                  setActionLoading(null);
+                }
               }
-            }
-          }}
-          disabled={!!actionLoading}
-        >
-          <i className="bi bi-trash" />
-        </button>
+            }}
+            disabled={!!actionLoading}
+          >
+            <i className="bi bi-trash" />
+          </button>
+        </AuthPrivilegesChecker>
       </>
     ),
     in_progress: (
       <>
-        <Link to={`/${moduleName}/${session.id}/count`} className="btn btn-primary btn-sm">
-          <i className="bi bi-qr-code-scan me-1" />
-          {t("modules.opname.list.btn_count")}
-        </Link>
-        <button
-          className="btn btn-warning btn-sm"
-          onClick={() => handleAction("complete")}
-          disabled={!!actionLoading}
-        >
-          {actionLoading === "complete" ? (
-            <span className="spinner-border spinner-border-sm" />
-          ) : (
-            <i className="bi bi-check-circle me-1" />
-          )}
-          {t("modules.opname.read.action_complete")}
-        </button>
+        <AuthPrivilegesChecker link="/opname/items/:id/count" method="PATCH">
+          <Link to={`/${moduleName}/${session.id}/count`} className="btn btn-primary btn-sm">
+            <i className="bi bi-qr-code-scan me-1" />
+            {t("modules.opname.list.btn_count")}
+          </Link>
+        </AuthPrivilegesChecker>
+        <AuthPrivilegesChecker link="/opname/sessions/:id/complete" method="PATCH">
+          <button
+            className="btn btn-warning btn-sm"
+            onClick={() => handleAction("complete")}
+            disabled={!!actionLoading}
+          >
+            {actionLoading === "complete" ? (
+              <span className="spinner-border spinner-border-sm" />
+            ) : (
+              <i className="bi bi-check-circle me-1" />
+            )}
+            {t("modules.opname.read.action_complete")}
+          </button>
+        </AuthPrivilegesChecker>
       </>
     ),
     pending_approval: (
       <>
-        <button
-          className="btn btn-success btn-sm"
-          onClick={() => handleAction("approve")}
-          disabled={!!actionLoading}
-        >
-          {actionLoading === "approve" ? (
-            <span className="spinner-border spinner-border-sm" />
-          ) : (
-            <i className="bi bi-check2 me-1" />
-          )}
-          {t("modules.opname.read.action_approve")}
-        </button>
-        <button
-          className="btn btn-outline-warning btn-sm"
-          onClick={() => handleAction("reject")}
-          disabled={!!actionLoading}
-        >
-          {actionLoading === "reject" ? (
-            <span className="spinner-border spinner-border-sm" />
-          ) : (
-            <i className="bi bi-x-circle me-1" />
-          )}
-          {t("modules.opname.read.action_reject")}
-        </button>
+        <AuthPrivilegesChecker link="/opname/sessions/:id/approve" method="PATCH">
+          <button
+            className="btn btn-success btn-sm"
+            onClick={() => handleAction("approve")}
+            disabled={!!actionLoading}
+          >
+            {actionLoading === "approve" ? (
+              <span className="spinner-border spinner-border-sm" />
+            ) : (
+              <i className="bi bi-check2 me-1" />
+            )}
+            {t("modules.opname.read.action_approve")}
+          </button>
+        </AuthPrivilegesChecker>
+        <AuthPrivilegesChecker link="/opname/sessions/:id/reject" method="PATCH">
+          <button
+            className="btn btn-outline-warning btn-sm"
+            onClick={() => handleAction("reject")}
+            disabled={!!actionLoading}
+          >
+            {actionLoading === "reject" ? (
+              <span className="spinner-border spinner-border-sm" />
+            ) : (
+              <i className="bi bi-x-circle me-1" />
+            )}
+            {t("modules.opname.read.action_reject")}
+          </button>
+        </AuthPrivilegesChecker>
       </>
     ),
     approved: (
-      <button
-        className="btn btn-dark btn-sm"
-        onClick={() => handleAction("close")}
-        disabled={!!actionLoading}
-      >
-        {actionLoading === "close" ? (
-          <span className="spinner-border spinner-border-sm" />
-        ) : (
-          <i className="bi bi-lock-fill me-1" />
-        )}
-        {t("modules.opname.read.action_close")}
-      </button>
+      <AuthPrivilegesChecker link="/opname/sessions/:id/close" method="PATCH">
+        <button
+          className="btn btn-dark btn-sm"
+          onClick={() => handleAction("close")}
+          disabled={!!actionLoading}
+        >
+          {actionLoading === "close" ? (
+            <span className="spinner-border spinner-border-sm" />
+          ) : (
+            <i className="bi bi-lock-fill me-1" />
+          )}
+          {t("modules.opname.read.action_close")}
+        </button>
+      </AuthPrivilegesChecker>
     ),
     closed: null,
   };
@@ -284,23 +301,27 @@ export const ReadPage: FC<ReadPageProps> = ({
                     <i className="bi bi-clipboard fs-1 text-muted" />
                     <p className="text-muted mt-2 mb-3">{t("modules.opname.read.no_items")}</p>
                     {session.status === "draft" && (
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleAction("start")}
-                        disabled={!!actionLoading}
-                      >
-                        <i className="bi bi-play-fill me-1" />
-                        {t("modules.opname.read.action_start")}
-                      </button>
+                      <AuthPrivilegesChecker link="/opname/sessions/:id/start" method="PATCH">
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleAction("start")}
+                          disabled={!!actionLoading}
+                        >
+                          <i className="bi bi-play-fill me-1" />
+                          {t("modules.opname.read.action_start")}
+                        </button>
+                      </AuthPrivilegesChecker>
                     )}
                     {session.status === "in_progress" && (
-                      <Link
-                        to={`/${moduleName}/${session.id}/count`}
-                        className="btn btn-primary btn-sm"
-                      >
-                        <i className="bi bi-qr-code-scan me-1" />
-                        {t("modules.opname.list.btn_count")}
-                      </Link>
+                      <AuthPrivilegesChecker link="/opname/items/:id/count" method="PATCH">
+                        <Link
+                          to={`/${moduleName}/${session.id}/count`}
+                          className="btn btn-primary btn-sm"
+                        >
+                          <i className="bi bi-qr-code-scan me-1" />
+                          {t("modules.opname.list.btn_count")}
+                        </Link>
+                      </AuthPrivilegesChecker>
                     )}
                   </div>
                 ) : (
@@ -445,26 +466,28 @@ export const ReadPage: FC<ReadPageProps> = ({
                             <td>{item.notes ? <small className="text-muted">{item.notes}</small> : "—"}</td>
                             <td>
                               {item.counted_status === "mismatch" && (
-                                <button
-                                  className="btn btn-outline-success btn-xs"
-                                  onClick={async () => {
-                                    try {
-                                      await apiAxios.patch(`/opname/sessions/${session.id}/items/${item.id}/approve-adjustment`);
-                                      enqueueSnackbar(
-                                        t("modules.opname.read.notification.adjustment_approved"),
-                                        { variant: "success" }
-                                      );
-                                      window.location.reload();
-                                    } catch {
-                                      enqueueSnackbar(
-                                        t("modules.opname.read.notification.adjustment_failed"),
-                                        { variant: "error" }
-                                      );
-                                    }
-                                  }}
-                                >
-                                  {t("modules.opname.read.btn_approve_adjustment")}
-                                </button>
+                                <AuthPrivilegesChecker link="/opname/items/:id/approve-adjustment" method="PATCH">
+                                  <button
+                                    className="btn btn-outline-success btn-xs"
+                                    onClick={async () => {
+                                      try {
+                                        await apiAxios.patch(`/opname/sessions/${session.id}/items/${item.id}/approve-adjustment`);
+                                        enqueueSnackbar(
+                                          t("modules.opname.read.notification.adjustment_approved"),
+                                          { variant: "success" }
+                                        );
+                                        window.location.reload();
+                                      } catch {
+                                        enqueueSnackbar(
+                                          t("modules.opname.read.notification.adjustment_failed"),
+                                          { variant: "error" }
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    {t("modules.opname.read.btn_approve_adjustment")}
+                                  </button>
+                                </AuthPrivilegesChecker>
                               )}
                             </td>
                           </tr>

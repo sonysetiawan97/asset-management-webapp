@@ -9,6 +9,7 @@ import {
 } from "@modules/assets/types/Model";
 import { EditButton } from "@components/list/actions/EditButton";
 import { ReadButton } from "@components/list/actions/ReadButton";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { Pagination } from "@components/list/Pagination";
@@ -120,10 +121,12 @@ const List = ({ data, count, allCount, selectedStatus, onStatusChange, countBySt
           <i className="bi bi-box-seam fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.assets.list.title")}</h2>
         </div>
-        <Link to={`/${moduleName}/create`} className="btn-create">
-          <i className="bi bi-plus-lg"></i>
-          {t("button.create")}
-        </Link>
+        <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+          <Link to={`/${moduleName}/create`} className="btn-create">
+            <i className="bi bi-plus-lg"></i>
+            {t("button.create")}
+          </Link>
+        </AuthPrivilegesChecker>
       </div>
 
       {/* ── Asset Cards ── */}

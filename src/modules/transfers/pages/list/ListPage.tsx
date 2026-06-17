@@ -13,6 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { Pagination } from "@components/list/Pagination";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { Modal } from "@components/Modal";
@@ -146,10 +147,12 @@ export const List: FC<ListProps> = ({
           <i className="bi bi-arrow-left-right fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.transfers.list.title")}</h2>
         </div>
-        <Link to={`/${moduleName}/create`} className="btn-create">
-          <i className="bi bi-plus-lg"></i>
-          {t("button.create")}
-        </Link>
+        <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+          <Link to={`/${moduleName}/create`} className="btn-create">
+            <i className="bi bi-plus-lg"></i>
+            {t("button.create")}
+          </Link>
+        </AuthPrivilegesChecker>
       </div>
 
       {/* Cards */}

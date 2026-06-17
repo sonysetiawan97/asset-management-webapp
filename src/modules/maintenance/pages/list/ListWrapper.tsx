@@ -1,10 +1,11 @@
-import { type FC } from "react";
+import { useEffect, type FC } from "react";
 import { moduleName, type MaintenanceLog } from "../../types/Model";
 import { List } from "./ListPage";
 import { useList } from "@hooks/list/useList";
 import { usePagination } from "@hooks/list/usePagination";
 import { useSearch } from "@hooks/list/useSearch";
 import { ContentLoader } from "@components/loadings/ContentLoader";
+import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 
 export const ListWrapper: FC = () => {
   const { skip } = usePagination();
@@ -18,6 +19,13 @@ export const ListWrapper: FC = () => {
       "!sort[id]": -1,
     },
   });
+
+  useEffect(() => {
+    setBreadcrumbs([
+      { label: "Home", path: "/" },
+      { label: "Maintenance", path: `/${moduleName}` },
+    ]);
+  }, []);
 
   if (isLoading) return <ContentLoader />;
 

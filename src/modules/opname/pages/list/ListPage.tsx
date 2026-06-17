@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { Pagination } from "@components/list/Pagination";
 import { StatusBadge } from "@/components/list/StatusBadge";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ListProps {
   data: OpnameSession[];
@@ -81,10 +82,12 @@ export const List: FC<ListProps> = ({ data, count, allCount, countByStatus, isLo
       {/* Table */}
       <div className="module-table-container">
         <div className="d-flex justify-content-end mb-3">
-          <Link to={`/${moduleName}/create`} className="btn btn-primary">
-            <i className="bi bi-plus-lg me-1" />
-            {t("modules.opname.list.btn_create")}
-          </Link>
+          <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+            <Link to={`/${moduleName}/create`} className="btn btn-primary">
+              <i className="bi bi-plus-lg me-1" />
+              {t("modules.opname.list.btn_create")}
+            </Link>
+          </AuthPrivilegesChecker>
         </div>
         <div className="table-responsive">
           <table className="table table-hover align-middle">

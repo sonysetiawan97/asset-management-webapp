@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ListProps {
   data: DisposalRequest[];
@@ -110,10 +111,12 @@ export const List: FC<ListProps> = ({ data, count }) => {
           <i className="bi bi-trash fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.disposals.list.title")}</h2>
         </div>
-        <Link to={`/${moduleName}/create`} className="btn-create">
-          <i className="bi bi-plus-lg"></i>
-          {t("button.create")}
-        </Link>
+        <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+          <Link to={`/${moduleName}/create`} className="btn-create">
+            <i className="bi bi-plus-lg"></i>
+            {t("button.create")}
+          </Link>
+        </AuthPrivilegesChecker>
       </div>
 
       {/* Cards */}

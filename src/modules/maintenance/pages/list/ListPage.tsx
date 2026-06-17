@@ -8,6 +8,7 @@ import { usePagination } from "@hooks/list/usePagination";
 import { useSnackbar } from "notistack";
 import { Modal } from "@components/Modal";
 import { Pagination } from "@components/list/Pagination";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ListProps {
   data: MaintenanceLog[];
@@ -114,10 +115,12 @@ export const List: FC<ListProps> = ({ data, count }) => {
           <i className="bi bi-wrench fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.maintenance.list.title")}</h2>
         </div>
-        <Link to={`/${moduleName}/create`} className="btn-create">
-          <i className="bi bi-plus-lg"></i>
-          {t("button.create")}
-        </Link>
+        <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+          <Link to={`/${moduleName}/create`} className="btn-create">
+            <i className="bi bi-plus-lg"></i>
+            {t("button.create")}
+          </Link>
+        </AuthPrivilegesChecker>
       </div>
 
       {/* Cards */}
