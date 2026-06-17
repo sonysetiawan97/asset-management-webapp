@@ -21,6 +21,8 @@ export interface CheckoutLog {
   asset_id: string;
   asset_name?: string;
   asset_code?: string;
+  department_name?: string;
+  location_name?: string;
   assigned_to: string;
   assigned_to_name?: string;
   checkout_date: string;

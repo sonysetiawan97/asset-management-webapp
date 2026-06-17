@@ -648,6 +648,8 @@
         "filter_by_status": "Filter berdasarkan status",
         "filter_all": "Semua",
         "assigned_to": "Ditugaskan Ke",
+        "department": "Departemen",
+        "location": "Lokasi",
         "checked_out": "Di-check-out",
         "expected_return": "Tgl Kembali Rencana",
         "expected": "Direncanakan",

@@ -150,6 +150,14 @@ export const List: FC<ListProps> = ({
                       {t("modules.checkout.list.assigned_to")}: {log.assigned_to_name ?? "—"}
                     </div>
                     <div className="workflow-meta__item">
+                      <i className="bi bi-building"></i>
+                      {t("modules.checkout.list.department")}: {log.department_name ?? "—"}
+                    </div>
+                    <div className="workflow-meta__item">
+                      <i className="bi bi-geo-alt"></i>
+                      {t("modules.checkout.list.location")}: {log.location_name ?? "—"}
+                    </div>
+                    <div className="workflow-meta__item">
                       <i className="bi bi-calendar"></i>
                       {log.return_date
                         ? `${t("modules.checkout.list.returned_on")} ${formatDate(log.return_date)}`

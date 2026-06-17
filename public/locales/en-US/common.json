@@ -670,6 +670,8 @@
         "filter_by_status": "Filter by status",
         "filter_all": "All",
         "assigned_to": "Assigned To",
+        "department": "Department",
+        "location": "Location",
         "checked_out": "Checked Out",
         "expected_return": "Expected Return",
         "expected": "Expected",
