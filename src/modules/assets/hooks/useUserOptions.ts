@@ -8,8 +8,7 @@ import { findOneById } from "@services/findOneById";
 export const getUserById = async (id: string): Promise<SelectOption | null> => {
   try {
     const response = await findOneById<{ id: number; first_name: string; last_name: string }>("users", id);
-    const item = response?.data;
-    if (item) return { value: String(item.id), label: `${item.first_name} ${item.last_name}`.trim() };
+    if (response) return { value: String(response.id), label: `${response.first_name} ${response.last_name}`.trim() };
     return null;
   } catch {
     return null;

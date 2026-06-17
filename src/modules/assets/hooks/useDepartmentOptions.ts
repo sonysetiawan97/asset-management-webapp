@@ -9,8 +9,7 @@ import { getAuth } from "@components/auth/AuthHelpers";
 export const getDepartmentById = async (id: string): Promise<SelectOption | null> => {
   try {
     const response = await findOneById<{ id: string; name: string }>("departments", id);
-    const item = response?.data;
-    if (item) return { value: item.id, label: item.name };
+    if (response) return { value: response.id, label: response.name };
     return null;
   } catch {
     return null;
