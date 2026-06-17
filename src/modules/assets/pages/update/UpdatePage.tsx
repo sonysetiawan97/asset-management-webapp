@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { moduleName, type UpdateModel } from "../../types/Model";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -14,12 +13,11 @@ import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
 import { getAuth } from "@components/auth/AuthHelpers";
-import { useFindOneById } from "@hooks/request/useFindOneById";
 
 const UpdatePage = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, watch, setValue } = useFormContext<UpdateModel>();
+  const { handleSubmit } = useFormContext<UpdateModel>();
   const { updateAsync, isLoading } = useUpdate<UpdateModel>();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -27,32 +25,6 @@ const UpdatePage = () => {
   const auth = getAuth();
   const roleCode = auth?.role?.role?.[0]?.code;
   const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
-
-  const watchedDeptId = watch("department_id");
-  const { data: deptDetail } = useFindOneById<{ name: string }>(
-    "departments",
-    isStaffOrManager && watchedDeptId && typeof watchedDeptId !== "object"
-      ? String(watchedDeptId)
-      : undefined
-  );
-
-  const resolvedDeptRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    if (
-      isStaffOrManager &&
-      deptDetail &&
-      watchedDeptId &&
-      typeof watchedDeptId !== "object" &&
-      resolvedDeptRef.current !== watchedDeptId
-    ) {
-      resolvedDeptRef.current = String(watchedDeptId);
-      (setValue as any)("department_id", {
-        value: String(watchedDeptId),
-        label: deptDetail.name,
-      });
-    }
-  }, [isStaffOrManager, deptDetail, watchedDeptId, setValue]);
 
   const categoryLoadOptions = useCategoryOptions();
   const locationLoadOptions = useLocationOptions();
