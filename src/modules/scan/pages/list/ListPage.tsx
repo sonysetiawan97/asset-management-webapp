@@ -251,7 +251,7 @@ const ListPage: FC<ListPageProps> = ({
         {/* Result Panel */}
         <div className="col-lg-6">
           <div className="card h-100">
-            <div className="card-header">
+            <div className="card-header" style={{ padding: "14.5px 16px" }}>
               <h5 className="mb-0">
                 <i className="bi bi-info-circle me-2" />
                 {t("modules.scan.list.result_title")}
