@@ -15,7 +15,7 @@ import { useFindAll } from "@hooks/request/useFindAll";
 
 const ReadPage: FC = () => {
   const { data: assetsData } = useFindAll<{ id: string; name: string; asset_code: string }>("assets", "assets");
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("users", "users");
+  const { data: usersData } = useFindAll<{ id: string; name: string }>("options/users", "options/users");
 
   const assets = assetsData?.result ?? [];
   const users = usersData?.result ?? [];

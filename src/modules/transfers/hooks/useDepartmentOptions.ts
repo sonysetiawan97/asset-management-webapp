@@ -25,12 +25,12 @@ export const useDepartmentOptions = (scoped = false) => {
         let response;
         if (isScoped && userDeptId) {
           response = await findAll<{ id: string; name: string }>(
-            "departments",
+            "options/departments",
             { id: String(userDeptId) }
           );
         } else {
           response = await findAll<{ id: string; name: string }>(
-            "departments",
+            "options/departments",
             {
               "name!like": inputValue,
               "!sort[id]": -1,

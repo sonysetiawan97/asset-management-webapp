@@ -22,7 +22,7 @@ export const useLocationOptions = () => {
       debounceRef.current = setTimeout(() => {
         (async () => {
           const response = await findAll<{ id: string; name: string }>(
-            "locations",
+            "options/locations",
             {
               "name!like": inputValue,
               "!sort[id]": -1,

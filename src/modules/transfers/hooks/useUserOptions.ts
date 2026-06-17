@@ -25,7 +25,7 @@ export const useUserOptions = () => {
             id: number;
             first_name: string;
             last_name: string;
-          }>("users", {
+          }>("options/users", {
             "first_name!like": inputValue,
             "!sort[id]": -1,
             "!limit": LIMIT,

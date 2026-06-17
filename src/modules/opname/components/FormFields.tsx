@@ -15,8 +15,8 @@ const FormFields = () => {
   const roleCode = auth?.role?.role?.[0]?.code;
   const isStaffOrManager = roleCode === "staff" || roleCode === "manager";
 
-  const { data: departmentData } = useFindAll<{ id: string; name: string }>("departments", "departments");
-  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
+  const { data: departmentData } = useFindAll<{ id: string; name: string }>("options/departments", "options/departments");
+  const { data: locationData } = useFindAll<{ id: string; name: string }>("options/locations", "options/locations");
 
   const loadDepartmentOptions = async (
     search: string,
