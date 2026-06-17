@@ -91,6 +91,20 @@ await restore<User>("users", "123");
 
 ---
 
+## Options API
+
+For dropdown/select components that need only ID + label (no sensitive data), use the `/options/{collection}` endpoints. These are fully public (no auth, no RBAC) and return only non-sensitive fields.
+
+```ts
+// Single option by ID
+const user = await findOneById("options/users", "123");
+// GET /options/users/123 → { id: 1, first_name: "John", last_name: "Doe" }
+```
+
+See backend docs for supported collections and their returned fields.
+
+---
+
 ## Auth Services
 
 ### `signin(request)` — `src/modules/auth/services/signinService.ts`

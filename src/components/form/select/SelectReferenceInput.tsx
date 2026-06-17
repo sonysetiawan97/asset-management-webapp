@@ -71,8 +71,8 @@ const SelectReferenceInput: FC<Props> = ({
       return;
     }
 
-    if (typeof fieldValue === "string" && fetchOptionById) {
-      fetchOptionById(fieldValue).then((option) => {
+    if ((typeof fieldValue === "string" || typeof fieldValue === "number") && fetchOptionById) {
+      fetchOptionById(String(fieldValue)).then((option) => {
         if (option) {
           setSelectedOption(option);
         } else {
@@ -87,7 +87,7 @@ const SelectReferenceInput: FC<Props> = ({
 
     Promise.resolve(loadOptions("", [], { skip: 0 })).then((result) => {
       const found = result.options.find(
-        (o) => "value" in o && o.value === fieldValue
+        (o) => "value" in o && String(o.value) === String(fieldValue)
       ) as SelectOption | undefined;
       if (found) {
         setSelectedOption(found);

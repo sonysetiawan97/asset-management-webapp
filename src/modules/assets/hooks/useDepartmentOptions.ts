@@ -8,7 +8,7 @@ import { getAuth } from "@components/auth/AuthHelpers";
 
 export const getDepartmentById = async (id: string): Promise<SelectOption | null> => {
   try {
-    const response = await findOneById<{ id: string; name: string }>("departments", id);
+    const response = await findOneById<{ id: string; name: string }>("options/departments", id);
     if (response) return { value: response.id, label: response.name };
     return null;
   } catch {
@@ -36,12 +36,12 @@ export const useDepartmentOptions = (scoped = false) => {
         let response;
         if (isScoped && userDeptId) {
           response = await findAll<{ id: string; name: string }>(
-            "departments",
+            "options/departments",
             { id: String(userDeptId) }
           );
         } else {
           response = await findAll<{ id: string; name: string }>(
-            "departments",
+            "options/departments",
             {
               "name!like": inputValue,
               "!sort[id]": -1,

@@ -7,7 +7,7 @@ import { findOneById } from "@services/findOneById";
 
 export const getUserById = async (id: string): Promise<SelectOption | null> => {
   try {
-    const response = await findOneById<{ id: number; first_name: string; last_name: string }>("users", id);
+    const response = await findOneById<{ id: number; first_name: string; last_name: string }>("options/users", id);
     if (response) return { value: String(response.id), label: `${response.first_name} ${response.last_name}`.trim() };
     return null;
   } catch {
@@ -36,7 +36,7 @@ export const useUserOptions = () => {
             id: number;
             first_name: string;
             last_name: string;
-          }>("users", {
+          }>("options/users", {
             "first_name!like": inputValue,
             "!sort[id]": -1,
             "!limit": LIMIT,

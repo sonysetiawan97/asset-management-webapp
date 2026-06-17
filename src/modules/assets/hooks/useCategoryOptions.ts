@@ -22,7 +22,7 @@ export const useCategoryOptions = () => {
       debounceRef.current = setTimeout(() => {
         (async () => {
           const response = await findAll<{ id: string; name: string }>(
-            "categories",
+            "options/categories",
             {
               "name!like": inputValue,
               "!sort[id]": -1,
