@@ -212,7 +212,7 @@ export const ReportPage: FC = () => {
           <i className="bi bi-wrench fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.reports.maintenance.title")}</h2>
         </div>
-        <AuthPrivilegesChecker link="/reports/maintenance" method="GET">
+        <AuthPrivilegesChecker link="/reports/export" method="GET">
           <button className="btn-create" onClick={() => exportToCsv(filteredData)} style={{ background: "var(--color-surface)", border: "1.5px solid var(--color-border)", color: "var(--color-text-primary)" }}>
             <i className="bi bi-download"></i>
             {t("modules.reports.maintenance.export_csv")}

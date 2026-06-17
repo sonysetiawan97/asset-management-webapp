@@ -50,7 +50,7 @@ export const InventoryReport: FC = () => {
           <i className="bi bi-plus-lg"></i>
           <h2>{t("modules.reports.inventory.title")}</h2>
         </div>
-        <AuthPrivilegesChecker link="/reports/inventory" method="GET">
+        <AuthPrivilegesChecker link="/reports/export" method="GET">
           <button className="btn-create" onClick={exportCsv}>
             <i className="bi bi-download"></i>
             {t("modules.reports.export_csv")}
