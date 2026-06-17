@@ -1,6 +1,8 @@
 import { useModal } from "@hooks/useModal";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { DeleteConfirmationBody } from "./DeleteConfirmationBody";
 import { DeleteConfirmationFooter } from "./DeleteConfirmationFooter";
 import { useSoftDelete } from "@hooks/request/useSoftDelete";
@@ -9,12 +11,14 @@ import { useSnackbar } from "notistack";
 
 interface DeleteButtonProps {
   id: string;
-  module: string;
+  module?: string;
 }
 
-export const DeleteButton: FC<DeleteButtonProps> = ({ id, module }) => {
+export const DeleteButton: FC<DeleteButtonProps> = ({ id, module: moduleProp }) => {
   const { t } = useTranslation();
   const { openModal, closeModal } = useModal();
+  const location = useLocation();
+  const module = moduleProp || location.pathname.split("/").filter(Boolean)[0];
   const { softDeleteAsync } = useSoftDelete(module);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -48,8 +52,10 @@ export const DeleteButton: FC<DeleteButtonProps> = ({ id, module }) => {
   };
 
   return (
-    <button type="button" onClick={handle} className="btn btn-link btn-sm">
-      <i className="bi bi-trash"></i>
-    </button>
+    <AuthPrivilegesChecker link={`/${module}/:id`} method="DELETE">
+      <button type="button" onClick={handle} className="btn btn-link btn-sm">
+        <i className="bi bi-trash"></i>
+      </button>
+    </AuthPrivilegesChecker>
   );
 };

@@ -7,6 +7,8 @@ import {
   STATUS_COLORS,
   CONDITION_COLORS,
 } from "@modules/assets/types/Model";
+import { EditButton } from "@components/list/actions/EditButton";
+import { ReadButton } from "@components/list/actions/ReadButton";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { Pagination } from "@components/list/Pagination";
@@ -235,12 +237,8 @@ const List = ({ data, count, allCount, selectedStatus, onStatusChange, countBySt
                     <span />
                   )}
                   <div className="asset-actions">
-                    <Link to={`/${moduleName}/${asset.id}/update`} className="btn-action" title="Edit">
-                      <i className="bi bi-pencil"></i>
-                    </Link>
-                    <Link to={`/${moduleName}/${asset.id}`} className="btn-action" title="View">
-                      <i className="bi bi-eye"></i>
-                    </Link>
+                    <EditButton id={asset.id} />
+                    <ReadButton id={asset.id} />
                   </div>
                 </div>
               </div>

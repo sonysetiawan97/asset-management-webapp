@@ -14,7 +14,6 @@ interface ListContainerProps<T> {
   skip: number;
   limit: number;
   onPageChange: (newSkip: number) => void;
-  createUrl?: string;
   /** Pass true only when the list page needs field-based filtering beyond text search. */
   showFilter?: boolean;
 }
@@ -28,7 +27,6 @@ export const ListContainer = <T,>({
   skip,
   limit,
   onPageChange,
-  createUrl,
   showFilter = false,
 }: ListContainerProps<T>) => {
   return (
@@ -39,7 +37,7 @@ export const ListContainer = <T,>({
           {/* SECTION: Title Menu */}
           <Title title={title} />
           {/* SECTION: Action Menu */}
-          <ActionBar createUrl={createUrl} showFilter={showFilter} />
+          <ActionBar showFilter={showFilter} />
           {/* SECTION: Table */}
           <div className="mb-0">
             <Table

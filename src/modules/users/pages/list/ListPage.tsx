@@ -1,5 +1,5 @@
 import { ListContainer } from "@components/list/ListContainer";
-import { moduleName, UserListModel } from "@/modules/users/types/UserTypes";
+import { UserListModel } from "@/modules/users/types/UserTypes";
 import type { FC } from "react";
 import { usePagination } from "@hooks/list/usePagination";
 import { useTranslation } from "react-i18next";
@@ -15,11 +15,6 @@ interface ListProps {
 const ListPage: FC<ListProps> = ({ data, count, isLoading }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
-  const privilegeUrl = {
-    read: "/users/:id",
-    update: "/users/:id/update",
-    delete: "/users/:id/delete"
-  }
 
   const columns: ColumnConfig<UserListModel>[] = [
     { title: "Id", name: "id", rowClassName: "font-weight-bold" },
@@ -43,7 +38,7 @@ const ListPage: FC<ListProps> = ({ data, count, isLoading }) => {
       headerClassName: "header-action-list text-center",
       render: (row) => {
         const { id } = row;
-        return <Action id={id} module={moduleName} privilegeUrl={privilegeUrl} />;
+        return <Action id={id} />;
       },
     },
   ];
@@ -58,7 +53,6 @@ const ListPage: FC<ListProps> = ({ data, count, isLoading }) => {
       skip={skip}
       limit={limit}
       onPageChange={setSkip}
-      createUrl="/users/create"
     />
   );
 };

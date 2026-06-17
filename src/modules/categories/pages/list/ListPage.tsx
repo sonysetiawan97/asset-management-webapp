@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { moduleName, type Model } from "@modules/categories/types/Model";
+import { EditButton } from "@components/list/actions/EditButton";
+import { ReadButton } from "@components/list/actions/ReadButton";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useTranslation } from "react-i18next";
 import { usePagination } from "@hooks/list/usePagination";
 import { Pagination } from "@components/list/Pagination";
@@ -32,10 +35,12 @@ export const List = ({
           <i className="bi bi-tags fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.categories.list.title")}</h2>
         </div>
-        <Link to={`/${moduleName}/create`} className="btn-create">
-          <i className="bi bi-plus-lg"></i>
-          {t("button.create")}
-        </Link>
+        <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+          <Link to={`/${moduleName}/create`} className="btn-create">
+            <i className="bi bi-plus-lg"></i>
+            {t("button.create")}
+          </Link>
+        </AuthPrivilegesChecker>
       </div>
 
       {/* ── Filter Bar ── */}
@@ -76,9 +81,11 @@ export const List = ({
               <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
             </div>
             <p className="empty-state__text">{t("modules.categories.list.empty")}</p>
-            <Link to={`/${moduleName}/create`} className="btn-create-empty">
-              {t("modules.categories.list.create_first")}
-            </Link>
+            <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+              <Link to={`/${moduleName}/create`} className="btn-create-empty">
+                {t("modules.categories.list.create_first")}
+              </Link>
+            </AuthPrivilegesChecker>
           </div>
         ) : (
           <div className="table-responsive">
@@ -121,12 +128,8 @@ export const List = ({
                       </td>
                       <td>
                         <div className="d-flex gap-2 justify-content-center">
-                          <Link to={`/${moduleName}/${cat.id}/update`} className="btn-action" title="Edit">
-                            <i className="bi bi-pencil"></i>
-                          </Link>
-                          <Link to={`/${moduleName}/${cat.id}`} className="btn-action" title="View">
-                            <i className="bi bi-eye"></i>
-                          </Link>
+                          <EditButton id={cat.id} />
+                          <ReadButton id={cat.id} />
                         </div>
                       </td>
                     </tr>

@@ -2,10 +2,8 @@ import type { FC } from "react";
 import { SearchBar } from "./SearchBar";
 import { SearchAdvanceBar } from "./SearchAdvanceBar";
 import { CreateButton } from "./actions/CreateButton";
-import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 type Props = {
-  createUrl?: string;
   showFilter?: boolean;
 }
 
@@ -18,7 +16,7 @@ type Props = {
  *   <SearchAdvanceBar />
  * Only include when the list page needs field-based filtering beyond text search.
  */
-export const ActionBar: FC<Props> = ({ createUrl, showFilter = false }) => {
+export const ActionBar: FC<Props> = ({ showFilter = false }) => {
   return (
     <div className="d-flex justify-content-between align-items-center mb-3">
       <div className="d-flex align-items-center gap-2">
@@ -30,9 +28,7 @@ export const ActionBar: FC<Props> = ({ createUrl, showFilter = false }) => {
         )}
       </div>
       <div className="group-btn">
-        <AuthPrivilegesChecker link={createUrl}>
-          <CreateButton />
-        </AuthPrivilegesChecker>
+        <CreateButton />
       </div>
     </div>
   );

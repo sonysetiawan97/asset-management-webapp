@@ -5,18 +5,22 @@ import { LinkProps } from "react-router-dom";
 type AuthPrivilegesCheckerProps = {
   children: ReactNode;
   link?: string;
+  method?: string;
 };
 
 export const AuthPrivilegesChecker: FC<AuthPrivilegesCheckerProps> = ({
   children,
   link,
+  method,
 }) => {
   const auth = getAuth();
 
   let hide = true;
   let path: string | undefined;
 
-  if (React.isValidElement(children)) {
+  if (link) {
+    path = link;
+  } else if (React.isValidElement(children)) {
     const childProps = children.props as Partial<LinkProps>;
 
     if (typeof childProps.to === "string") {
@@ -24,12 +28,8 @@ export const AuthPrivilegesChecker: FC<AuthPrivilegesCheckerProps> = ({
     }
   }
 
-  if (!path && link) {
-    path = link;
-  }
-
   if (path) {
-    const isHavePrivilege = PrivilegesValidation({ auth, path });
+    const isHavePrivilege = PrivilegesValidation({ auth, path, method });
     hide = !isHavePrivilege;
   }
 

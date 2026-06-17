@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { moduleName, type Model } from "../../types/Model";
+import { type Model } from "../../types/Model";
 import { Action } from "@/components/list/Action";
 import type { ColumnConfig } from "@/types/ColumnConfig";
 import { ListContainer } from "@/components/list/ListContainer";
@@ -15,11 +15,6 @@ interface ListProps {
 export const List: FC<ListProps> = ({ data, count, isLoading }) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
-  const privilegeUrl = {
-    read: "/products/:id",
-    update: "/products/:id/update",
-    delete: "/products/:id/delete"
-  };
 
   const columns: ColumnConfig<Model>[] = [
     { title: "#", name: "id", rowClassName: "font-weight-bold" },
@@ -43,7 +38,7 @@ export const List: FC<ListProps> = ({ data, count, isLoading }) => {
       name: "id",
       headerClassName: "header-action-list text-center",
       render: (row) => (
-        <Action id={row.id} module={moduleName} privilegeUrl={privilegeUrl} />
+        <Action id={row.id} />
       ),
     },
   ];
@@ -58,7 +53,6 @@ export const List: FC<ListProps> = ({ data, count, isLoading }) => {
       skip={skip}
       limit={limit}
       onPageChange={setSkip}
-      createUrl="/products/create"
     />
   );
 };
