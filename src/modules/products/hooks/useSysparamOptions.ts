@@ -1,4 +1,4 @@
-import { Model, moduleName } from "@modules/sysparam/types/Model";
+import { Model } from "@modules/sysparam/types/Model";
 import { findAll } from "@services/findAll";
 import { SelectOption } from "@/types/SelectOption";
 import { useEffect, useRef, useState } from "react";
@@ -25,7 +25,7 @@ export const useSysparamOptions = ({ groupName }: SysparamOptionsProps) => {
 
       debounceRef.current = setTimeout(() => {
         (async () => {
-          const response = await findAll<Model>(`/${moduleName}`, {
+          const response = await findAll<Model>("options/sysparams", {
             "!search": inputValue,
             status: "1",
             "!sort[id]": -1,
@@ -70,7 +70,7 @@ export const useDefaultOptionSysparamByGroup = (
 
     const fetchData = async () => {
       try {
-        const response = await findAll<Model>(`/${moduleName}`, {
+        const response = await findAll<Model>("options/sysparams", {
           group,
           status: "1",
         });
