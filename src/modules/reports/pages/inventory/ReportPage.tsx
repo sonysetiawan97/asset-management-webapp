@@ -5,9 +5,26 @@ import { useEffect } from "react";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
+import { apiAxios } from "@/utils/apiAxios";
+import { ASSET_STATUSES } from "@modules/assets/types/Model";
 
-const formatCurrency = (v?: number) => v === undefined || v === null || !isFinite(v) ? "—" : new Intl.NumberFormat("en-US", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(v);
 const formatDate = (d?: string) => d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
+
+async function exportCsv() {
+  const response = await apiAxios.get("assets/null/export", {
+    params: { report_type: "csv" },
+    responseType: "blob",
+  });
+  const blob = new Blob([response.data], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `inventory_report_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 export const InventoryReport: FC = () => {
   const { t } = useTranslation();
@@ -21,15 +38,11 @@ export const InventoryReport: FC = () => {
 
   const assets = data?.data.result || [];
   const total = assets.length;
-  const totalPurchase = assets.reduce((acc: number, a: any) => acc + Number(a.purchase_price), 0);
-  const totalBook = assets.reduce((acc: number, a: any) => acc + Number(a.book_value), 0);
 
   return (
     <div className="report-container">
       <div className="module-stat-bar">
         <div className="stat-item"><span className="stat-value">{total}</span><span className="stat-label">Total Assets</span></div>
-        <div className="stat-item"><span className="stat-value">{formatCurrency(totalPurchase)}</span><span className="stat-label">Total Purchase Value</span></div>
-        <div className="stat-item"><span className="stat-value">{formatCurrency(totalBook)}</span><span className="stat-label">Total Book Value</span></div>
       </div>
 
       <div className="module-list-header">
@@ -38,8 +51,8 @@ export const InventoryReport: FC = () => {
           <h2>{t("modules.reports.inventory.title")}</h2>
         </div>
         <AuthPrivilegesChecker link="/reports/inventory" method="GET">
-          <button className="btn-create" onClick={() => window.print()}>
-            <i className="bi bi-info-circle"></i>
+          <button className="btn-create" onClick={exportCsv}>
+            <i className="bi bi-download"></i>
             {t("modules.reports.export_csv")}
           </button>
         </AuthPrivilegesChecker>
@@ -52,8 +65,6 @@ export const InventoryReport: FC = () => {
               <th>Code</th>
               <th>Name</th>
               <th>Status</th>
-              <th>Purchase Price</th>
-              <th>Book Value</th>
               <th>Purchase Date</th>
             </tr>
           </thead>
@@ -62,9 +73,7 @@ export const InventoryReport: FC = () => {
               <tr key={a.id}>
                 <td className="font-mono text-xs">{a.asset_code ?? "—"}</td>
                 <td>{a.name}</td>
-                <td><span className="report-status">{a.status}</span></td>
-                <td className="text-right">{formatCurrency(a.purchase_price)}</td>
-                <td className="text-right">{formatCurrency(a.book_value)}</td>
+                <td><span className="report-status">{ASSET_STATUSES.find((s) => s.value === a.status)?.label ?? a.status}</span></td>
                 <td>{formatDate(a.purchase_date)}</td>
               </tr>
             ))}
