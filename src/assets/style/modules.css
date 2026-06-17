@@ -1769,7 +1769,7 @@
 /* Transfer route arrow */
 .transfer-route {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: var(--space-3);
   padding: var(--space-3);
   background: var(--color-surface);

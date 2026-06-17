@@ -38,7 +38,7 @@ const CreatePage = () => {
 
   return (
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
-      <div className="col-12">
+      <div className="form-section col-12">
         <FormFields departments={departments} />
       </div>
       <div className="col-12">

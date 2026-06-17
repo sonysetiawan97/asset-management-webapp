@@ -50,6 +50,20 @@ export const List: FC<ListProps> = ({ data, count, allCount, countByStatus, isLo
 
   return (
     <div className="module-list-container">
+      {/* ── Header Bar ── */}
+      <div className="module-list-header">
+        <div className="module-list-title">
+          <i className="bi bi-box-seam fs-4" style={{ color: "#1a1a2e" }}></i>
+          <h2>{t("modules.opname.list.title")}</h2>
+        </div>
+        <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+          <Link to={`/${moduleName}/create`} className="btn btn-primary">
+            <i className="bi bi-plus-lg me-1" />
+            {t("modules.opname.list.btn_create")}
+          </Link>
+        </AuthPrivilegesChecker>
+      </div>
+
       {/* Status Filter Bar */}
       <div className="status-filter-bar">
         <span className="status-filter-bar__label">{t("modules.opname.list.filter_by_status")}</span>
@@ -81,14 +95,6 @@ export const List: FC<ListProps> = ({ data, count, allCount, countByStatus, isLo
 
       {/* Table */}
       <div className="module-table-container">
-        <div className="d-flex justify-content-end mb-3">
-          <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
-            <Link to={`/${moduleName}/create`} className="btn btn-primary">
-              <i className="bi bi-plus-lg me-1" />
-              {t("modules.opname.list.btn_create")}
-            </Link>
-          </AuthPrivilegesChecker>
-        </div>
         <div className="table-responsive">
           <table className="table table-hover align-middle">
             <thead>

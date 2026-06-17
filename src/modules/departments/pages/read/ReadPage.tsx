@@ -19,7 +19,9 @@ const ReadPage = ({ defaultValue }: ReadPageProps) => {
   return (
     <form className="row g-3">
       <div className="col-12">
-        <FormFields readOnly={true} departments={departments} defaultValue={defaultValue} />
+        <div className="form-section ">
+          <FormFields readOnly={true} departments={departments} defaultValue={defaultValue} />
+        </div>
       </div>
 
       <div className="col-12">

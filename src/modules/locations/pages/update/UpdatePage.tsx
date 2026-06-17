@@ -43,7 +43,9 @@ const UpdatePage = () => {
   return (
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
-        <FormFields locations={locations} />
+        <div className="form-section">
+          <FormFields locations={locations} />
+        </div>
       </div>
 
       <div className="col-12">

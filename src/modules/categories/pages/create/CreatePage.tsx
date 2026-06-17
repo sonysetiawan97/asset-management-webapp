@@ -39,7 +39,9 @@ const CreatePage = () => {
   return (
     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="col-12">
-        <FormFields categories={categories} />
+        <div className="form-section">
+          <FormFields categories={categories} />
+        </div>
       </div>
       <div className="col-12">
         <div className="d-flex gap-3">
