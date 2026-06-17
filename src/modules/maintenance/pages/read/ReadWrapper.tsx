@@ -18,11 +18,12 @@ import { extractErrors } from "@/utils/extractError";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const ReadPage: FC<{
+  id: string;
   control: any;
   status: "open" | "completed";
   onComplete: () => void;
   isCompleting: boolean;
-}> = ({ control, status, onComplete, isCompleting }) => {
+}> = ({ id, control, status, onComplete, isCompleting }) => {
   const isOpen = status === "open";
 
   return (
@@ -81,7 +82,7 @@ const ReadWrapper: FC = () => {
       <TitleBarWithIcon title={t("modules.maintenance.read.title")}>
         <i className="bi bi-eye"></i>
       </TitleBarWithIcon>
-      <ReadPage control={methods.control} status={data.status ?? "open"} onComplete={handleComplete} isCompleting={isCompleting} />
+      <ReadPage id={id ?? ""} control={methods.control} status={data.status ?? "open"} onComplete={handleComplete} isCompleting={isCompleting} />
     </FormProvider>
   );
 };

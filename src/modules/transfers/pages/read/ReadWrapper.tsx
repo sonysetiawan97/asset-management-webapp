@@ -22,6 +22,7 @@ const formatDate = (dateStr: string | undefined) => {
 };
 
 interface ReadPageProps {
+  id: string;
   data: ReadTransferModel;
   transferStatus?: string;
   onApprove?: () => void;
@@ -29,7 +30,7 @@ interface ReadPageProps {
   isWorkflowPending?: boolean;
 }
 
-const ReadPage: FC<ReadPageProps> = ({ data, transferStatus, onApprove, onOpenRejectModal, isWorkflowPending }) => {
+const ReadPage: FC<ReadPageProps> = ({ id, data, transferStatus, onApprove, onOpenRejectModal, isWorkflowPending }) => {
   const { t } = useTranslation();
 
   const statusMeta = TRANSFER_STATUSES.find((s) => s.value === data.transfer_status);
@@ -226,6 +227,7 @@ const ReadWrapper: FC = () => {
         <i className="bi bi-eye"></i>
       </TitleBarWithIcon>
       <ReadPage
+        id={id ?? ""}
         data={data}
         transferStatus={data.transfer_status}
         onApprove={handleApprove}
