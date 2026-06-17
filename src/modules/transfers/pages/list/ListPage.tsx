@@ -216,22 +216,26 @@ export const List: FC<ListProps> = ({
                   <div className="workflow-actions">
                     {transfer.transfer_status === "pending" && (
                       <>
-                        <button
-                          className="btn-action btn-action--success"
-                          title={t("modules.transfers.list.approve")}
-                          onClick={() => handleApprove(transfer.id)}
-                          disabled={workflowMutation.isPending}
-                        >
-                          <i className="bi bi-check-lg"></i>
-                        </button>
-                        <button
-                          className="btn-action btn-action--danger"
-                          title={t("modules.transfers.list.reject")}
-                          onClick={() => handleReject(transfer.id)}
-                          disabled={workflowMutation.isPending}
-                        >
-                          <i className="bi bi-x-lg"></i>
-                        </button>
+                        <AuthPrivilegesChecker link={`/${moduleName}/${transfer.id}/approve`} method="PATCH">
+                          <button
+                            className="btn-action btn-action--success"
+                            title={t("modules.transfers.list.approve")}
+                            onClick={() => handleApprove(transfer.id)}
+                            disabled={workflowMutation.isPending}
+                          >
+                            <i className="bi bi-check-lg"></i>
+                          </button>
+                        </AuthPrivilegesChecker>
+                        <AuthPrivilegesChecker link={`/${moduleName}/${transfer.id}/reject`} method="PATCH">
+                          <button
+                            className="btn-action btn-action--danger"
+                            title={t("modules.transfers.list.reject")}
+                            onClick={() => handleReject(transfer.id)}
+                            disabled={workflowMutation.isPending}
+                          >
+                            <i className="bi bi-x-lg"></i>
+                          </button>
+                        </AuthPrivilegesChecker>
                       </>
                     )}
                     <Link to={`/${moduleName}/${transfer.id}`} className="btn-action" title={t("modules.transfers.list.view")}>
@@ -267,13 +271,15 @@ export const List: FC<ListProps> = ({
           <button className="btn btn-secondary" onClick={closeRejectModal} disabled={workflowMutation.isPending}>
             {t("modules.transfers.read.reject_cancel")}
           </button>
-          <button
-            className="btn btn-danger"
-            onClick={handleConfirmReject}
-            disabled={workflowMutation.isPending || !rejectionReason.trim()}
-          >
-            {t("modules.transfers.read.reject_confirm")}
-          </button>
+          <AuthPrivilegesChecker link={`/${moduleName}/${rejectTargetId}/reject`} method="PATCH">
+            <button
+              className="btn btn-danger"
+              onClick={handleConfirmReject}
+              disabled={workflowMutation.isPending || !rejectionReason.trim()}
+            >
+              {t("modules.transfers.read.reject_confirm")}
+            </button>
+          </AuthPrivilegesChecker>
         </div>
       </Modal>
 

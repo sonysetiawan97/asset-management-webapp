@@ -14,6 +14,7 @@ import { apiAxios } from "@/utils/apiAxios";
 import { useSnackbar } from "notistack";
 import { Modal } from "@components/Modal";
 import type { AxiosError } from "axios";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const formatDate = (dateStr: string | undefined) => {
   if (!dateStr) return "—";
@@ -149,12 +150,16 @@ const ReadPage: FC<ReadPageProps> = ({ data, transferStatus, onApprove, onOpenRe
       <div className="d-flex gap-2 justify-content-end">
         {transferStatus === "pending" && (
           <>
-            <button className="btn btn-success" onClick={onApprove} disabled={isWorkflowPending}>
-              <i className="bi bi-check-lg me-1"></i> {t("modules.transfers.read.approve")}
-            </button>
-            <button className="btn btn-danger" onClick={onOpenRejectModal} disabled={isWorkflowPending}>
-              <i className="bi bi-x-lg me-1"></i> {t("modules.transfers.read.reject")}
-            </button>
+            <AuthPrivilegesChecker link={`/${moduleName}/${id}/approve`} method="PATCH">
+              <button className="btn btn-success" onClick={onApprove} disabled={isWorkflowPending}>
+                <i className="bi bi-check-lg me-1"></i> {t("modules.transfers.read.approve")}
+              </button>
+            </AuthPrivilegesChecker>
+            <AuthPrivilegesChecker link={`/${moduleName}/${id}/reject`} method="PATCH">
+              <button className="btn btn-danger" onClick={onOpenRejectModal} disabled={isWorkflowPending}>
+                <i className="bi bi-x-lg me-1"></i> {t("modules.transfers.read.reject")}
+              </button>
+            </AuthPrivilegesChecker>
           </>
         )}
         <BackButton />
@@ -249,13 +254,15 @@ const ReadWrapper: FC = () => {
           <button className="btn btn-secondary" onClick={() => setShowRejectModal(false)} disabled={workflowMutation.isPending}>
             {t("modules.transfers.read.reject_cancel")}
           </button>
-          <button
-            className="btn btn-danger"
-            onClick={handleConfirmReject}
-            disabled={workflowMutation.isPending || !rejectionReason.trim()}
-          >
-            {t("modules.transfers.read.reject_confirm")}
-          </button>
+          <AuthPrivilegesChecker link={`/${moduleName}/${id}/reject`} method="PATCH">
+            <button
+              className="btn btn-danger"
+              onClick={handleConfirmReject}
+              disabled={workflowMutation.isPending || !rejectionReason.trim()}
+            >
+              {t("modules.transfers.read.reject_confirm")}
+            </button>
+          </AuthPrivilegesChecker>
         </div>
       </Modal>
     </>

@@ -190,17 +190,21 @@ export const List: FC<ListProps> = ({ data, count }) => {
                 <div className="workflow-card__footer">
                   <div className="workflow-actions">
                     {log.status !== "completed" && (
-                      <button
-                        className="btn-action btn-action--primary"
-                        title={t("modules.maintenance.read.complete")}
-                        onClick={() => setCompleteTargetId(log.id)}
-                      >
-                        <i className="bi bi-check-lg"></i>
-                      </button>
+                      <AuthPrivilegesChecker link={`/${moduleName}/${log.id}/complete`} method="POST">
+                        <button
+                          className="btn-action btn-action--primary"
+                          title={t("modules.maintenance.read.complete")}
+                          onClick={() => setCompleteTargetId(log.id)}
+                        >
+                          <i className="bi bi-check-lg"></i>
+                        </button>
+                      </AuthPrivilegesChecker>
                     )}
-                    <Link to={`/${moduleName}/${log.id}`} className="btn-action" title="View">
-                      <i className="bi bi-eye"></i>
-                    </Link>
+                    <AuthPrivilegesChecker link={`/${moduleName}/${log.id}`} method="GET">
+                      <Link to={`/${moduleName}/${log.id}`} className="btn-action" title="View">
+                        <i className="bi bi-eye"></i>
+                      </Link>
+                    </AuthPrivilegesChecker>
                   </div>
                 </div>
               </div>
@@ -226,20 +230,22 @@ export const List: FC<ListProps> = ({ data, count }) => {
           >
             {t("button.cancel")}
           </button>
-          <button
-            className="btn btn-success"
-            onClick={handleConfirmComplete}
-            disabled={completeMutation.isPending}
-          >
-            {completeMutation.isPending ? (
-              <>
-                <span className="spinner-border spinner-border-sm me-1" />
-                {t("modules.maintenance.read.complete")}
-              </>
-            ) : (
-              t("modules.maintenance.read.complete")
-            )}
-          </button>
+          <AuthPrivilegesChecker link={`/${moduleName}/${completeTargetId}/complete`} method="POST">
+            <button
+              className="btn btn-success"
+              onClick={handleConfirmComplete}
+              disabled={completeMutation.isPending}
+            >
+              {completeMutation.isPending ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-1" />
+                  {t("modules.maintenance.read.complete")}
+                </>
+              ) : (
+                t("modules.maintenance.read.complete")
+              )}
+            </button>
+          </AuthPrivilegesChecker>
         </div>
       </Modal>
 

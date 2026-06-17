@@ -7,6 +7,7 @@ import { useMarkRead } from "../../services/useNotificationPoll";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { useEffect, useState } from "react";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ListProps {
   data: Notification[];
@@ -135,25 +136,27 @@ export const List: FC<ListProps> = ({ filterRead }) => {
           </div>
         ) : (
           allNotifications.map((notification, index) => (
-            <div
-              key={notification.id}
-              className={`notification-item ${notification.is_read ? "read" : "unread"}`}
-              style={{ animationDelay: `${index * 40}ms` }}
-              onClick={() => !notification.is_read && handleMarkRead(notification.id)}
-            >
-              <div className={`notification-icon ${!notification.is_read ? "unread" : ""}`}>
-                <i className={getNotifIcon(notification.type)}></i>
-              </div>
-              <div className="notification-content">
-                <div className="notification-header">
-                  <span className="notification-title">{notification.title}</span>
-                  <span className="notification-time">{formatDate(notification.created_time)}</span>
+            <AuthPrivilegesChecker link={`/notifications/${notification.id}`} method="PATCH">
+              <div
+                key={notification.id}
+                className={`notification-item ${notification.is_read ? "read" : "unread"}`}
+                style={{ animationDelay: `${index * 40}ms` }}
+                onClick={() => !notification.is_read && handleMarkRead(notification.id)}
+              >
+                <div className={`notification-icon ${!notification.is_read ? "unread" : ""}`}>
+                  <i className={getNotifIcon(notification.type)}></i>
                 </div>
-                <p className="notification-message">{notification.message}</p>
-                <span className="notification-type">{NOTIFICATION_TYPE_LABELS[notification.type]}</span>
+                <div className="notification-content">
+                  <div className="notification-header">
+                    <span className="notification-title">{notification.title}</span>
+                    <span className="notification-time">{formatDate(notification.created_time)}</span>
+                  </div>
+                  <p className="notification-message">{notification.message}</p>
+                  <span className="notification-type">{NOTIFICATION_TYPE_LABELS[notification.type]}</span>
+                </div>
+                {!notification.is_read && <div className="notification-dot" />}
               </div>
-              {!notification.is_read && <div className="notification-dot" />}
-            </div>
+            </AuthPrivilegesChecker>
           ))
         )}
       </div>

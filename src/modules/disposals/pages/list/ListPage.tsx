@@ -172,27 +172,33 @@ export const List: FC<ListProps> = ({ data, count }) => {
                   <div className="workflow-actions">
                     {disposal.disposal_status === "pending" && (
                       <>
-                        <button
-                          className="btn-action btn-action--success"
-                          title="Approve"
-                          onClick={() => handleApprove(disposal.id)}
-                          disabled={workflowMutation.isPending}
-                        >
-                          <i className="bi bi-check-lg"></i>
-                        </button>
-                        <button
-                          className="btn-action btn-action--danger"
-                          title="Reject"
-                          onClick={() => handleReject(disposal.id)}
-                          disabled={workflowMutation.isPending}
-                        >
-                          <i className="bi bi-x-lg"></i>
-                        </button>
+                        <AuthPrivilegesChecker link={`/${moduleName}/${disposal.id}/approve`} method="PATCH">
+                          <button
+                            className="btn-action btn-action--success"
+                            title="Approve"
+                            onClick={() => handleApprove(disposal.id)}
+                            disabled={workflowMutation.isPending}
+                          >
+                            <i className="bi bi-check-lg"></i>
+                          </button>
+                        </AuthPrivilegesChecker>
+                        <AuthPrivilegesChecker link={`/${moduleName}/${disposal.id}/reject`} method="PATCH">
+                          <button
+                            className="btn-action btn-action--danger"
+                            title="Reject"
+                            onClick={() => handleReject(disposal.id)}
+                            disabled={workflowMutation.isPending}
+                          >
+                            <i className="bi bi-x-lg"></i>
+                          </button>
+                        </AuthPrivilegesChecker>
                       </>
                     )}
-                    <Link to={`/${moduleName}/${disposal.id}`} className="btn-action" title="View">
-                      <i className="bi bi-eye"></i>
-                    </Link>
+                    <AuthPrivilegesChecker link={`/${moduleName}/${disposal.id}`} method="GET">
+                      <Link to={`/${moduleName}/${disposal.id}`} className="btn-action" title="View">
+                        <i className="bi bi-eye"></i>
+                      </Link>
+                    </AuthPrivilegesChecker>
                   </div>
                 </div>
               </div>

@@ -9,6 +9,7 @@ import { useFindAll } from "@hooks/request/useFindAll";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { apiAxios } from "@/utils/apiAxios";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface CheckoutModalProps {
@@ -80,9 +81,11 @@ export const CheckoutModal: FC<CheckoutModalProps> = ({
           <button type="button" className="btn btn-secondary" onClick={onCancel}>
             {t("button.cancel")}
           </button>
-          <button type="button" className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
-            {t("button.checkout")}
-          </button>
+          <AuthPrivilegesChecker link="/assets/checkout" method="POST">
+            <button type="button" className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
+              {t("button.checkout")}
+            </button>
+          </AuthPrivilegesChecker>
         </div>
       }
     >

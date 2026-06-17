@@ -134,9 +134,11 @@ export const List = ({
                       {skip + index + 1}
                     </td>
                     <td>
-                      <Link to={`/${moduleName}/${location.id}`} className="text-decoration-none fw-semibold">
-                        {location.name}
-                      </Link>
+                      <AuthPrivilegesChecker link={`/${moduleName}/${location.id}`} method="GET">
+                        <Link to={`/${moduleName}/${location.id}`} className="text-decoration-none fw-semibold">
+                          {location.name}
+                        </Link>
+                      </AuthPrivilegesChecker>
                     </td>
                     <td>
                       {location.code ? (

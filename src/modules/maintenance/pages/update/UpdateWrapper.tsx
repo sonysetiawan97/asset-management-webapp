@@ -14,6 +14,7 @@ import type { AxiosError } from "axios";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
 import { FormFields } from "../../components/FormFields";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const UpdateWrapper: FC = () => {
   const { t } = useTranslation();
@@ -72,7 +73,9 @@ const UpdateWrapper: FC = () => {
         <div className="col-12">
           <div className="d-flex gap-2">
             <BackButton />
-            <SubmitButton isLoading={isUpdating} />
+            <AuthPrivilegesChecker link={`/${moduleName}`} method="PUT">
+              <SubmitButton isLoading={isUpdating} />
+            </AuthPrivilegesChecker>
           </div>
         </div>
       </form>

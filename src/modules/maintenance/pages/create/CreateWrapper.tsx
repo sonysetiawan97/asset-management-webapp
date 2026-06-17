@@ -11,6 +11,7 @@ import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateMaintenanceModel>({ mode: "onBlur" });
@@ -47,7 +48,9 @@ const CreateWrapper: FC = () => {
         <div className="">
           <div className="d-flex gap-3">
             <CancelButton to={`/${moduleName}`} />
-            <SubmitButton isLoading={isLoading} />
+            <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+              <SubmitButton isLoading={isLoading} />
+            </AuthPrivilegesChecker>
           </div>
         </div>
       </form>

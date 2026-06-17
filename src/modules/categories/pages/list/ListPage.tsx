@@ -115,9 +115,11 @@ export const List = ({
                         {skip + index + 1}
                       </td>
                       <td>
-                        <Link to={`/${moduleName}/${cat.id}`} className="text-decoration-none fw-semibold">
-                          {cat.name}
-                        </Link>
+                        <AuthPrivilegesChecker link={`/${moduleName}/${cat.id}`} method="GET">
+                          <Link to={`/${moduleName}/${cat.id}`} className="text-decoration-none fw-semibold">
+                            {cat.name}
+                          </Link>
+                        </AuthPrivilegesChecker>
                       </td>
                       <td className="text-muted">{parentName}</td>
                       <td style={{ textAlign: "right" }}>

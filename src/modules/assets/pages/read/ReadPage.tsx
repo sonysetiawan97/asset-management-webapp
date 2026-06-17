@@ -13,6 +13,7 @@ import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
 import { getAuth } from "@components/auth/AuthHelpers";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ReadPageProps {
   defaultValue?: { category_id: string; location_id: string };
@@ -54,14 +55,16 @@ const ReadPage = (_props: ReadPageProps) => {
             <BackButton />
             <UpdateButton to={"update"} />
             {assetStatus === "available" && (
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setShowCheckoutModal(true)}
-              >
-                <i className="bi bi-send me-1"></i>
-                {t("modules.checkout.create.title")}
-              </button>
+              <AuthPrivilegesChecker link="/assets/checkout" method="POST">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setShowCheckoutModal(true)}
+                >
+                  <i className="bi bi-send me-1"></i>
+                  {t("modules.checkout.create.title")}
+                </button>
+              </AuthPrivilegesChecker>
             )}
           </div>
         </div>

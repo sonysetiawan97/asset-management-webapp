@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { ContentLoader } from "@components/loadings/ContentLoader";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const formatCurrency = (v?: number) => v === undefined || v === null || !isFinite(v) ? "—" : new Intl.NumberFormat("en-US", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(v);
 const formatDate = (d?: string) => d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
@@ -36,10 +37,12 @@ export const InventoryReport: FC = () => {
           <i className="bi bi-plus-lg"></i>
           <h2>{t("modules.reports.inventory.title")}</h2>
         </div>
-        <button className="btn-create" onClick={() => window.print()}>
-          <i className="bi bi-info-circle"></i>
-          {t("modules.reports.export_csv")}
-        </button>
+        <AuthPrivilegesChecker link="/reports/inventory" method="GET">
+          <button className="btn-create" onClick={() => window.print()}>
+            <i className="bi bi-info-circle"></i>
+            {t("modules.reports.export_csv")}
+          </button>
+        </AuthPrivilegesChecker>
       </div>
 
       <div className="report-table-wrap">

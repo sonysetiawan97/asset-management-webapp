@@ -15,6 +15,7 @@ import { useLocationOptions } from "../../hooks/useLocationOptions";
 import { useDepartmentOptions } from "../../hooks/useDepartmentOptions";
 import { useUserOptions } from "../../hooks/useUserOptions";
 import { getAuth } from "@components/auth/AuthHelpers";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const CreatePage = () => {
   const { t } = useTranslation();
@@ -65,7 +66,9 @@ const CreatePage = () => {
         <div className="d-flex gap-3">
           <CancelButton to={`/${moduleName}`} />
           <ResetButton />
-          <SubmitButton isLoading={isLoading} />
+          <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+            <SubmitButton isLoading={isLoading} />
+          </AuthPrivilegesChecker>
         </div>
       </div>
     </form>

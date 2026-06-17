@@ -13,6 +13,7 @@ import { ContentLoader } from "@components/loadings/ContentLoader";
 import NotFound from "@modules/errors/pages/404NotFound";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const formatDate = (dateStr: string | undefined) => {
   if (!dateStr) return "—";
@@ -189,8 +190,12 @@ const ReadPage: FC<{ data: DisposalRequest }> = ({ data }) => {
             <BackButton />
             {isPending && (
               <div className="d-flex gap-2">
-                <WorkflowButton id={data.id} action="reject" onSuccess={handleSuccess} onError={handleError} />
-                <WorkflowButton id={data.id} action="approve" onSuccess={handleSuccess} onError={handleError} />
+                <AuthPrivilegesChecker link={`/${moduleName}/${data.id}/reject`} method="PATCH">
+                  <WorkflowButton id={data.id} action="reject" onSuccess={handleSuccess} onError={handleError} />
+                </AuthPrivilegesChecker>
+                <AuthPrivilegesChecker link={`/${moduleName}/${data.id}/approve`} method="PATCH">
+                  <WorkflowButton id={data.id} action="approve" onSuccess={handleSuccess} onError={handleError} />
+                </AuthPrivilegesChecker>
               </div>
             )}
           </div>

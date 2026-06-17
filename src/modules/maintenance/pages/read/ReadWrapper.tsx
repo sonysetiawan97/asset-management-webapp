@@ -15,6 +15,7 @@ import { FormFields } from "../../components/FormFields";
 import { apiAxios } from "@/utils/apiAxios";
 import { useSnackbar } from "notistack";
 import { extractErrors } from "@/utils/extractError";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const ReadPage: FC<{
   control: any;
@@ -31,7 +32,9 @@ const ReadPage: FC<{
         <div className="d-flex gap-2 mt-2">
           <BackButton />
           {isOpen && (
-            <CompleteButton onClick={onComplete} isLoading={isCompleting} />
+            <AuthPrivilegesChecker link={`/${moduleName}/${id}/complete`} method="POST">
+              <CompleteButton onClick={onComplete} isLoading={isCompleting} />
+            </AuthPrivilegesChecker>
           )}
           {!isOpen && (
             <CancelButton to={`/${moduleName}`} />

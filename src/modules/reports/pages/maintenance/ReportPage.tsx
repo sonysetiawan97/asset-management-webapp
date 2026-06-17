@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useList } from "@hooks/list/useList";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { ContentLoader } from "@components/loadings/ContentLoader";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { MAINTENANCE_TYPES } from "@modules/maintenance/types/Model";
 
 interface MaintenanceRecord {
@@ -211,10 +212,12 @@ export const ReportPage: FC = () => {
           <i className="bi bi-wrench fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.reports.maintenance.title")}</h2>
         </div>
-        <button className="btn-create" onClick={() => exportToCsv(filteredData)} style={{ background: "var(--color-surface)", border: "1.5px solid var(--color-border)", color: "var(--color-text-primary)" }}>
-          <i className="bi bi-download"></i>
-          {t("modules.reports.maintenance.export_csv")}
-        </button>
+        <AuthPrivilegesChecker link="/reports/maintenance" method="GET">
+          <button className="btn-create" onClick={() => exportToCsv(filteredData)} style={{ background: "var(--color-surface)", border: "1.5px solid var(--color-border)", color: "var(--color-text-primary)" }}>
+            <i className="bi bi-download"></i>
+            {t("modules.reports.maintenance.export_csv")}
+          </button>
+        </AuthPrivilegesChecker>
       </div>
 
       {/* Table */}

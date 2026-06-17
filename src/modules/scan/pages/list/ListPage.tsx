@@ -4,6 +4,7 @@ import { useRef, useCallback, useEffect, type FC } from "react";
 import { useTranslation } from "react-i18next";
 import { type AssetLookupResult } from "@modules/scan/types/Model";
 import { ASSET_STATUSES } from "@modules/assets/types/Model";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 interface ListPageProps {
   scannedAsset: AssetLookupResult | null;
@@ -148,15 +149,19 @@ const ListPage: FC<ListPageProps> = ({
                 {t("modules.scan.list.scanner_title")}
               </h5>
               {isScanning ? (
-                <button className="btn btn-sm btn-danger" onClick={handleStopScan}>
-                  <i className="bi bi-stop-fill me-1" />
-                  {t("modules.scan.list.stop_scan")}
-                </button>
+                <AuthPrivilegesChecker link="/scan" method="GET">
+                  <button className="btn btn-sm btn-danger" onClick={handleStopScan}>
+                    <i className="bi bi-stop-fill me-1" />
+                    {t("modules.scan.list.stop_scan")}
+                  </button>
+                </AuthPrivilegesChecker>
               ) : (
-                <button className="btn btn-sm btn-primary" onClick={onStartScan}>
-                  <i className="bi bi-camera-fill me-1" />
-                  {t("modules.scan.list.start_scan")}
-                </button>
+                <AuthPrivilegesChecker link="/scan" method="GET">
+                  <button className="btn btn-sm btn-primary" onClick={onStartScan}>
+                    <i className="bi bi-camera-fill me-1" />
+                    {t("modules.scan.list.start_scan")}
+                  </button>
+                </AuthPrivilegesChecker>
               )}
             </div>
 
@@ -223,25 +228,27 @@ const ListPage: FC<ListPageProps> = ({
                       }
                     }}
                   />
-                  <button
-                    className="btn btn-sm btn-outline-primary"
-                    onClick={() => {
-                      const input = document.getElementById("manual-code-input") as HTMLInputElement;
-                      if (input?.value.trim()) {
-                        onManualLookup(input.value.trim());
-                        input.value = "";
-                      }
-                    }}
-                  >
-                    {isLookingUp ? (
-                      <span className="spinner-border spinner-border-sm" role="status" />
-                    ) : (
-                      <>
-                        <i className="bi bi-search me-1" />
-                        {t("modules.scan.list.lookup")}
-                      </>
-                    )}
-                  </button>
+                  <AuthPrivilegesChecker link="/scan" method="GET">
+                    <button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={() => {
+                        const input = document.getElementById("manual-code-input") as HTMLInputElement;
+                        if (input?.value.trim()) {
+                          onManualLookup(input.value.trim());
+                          input.value = "";
+                        }
+                      }}
+                    >
+                      {isLookingUp ? (
+                        <span className="spinner-border spinner-border-sm" role="status" />
+                      ) : (
+                        <>
+                          <i className="bi bi-search me-1" />
+                          {t("modules.scan.list.lookup")}
+                        </>
+                      )}
+                    </button>
+                  </AuthPrivilegesChecker>
                 </div>
               </div>
             </div>
@@ -298,20 +305,24 @@ const ListPage: FC<ListPageProps> = ({
                   </div>
 
                   <div className="d-flex gap-2 mt-3">
-                    <Link
-                      to={`/assets/${scannedAsset.id}`}
-                      className="btn btn-sm btn-primary"
-                    >
-                      <i className="bi bi-eye me-1" />
-                      {t("modules.scan.list.view_asset")}
-                    </Link>
-                    <Link
-                      to={`/assets/${scannedAsset.id}/update`}
-                      className="btn btn-sm btn-outline-secondary"
-                    >
-                      <i className="bi bi-pencil me-1" />
-                      {t("modules.scan.list.edit_asset")}
-                    </Link>
+                    <AuthPrivilegesChecker link={`/assets/${scannedAsset.id}`} method="GET">
+                      <Link
+                        to={`/assets/${scannedAsset.id}`}
+                        className="btn btn-sm btn-primary"
+                      >
+                        <i className="bi bi-eye me-1" />
+                        {t("modules.scan.list.view_asset")}
+                      </Link>
+                    </AuthPrivilegesChecker>
+                    <AuthPrivilegesChecker link={`/assets/${scannedAsset.id}`} method="PUT">
+                      <Link
+                        to={`/assets/${scannedAsset.id}/update`}
+                        className="btn btn-sm btn-outline-secondary"
+                      >
+                        <i className="bi bi-pencil me-1" />
+                        {t("modules.scan.list.edit_asset")}
+                      </Link>
+                    </AuthPrivilegesChecker>
                   </div>
                 </div>
               ) : (
@@ -328,10 +339,12 @@ const ListPage: FC<ListPageProps> = ({
 
       {scannedAsset && (
         <div className="text-center mt-4">
-          <button className="btn btn-outline-primary" onClick={onStartScan}>
-            <i className="bi bi-qr-code-scan me-1" />
-            {t("modules.scan.list.scan_again")}
-          </button>
+          <AuthPrivilegesChecker link="/scan" method="GET">
+            <button className="btn btn-outline-primary" onClick={onStartScan}>
+              <i className="bi bi-qr-code-scan me-1" />
+              {t("modules.scan.list.scan_again")}
+            </button>
+          </AuthPrivilegesChecker>
         </div>
       )}
     </div>

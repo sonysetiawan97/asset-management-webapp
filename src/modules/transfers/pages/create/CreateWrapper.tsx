@@ -12,6 +12,7 @@ import { SubmitButton } from "@components/buttons/SubmitButton";
 import { useCreate } from "@hooks/request/useCreate";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateTransferModel>({ mode: "onBlur" });
@@ -48,7 +49,9 @@ const CreateWrapper: FC = () => {
         <div className="col-12">
           <div className="d-flex gap-3">
             <CancelButton to={`/${moduleName}`} />
-            <SubmitButton isLoading={isLoading} />
+            <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+              <SubmitButton isLoading={isLoading} />
+            </AuthPrivilegesChecker>
           </div>
         </div>
       </form>

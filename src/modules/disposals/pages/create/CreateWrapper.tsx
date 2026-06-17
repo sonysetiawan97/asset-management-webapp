@@ -14,6 +14,7 @@ import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { useFindAll } from "@hooks/request/useFindAll";
 import { ContentLoader } from "@components/loadings/ContentLoader";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 
 const CreateWrapper: FC = () => {
   const methods = useForm<CreateDisposalModel>({ mode: "onBlur" });
@@ -53,7 +54,9 @@ const CreateWrapper: FC = () => {
         <div className="col-12">
           <div className="d-flex gap-3">
             <CancelButton to={`/${moduleName}`} />
-            <SubmitButton isLoading={isLoading} />
+            <AuthPrivilegesChecker link={`/${moduleName}`} method="POST">
+              <SubmitButton isLoading={isLoading} />
+            </AuthPrivilegesChecker>
           </div>
         </div>
       </form>

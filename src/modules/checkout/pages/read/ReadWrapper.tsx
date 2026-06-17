@@ -7,6 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { TitleBarWithIcon } from "@components/TitleBarWithIcon";
 import { BackButton } from "@components/buttons/BackButton";
 import { SubmitButton } from "@components/buttons/SubmitButton";
+import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useFindOneById } from "@hooks/request/useFindOneById";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
@@ -147,7 +148,9 @@ const ReadWrapper: FC = () => {
             <div className="col-12">
               <div className="d-flex gap-2">
                 <BackButton />
-                <SubmitButton isLoading={false} />
+                <AuthPrivilegesChecker link="/assets/checkin" method="POST">
+                  <SubmitButton isLoading={false} />
+                </AuthPrivilegesChecker>
               </div>
             </div>
           </form>
