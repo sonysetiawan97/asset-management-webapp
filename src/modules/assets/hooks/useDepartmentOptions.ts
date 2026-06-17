@@ -3,7 +3,19 @@ import type { LoadOptions } from "react-select-async-paginate";
 import type { GroupBase } from "react-select";
 import type { SelectOption } from "@/types/SelectOption";
 import { findAll } from "@services/findAll";
+import { findOneById } from "@services/findOneById";
 import { getAuth } from "@components/auth/AuthHelpers";
+
+export const getDepartmentById = async (id: string): Promise<SelectOption | null> => {
+  try {
+    const response = await findOneById<{ id: string; name: string }>("departments", id);
+    const item = response?.data;
+    if (item) return { value: item.id, label: item.name };
+    return null;
+  } catch {
+    return null;
+  }
+};
 
 const LIMIT = 10;
 

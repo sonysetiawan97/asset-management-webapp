@@ -27,6 +27,7 @@ interface Props {
   readOnly?: boolean;
   initialValue?: SelectOption | undefined;
   isOptionDisabled?: (option: SelectOption) => boolean;
+  fetchOptionById?: (id: string) => Promise<SelectOption | null>;
 }
 
 const SelectReferenceInput: FC<Props> = ({
@@ -40,6 +41,7 @@ const SelectReferenceInput: FC<Props> = ({
   readOnly = false,
   initialValue,
   isOptionDisabled,
+  fetchOptionById,
 }) => {
   const {
     trigger,
@@ -66,6 +68,17 @@ const SelectReferenceInput: FC<Props> = ({
     if (typeof fieldValue === "object" && "value" in fieldValue) {
       setSelectedOption(fieldValue);
       setValue(name, fieldValue.value);
+      return;
+    }
+
+    if (typeof fieldValue === "string" && fetchOptionById) {
+      fetchOptionById(fieldValue).then((option) => {
+        if (option) {
+          setSelectedOption(option);
+        } else {
+          setSelectedOption({ value: fieldValue, label: String(fieldValue) });
+        }
+      });
       return;
     }
 

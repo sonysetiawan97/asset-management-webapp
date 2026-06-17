@@ -17,8 +17,11 @@ export interface Model {
   asset_code: string;
   serial_number: string;
   category_id: string;
+  category_name?: string;
   location_id: string;
+  location_name?: string;
   department_id: string;
+  department_name?: string;
   custodian_id: string;
   purchase_price: number;
   purchase_date: string;
@@ -79,14 +82,30 @@ export interface UpdateModel {
   notes?: string;
 }
 
-export const ASSET_STATUSES: { value: AssetStatus; label: string; className: string }[] = [
-  { value: "available", label: "Available", className: "status-badge--available" },
+export const ASSET_STATUSES: {
+  value: AssetStatus;
+  label: string;
+  className: string;
+}[] = [
+  {
+    value: "available",
+    label: "Available",
+    className: "status-badge--available",
+  },
   { value: "in_use", label: "In Use", className: "status-badge--in-use" },
-  { value: "under_maintenance", label: "Maintenance", className: "status-badge--maintenance" },
+  {
+    value: "under_maintenance",
+    label: "Maintenance",
+    className: "status-badge--maintenance",
+  },
   { value: "reserved", label: "Reserved", className: "status-badge--reserved" },
   { value: "lost", label: "Lost", className: "status-badge--lost" },
   { value: "disposed", label: "Disposed", className: "status-badge--disposed" },
-  { value: "pending_transfer", label: "Pending Transfer", className: "status-badge--pending" },
+  {
+    value: "pending_transfer",
+    label: "Pending Transfer",
+    className: "status-badge--pending",
+  },
 ];
 
 export const ASSET_FILTER_STATUSES: { value: AssetStatus; label: string }[] = [
@@ -99,14 +118,21 @@ export const ASSET_FILTER_STATUSES: { value: AssetStatus; label: string }[] = [
   { value: "pending_transfer", label: "Pending Transfer" },
 ];
 
-export const ASSET_CONDITIONS: { value: AssetCondition; label: string; className: string }[] = [
+export const ASSET_CONDITIONS: {
+  value: AssetCondition;
+  label: string;
+  className: string;
+}[] = [
   { value: "new", label: "New", className: "condition-badge--new" },
   { value: "good", label: "Good", className: "condition-badge--good" },
   { value: "fair", label: "Fair", className: "condition-badge--fair" },
   { value: "poor", label: "Poor", className: "condition-badge--poor" },
 ];
 
-export const STATUS_COLORS: Record<AssetStatus, { bg: string; text: string; dot: string }> = {
+export const STATUS_COLORS: Record<
+  AssetStatus,
+  { bg: string; text: string; dot: string }
+> = {
   available: { bg: "#d1fae5", text: "#065f46", dot: "#10b981" },
   in_use: { bg: "#dbeafe", text: "#1e40af", dot: "#3b82f6" },
   under_maintenance: { bg: "#fef3c7", text: "#78350f", dot: "#f59e0b" },
@@ -116,7 +142,10 @@ export const STATUS_COLORS: Record<AssetStatus, { bg: string; text: string; dot:
   pending_transfer: { bg: "#e0f2fe", text: "#075985", dot: "#0ea5e9" },
 };
 
-export const CONDITION_COLORS: Record<AssetCondition, { bg: string; text: string }> = {
+export const CONDITION_COLORS: Record<
+  AssetCondition,
+  { bg: string; text: string }
+> = {
   new: { bg: "#d1fae5", text: "#065f46" },
   good: { bg: "#dbeafe", text: "#1e40af" },
   fair: { bg: "#fef3c7", text: "#78350f" },

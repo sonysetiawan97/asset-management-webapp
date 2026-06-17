@@ -15,8 +15,6 @@ interface ListProps {
   data: Model[];
   count: number;
   allCount: number;
-  categories: { id: string; name: string }[];
-  locations: { id: string; name: string }[];
   selectedStatus: string | null;
   onStatusChange: (status: string | null) => void;
   countByStatus: Record<string, number>;
@@ -43,7 +41,7 @@ const formatDate = (dateStr: string | undefined) => {
   });
 };
 
-const List = ({ data, count, allCount, categories, locations, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
+const List = ({ data, count, allCount, selectedStatus, onStatusChange, countByStatus }: ListProps) => {
   const { skip, limit, setSkip } = usePagination();
   const { t } = useTranslation();
 
@@ -143,8 +141,9 @@ const List = ({ data, count, allCount, categories, locations, selectedStatus, on
           data.map((asset, index) => {
             const statusColors = STATUS_COLORS[asset.asset_status] ?? { bg: "#f3f4f6", text: "#374151", dot: "#6b7280" };
             const conditionColors = CONDITION_COLORS[asset.condition] ?? { bg: "#f3f4f6", text: "#374151" };
-            const categoryName = categories.find((c) => c.id === asset.category_id)?.name ?? "—";
-            const locationName = locations.find((l) => l.id === asset.location_id)?.name ?? "—";
+            const categoryName = asset.category_name ?? "—";
+            const locationName = asset.location_name ?? "—";
+            const departmentName = asset.department_name ?? "—";
 
             return (
               <div
@@ -186,6 +185,12 @@ const List = ({ data, count, allCount, categories, locations, selectedStatus, on
                       <div className="asset-meta__item">
                         <i className="bi bi-geo-alt"></i>
                         {locationName}
+                      </div>
+                    )}
+                    {departmentName && (
+                      <div className="asset-meta__item">
+                        <i className="bi bi-diagram-3"></i>
+                        {departmentName}
                       </div>
                     )}
                     {asset.serial_number && (

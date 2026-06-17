@@ -77,6 +77,12 @@ const hasPrivilege = (
     if (lowerUri.includes(":") && matchDynamicUri(privilege.uri, lowerPath)) {
       return true;
     }
+
+    // 5. Prefix match: check if privilege URI starts with requested path
+    // at a path segment boundary (e.g., /opname matches /opname/sessions)
+    if (lowerUri.startsWith(lowerPath + "/")) {
+      return true;
+    }
   }
 
   return false;

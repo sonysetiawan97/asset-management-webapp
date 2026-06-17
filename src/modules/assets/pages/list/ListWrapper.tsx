@@ -6,7 +6,6 @@ import { useSearch } from "@hooks/list/useSearch";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { usePagination } from "@hooks/list/usePagination";
 import { setBreadcrumbs } from "@stores/BreadcrumbStore";
-import { useFindAll } from "@hooks/request/useFindAll";
 
 export const ListWrapper: FC = () => {
   const { skip, setSkip } = usePagination();
@@ -30,11 +29,6 @@ export const ListWrapper: FC = () => {
     limit: 12,
     params,
   });
-
-  const { data: categoryData } = useFindAll<{ id: string; name: string }>("categories", "categories");
-  const { data: locationData } = useFindAll<{ id: string; name: string }>("locations", "locations");
-  const categories = categoryData?.result ?? [];
-  const locations = locationData?.result ?? [];
 
   useEffect(() => {
     setBreadcrumbs([
@@ -66,8 +60,6 @@ export const ListWrapper: FC = () => {
       count={data?.data.count ?? 0}
       allCount={unfilteredCounts?.count ?? data?.data.count ?? 0}
       countByStatus={unfilteredCounts?.countByStatus ?? data?.data.count_by_status ?? {}}
-      categories={categories}
-      locations={locations}
       selectedStatus={selectedStatus}
       onStatusChange={handleStatusChange}
     />

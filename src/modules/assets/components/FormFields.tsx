@@ -10,6 +10,8 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { useFindOneById } from "@hooks/request/useFindOneById";
 import { ASSET_CONDITIONS } from "@modules/assets/types/Model";
+import { getDepartmentById } from "../hooks/useDepartmentOptions";
+import { getUserById } from "../hooks/useUserOptions";
 import type { LoadOptions } from "react-select-async-paginate";
 import type { GroupBase } from "react-select";
 import type { SelectOption } from "@/types/SelectOption";
@@ -103,6 +105,7 @@ export const FormFields = ({
             label={t("modules.assets.create.form.department")}
             readOnly={readOnly || departmentReadOnly}
             required={true}
+            fetchOptionById={getDepartmentById}
           />
           </div>
           <div className="col-12 col-md-4">
@@ -112,6 +115,7 @@ export const FormFields = ({
               loadOptions={userLoadOptions}
               label={t("modules.assets.create.form.custodian")}
               readOnly={readOnly}
+              fetchOptionById={getUserById}
             />
           </div>
           <div className="col-12 col-md-4">
