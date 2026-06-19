@@ -363,6 +363,30 @@ a {
   flex-shrink: 0;
 }
 
+.btn-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  opacity: 0.5;
+  color: var(--color-text-inverse);
+}
+
 .btn-dark {
   background: var(--color-primary);
   border-color: var(--color-primary);
