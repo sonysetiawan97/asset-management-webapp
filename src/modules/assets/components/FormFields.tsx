@@ -105,6 +105,7 @@ export const FormFields = ({
               loadOptions={locationLoadOptions}
               label={t("modules.assets.create.form.location")}
               readOnly={readOnly}
+              required={true}
             />
           </div>
           <div className="col-12 col-md-4">
