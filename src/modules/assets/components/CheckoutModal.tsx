@@ -10,7 +10,7 @@ import type { AxiosError } from "axios";
 import { apiAxios } from "@/utils/apiAxios";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserOptions, getUserById } from "../hooks/useAsigneeOptions";
+import { useUserOptions, getUserById } from "../hooks/useAssigneeOptions";
 
 interface CheckoutModalProps {
   isOpen: boolean;
