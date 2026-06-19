@@ -2,15 +2,15 @@ import { type FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Modal } from "@components/Modal";
-import SelectInput from "@components/form/select/SelectInput";
+import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { DateInput } from "@components/form/inputs/DateInput";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
-import { useFindAll } from "@hooks/request/useFindAll";
 import { useSnackbar } from "notistack";
 import type { AxiosError } from "axios";
 import { apiAxios } from "@/utils/apiAxios";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserOptions, getUserById } from "../hooks/useUserOptions";
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -38,10 +38,7 @@ export const CheckoutModal: FC<CheckoutModalProps> = ({
   const { handleSubmit, reset } = methods;
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
-
-  const { data: usersData } = useFindAll<{ id: string; name: string }>("options/users", "options/users");
-  const users = usersData?.result ?? [];
-  const userOptions = users.map((u) => ({ value: u.id, label: u.name }));
+  const userLoadOptions = useUserOptions();
 
   // Reset form when modal opens
   useEffect(() => {
@@ -98,11 +95,13 @@ export const CheckoutModal: FC<CheckoutModalProps> = ({
 
         <div className="row g-3">
           <div className="col-12">
-            <SelectInput
+            <SelectReferenceInput
               name="assignee_id"
+              control={methods.control}
+              loadOptions={userLoadOptions}
               label={t("modules.checkout.create.form.assignee")}
-              options={userOptions}
               required={true}
+              fetchOptionById={getUserById}
             />
           </div>
           <div className="col-12 col-md-6">
