@@ -3,6 +3,31 @@ import type { LoadOptions } from "react-select-async-paginate";
 import type { GroupBase } from "react-select";
 import type { SelectOption } from "@/types/SelectOption";
 import { findAll } from "@services/findAll";
+import { findOneById } from "@services/findOneById";
+
+export interface CategoryOptionDetail {
+  id: string;
+  name: string;
+  useful_life_years: number;
+  salvage_value_pct: number;
+}
+
+export const getCategoryById = async (
+  id: string
+): Promise<{ option: SelectOption; detail: CategoryOptionDetail } | null> => {
+  try {
+    const response = await findOneById<CategoryOptionDetail>("options/categories", id);
+    if (response) {
+      return {
+        option: { value: response.id, label: response.name },
+        detail: response,
+      };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
 
 const LIMIT = 10;
 

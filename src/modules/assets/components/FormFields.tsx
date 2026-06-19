@@ -8,10 +8,12 @@ import SelectReferenceInput from "@components/form/select/SelectReferenceInput";
 import { TextAreaInput } from "@components/form/inputs/TextAreaInput";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
-import { useFindOneById } from "@hooks/request/useFindOneById";
+import { useQuery } from "@tanstack/react-query";
+import { findOneById } from "@services/findOneById";
 import { ASSET_CONDITIONS } from "@modules/assets/types/Model";
 import { getDepartmentById } from "../hooks/useDepartmentOptions";
 import { getUserById } from "../hooks/useUserOptions";
+import { getCategoryById, type CategoryOptionDetail } from "../hooks/useCategoryOptions";
 import type { LoadOptions } from "react-select-async-paginate";
 import type { GroupBase } from "react-select";
 import type { SelectOption } from "@/types/SelectOption";
@@ -37,10 +39,14 @@ export const FormFields = ({
   const { control, setValue } = useFormContext();
   const watchedCategoryId = useWatch({ name: "category_id" });
 
-  const { data: categoryDetail } = useFindOneById<{ useful_life_years: number; salvage_value_pct: number }>(
-    "categories",
-    watchedCategoryId
-  );
+  const { data: categoryDetail } = useQuery({
+    queryKey: ["options/categories", watchedCategoryId],
+    queryFn: () =>
+      watchedCategoryId
+        ? findOneById<CategoryOptionDetail>("options/categories", watchedCategoryId)
+        : Promise.reject("no id"),
+    enabled: !!watchedCategoryId,
+  });
 
   useEffect(() => {
     if (categoryDetail) {
@@ -86,6 +92,10 @@ export const FormFields = ({
               label={t("modules.assets.create.form.category")}
               readOnly={readOnly}
               required={true}
+              fetchOptionById={async (id) => {
+                const result = await getCategoryById(id);
+                return result?.option ?? null;
+              }}
             />
           </div>
           <div className="col-12 col-md-4">
