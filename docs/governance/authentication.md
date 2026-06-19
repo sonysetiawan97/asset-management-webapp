@@ -38,12 +38,56 @@ On logout: `clearAccessToken()` + `clearRefreshToken()` + `clearUser()` + redire
 
 Refresh is handled **exclusively** by `axiosSetup.ts` (applied to `apiAxios`) — triggered only on **401 responses**, not on route changes.
 
-Flow: API call → 401? → mark `_retry` flag → `refreshAccessToken()` → single POST with both `withCredentials: true` and `Authorization: Bearer <refreshToken>` → update localStorage on success, clear `accessToken` on failure → retry original request.
+`axiosSetup` uses a **dependency injection** pattern (via `AxiosSetupDeps`) rather than direct imports:
+
+```ts
+// apiAxios.ts — wiring dependencies
+axiosSetup(apiAxios, {
+  getRefreshToken,    // reads refreshToken from authStores
+  authAxios,          // separate axios instance (no interceptors) for refresh call
+  onLogout: logout,   // clears tokens + redirects to /auth/signin
+});
+```
+
+Flow: API call → 401? → mark `_retry` flag → `refreshAccessToken()` → POST `/auth/refresh` via `authAxios` with `Authorization: Bearer <refreshToken>` → read `response.data.data` (backend wraps tokens in nested `data`) → update localStorage on success → retry original request.
+
+On refresh failure: `onLogout?.()` clears tokens + stores, redirects to `/auth/signin`.
 
 Key files:
-- `src/utils/axiosSetup.ts` — 401 interceptor with refresh + retry logic
+- `src/utils/axiosSetup.ts` — 401 interceptor with refresh + retry logic (DI via `AxiosSetupDeps`)
+- `src/utils/apiAxios.ts` — wires dependencies into `axiosSetup`
 - `src/components/auth/AuthMiddleware.tsx` — auth check only, no refresh calls
 - `src/modules/auth/stores/authStores.ts` — `setRefreshToken()`, `getRefreshToken()`, `clearRefreshToken()`
+
+## Inactive User Handling (403 Interceptor)
+
+When the backend returns **403** with message containing `"no longer active"` (e.g., user was deactivated after login), `axiosSetup.ts` automatically triggers `onLogout?.()` and redirects to `/auth/signin`.
+
+This is separate from standard 403 RBAC errors (e.g., "No permissions assigned") — those pass through the interceptor without auto-logout.
+
+```ts
+// axiosSetup.ts — 403 inactive handler
+if (status === 403) {
+  const message = error.response?.data?.message;
+  if (typeof message === "string" && message.toLowerCase().includes("no longer active")) {
+    onLogout?.();                          // clear tokens + stores
+    window.location.href = "/auth/signin"; // force redirect
+  }
+}
+```
+
+## Sign In Error Scenarios
+
+The sign-in page now displays the **backend error message directly** (via `(err as Error).message`), with i18n fallback when no message is available:
+
+| Scenario | Status | Displayed Message |
+|----------|--------|-------------------|
+| Wrong password | `401` | `"Invalid user or password"` |
+| Inactive user (status = 0) | `401` | `"User is no longer active, please contact administrator"` |
+| Soft-deleted user | `401` | `"Your account has been deleted, please contact administrator"` |
+| Network error / no message | — | i18n fallback: `"Invalid username or password"` |
+
+**Note:** Unlike CRUD endpoints (which use `errors[]` array), signin reads `response.data.message` (a single string) from the backend response body.
 
 ## Route Guards
 

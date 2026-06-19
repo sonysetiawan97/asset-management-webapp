@@ -12,6 +12,21 @@ All generic CRUD services live in `src/services/`. They are used by the request 
 
 `apiAxios` automatically injects the Bearer token + handles 401 refresh via `axiosSetup`. Other instances do not refresh tokens.
 
+### DI Pattern in `axiosSetup`
+
+`axiosSetup` receives dependencies via `AxiosSetupDeps` parameter object (instead of direct imports):
+
+```ts
+// apiAxios.ts
+axiosSetup(apiAxios, {
+  getRefreshToken,   // () => string | null — reads refreshToken from store
+  authAxios,         // separate axios instance for refresh call (no interceptors)
+  onLogout: logout,  // clears tokens + stores, called on refresh failure or 403 inactive
+});
+```
+
+This allows `axiosSetup` to be testable and decoupled from module imports.
+
 ---
 
 ## Generic CRUD Services

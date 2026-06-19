@@ -1,52 +1,86 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { getRefreshToken } from "../modules/auth/stores/authStores";
-import { authAxios } from "./authAxios";
+import axios, { type AxiosError, type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 
 const { VITE_API_BASE_URL, VITE_API_TIMEOUT } = import.meta.env;
 
-// Shared refresh promise — prevents concurrent refresh calls from racing.
-let refreshPromise: Promise<boolean> | null = null;
+// --- Types ---
 
-const refreshAccessToken = async (): Promise<boolean> => {
-  if (refreshPromise) {
-    return refreshPromise;
-  }
+type RefreshTokenFn = () => string | null;
 
-  refreshPromise = (async () => {
-    try {
-      const storedRefreshToken = getRefreshToken();
-      const response = await authAxios.post(
-        "/auth/refresh",
-        {},
-        { headers: { Authorization: `Bearer ${storedRefreshToken}` } },
-      );
-      const { access_token, refresh_token } = response.data.data;
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token);
-      return true;
-    } catch {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      return false;
-    }
-  })();
+interface RefreshData {
+  access_token: string;
+  refresh_token: string;
+}
 
-  try {
-    return await refreshPromise;
-  } finally {
-    refreshPromise = null;
-  }
+interface RefreshResponse {
+  status: boolean;
+  data: RefreshData;
+  message: string;
+  code: number;
+}
+
+type AuthAxiosInstance = {
+  post: <T = unknown>(
+    url: string,
+    data?: unknown,
+    config?: Record<string, unknown>,
+  ) => Promise<{ data: T }>;
 };
+
+interface AxiosSetupDeps {
+  getRefreshToken: RefreshTokenFn;
+  authAxios: AuthAxiosInstance;
+  onLogout?: () => void;
+}
+
+// --- Factory ---
+
+const createRefreshAccessToken = (deps: AxiosSetupDeps) => {
+  const { getRefreshToken, authAxios } = deps;
+  let refreshPromise: Promise<boolean> | null = null;
+
+  return async (): Promise<boolean> => {
+    if (refreshPromise) {
+      return refreshPromise;
+    }
+
+    refreshPromise = (async () => {
+      try {
+        const storedRefreshToken = getRefreshToken();
+        const response = await authAxios.post<RefreshResponse>(
+          "/auth/refresh",
+          {},
+          { headers: { Authorization: `Bearer ${storedRefreshToken}` } },
+        );
+        const { access_token, refresh_token } = response.data.data;
+        localStorage.setItem("accessToken", access_token);
+        localStorage.setItem("refreshToken", refresh_token);
+        return true;
+      } catch {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        return false;
+      }
+    })();
+
+    try {
+      return await refreshPromise;
+    } finally {
+      refreshPromise = null;
+    }
+  };
+};
+
+// --- Main setup ---
 
 const MAX_RETRIES = 3;
 
-const axiosSetup = (instance: {
-  interceptors: {
-    request: { use: Function };
-    response: { use: Function };
-  };
-}) => {
+const axiosSetup = (
+  instance: AxiosInstance,
+  deps: AxiosSetupDeps,
+) => {
+  const refreshAccessToken = createRefreshAccessToken(deps);
+  const { onLogout } = deps;
+
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig): typeof config => {
       config.baseURL = VITE_API_BASE_URL;
@@ -61,11 +95,11 @@ const axiosSetup = (instance: {
 
       return config;
     },
-    (error: unknown) => Promise.reject(error)
+    (error: unknown) => Promise.reject(error),
   );
 
   instance.interceptors.response.use(
-    (response: unknown) => response,
+    (response: AxiosResponse) => response,
     async (error: AxiosError) => {
       const originalRequest = error.config as InternalAxiosRequestConfig & {
         _retry?: boolean;
@@ -78,7 +112,7 @@ const axiosSetup = (instance: {
 
       const status = error.response?.status;
 
-      // Only attempt refresh on 401, once per request
+      // 401 — attempt token refresh, once per request
       if (status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
@@ -88,27 +122,37 @@ const axiosSetup = (instance: {
           return axios(originalRequest);
         }
 
-        const { logout } = await import("@modules/auth/services/logoutService");
-        logout();
+        onLogout?.();
         window.location.href = "/auth/signin";
         return Promise.reject(error);
       }
 
-      // 5xx — retry up to MAX_RETRIES times, but do NOT trigger refresh
+      // 403 — inactive user → force logout
+      if (status === 403) {
+        const body = error.response?.data as Record<string, unknown> | undefined;
+        const message = body?.message;
+        if (typeof message === "string" && message.toLowerCase().includes("no longer active")) {
+          onLogout?.();
+          window.location.href = "/auth/signin";
+          return Promise.reject(error);
+        }
+      }
+
+      // 5xx — retry up to MAX_RETRIES times
       if (status && status >= 500 && !originalRequest._retryCount) {
         originalRequest._retryCount = 1;
         return retryRequest(originalRequest, 1);
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 };
 
 // Separated to keep the interceptor clean and allow recursion
 async function retryRequest(
   config: InternalAxiosRequestConfig & { _retryCount?: number },
-  attempt: number
+  attempt: number,
 ): Promise<unknown> {
   if (attempt > MAX_RETRIES) {
     return Promise.reject(new Error(`Request failed after ${MAX_RETRIES} retries`));
@@ -132,3 +176,4 @@ async function retryRequest(
 }
 
 export { axiosSetup };
+export type { AxiosSetupDeps };

@@ -40,6 +40,28 @@ Example response:
 }
 ```
 
+### Exception: Sign-in Error
+
+The sign-in endpoint (`POST /auth/signin`) uses a **different error format** — it returns a single `message` string, not an `errors` array:
+
+```ts
+// signinService.ts — reads response.data.message directly
+const axiosError = error as AxiosError<{ message?: string }>;
+const apiMessage = axiosError.response?.data?.message ?? axiosError.message;
+throw new Error(apiMessage);
+```
+
+```json
+{
+  "status": false,
+  "errors": [],
+  "message": "Invalid user or password",
+  "code": 401
+}
+```
+
+This is because sign-in errors represent a single auth failure reason, not field-level validation errors.
+
 ## Usage Pattern
 
 Use this pattern in all `catch` blocks:

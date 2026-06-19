@@ -13,7 +13,6 @@ export const Signin: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -31,10 +30,10 @@ export const Signin: React.FC = () => {
       navigate("/dashboard");
     } catch (err) {
       console.error("Signin failed:", err);
-      enqueueSnackbar(t("signin.notification.failed"), {
+      const msg = (err as Error).message || t("signin.notification.failed");
+      enqueueSnackbar(msg, {
         variant: "error",
       });
-      setError(t("signin.notification.failed"));
     } finally {
       setIsSubmit(false);
     }
@@ -84,9 +83,12 @@ export const Signin: React.FC = () => {
         className="btn btn-dark w-100 rounded-pill mt-3"
         disabled={isSubmit}
       >
-        {isSubmit ? <LoadingSpinner color='text-white'/> : t("signin.form.button")}
+        {isSubmit ? (
+          <LoadingSpinner color="text-white" />
+        ) : (
+          t("signin.form.button")
+        )}
       </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 };
