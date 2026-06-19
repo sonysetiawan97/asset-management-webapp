@@ -6,7 +6,8 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { apiAxios } from "@/utils/apiAxios";
-import { ASSET_STATUSES } from "@modules/assets/types/Model";
+import { ASSET_STATUSES, STATUS_COLORS } from "@modules/assets/types/Model";
+import { StatusBadge } from "@/components/list/StatusBadge";
 
 const formatDate = (d?: string) => d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
 
@@ -38,16 +39,17 @@ export const InventoryReport: FC = () => {
 
   const assets = data?.data.result || [];
   const total = assets.length;
+  const getStatusColor = (status: string) => STATUS_COLORS[status as keyof typeof STATUS_COLORS] || STATUS_COLORS.available;
 
   return (
-    <div className="report-container">
+    <div className="module-list-container">
       <div className="module-stat-bar">
         <div className="stat-item"><span className="stat-value">{total}</span><span className="stat-label">Total Assets</span></div>
       </div>
 
       <div className="module-list-header">
         <div className="module-list-title">
-          <i className="bi bi-plus-lg"></i>
+          <i className="bi bi-box-seam fs-4" style={{ color: "#1a1a2e" }}></i>
           <h2>{t("modules.reports.inventory.title")}</h2>
         </div>
         <AuthPrivilegesChecker link="/reports/export" method="GET">
@@ -58,27 +60,48 @@ export const InventoryReport: FC = () => {
         </AuthPrivilegesChecker>
       </div>
 
-      <div className="report-table-wrap">
-        <table className="report-table">
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Purchase Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assets.map((a: any) => (
-              <tr key={a.id}>
-                <td className="font-mono text-xs">{a.asset_code ?? "—"}</td>
-                <td>{a.name}</td>
-                <td><span className="report-status">{ASSET_STATUSES.find((s) => s.value === a.status)?.label ?? a.status}</span></td>
-                <td>{formatDate(a.purchase_date)}</td>
+      <div className="module-table-container">
+        <div className="table-responsive">
+          <table className="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Purchase Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {assets.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="text-center py-4 text-muted">
+                    {t("modules.reports.inventory.empty") ?? "No data"}
+                  </td>
+                </tr>
+              ) : (
+                assets.map((a: any) => {
+                  const color = getStatusColor(a.status);
+                  const statusMeta = ASSET_STATUSES.find((s) => s.value === a.status);
+                  return (
+                    <tr key={a.id}>
+                      <td className="fw-semibold font-mono text-xs">{a.asset_code ?? "—"}</td>
+                      <td>{a.name}</td>
+                      <td>
+                        <StatusBadge
+                          label={statusMeta?.label ?? a.status}
+                          bgColor={color.bg}
+                          textColor={color.text}
+                          dotColor={color.dot}
+                        />
+                      </td>
+                      <td>{formatDate(a.purchase_date)}</td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

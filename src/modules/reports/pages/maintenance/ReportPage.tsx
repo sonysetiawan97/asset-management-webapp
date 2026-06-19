@@ -5,6 +5,7 @@ import { setBreadcrumbs } from "@stores/BreadcrumbStore";
 import { ContentLoader } from "@components/loadings/ContentLoader";
 import { AuthPrivilegesChecker } from "@components/auth/AuthPrivilegesChecker";
 import { MAINTENANCE_TYPES } from "@modules/maintenance/types/Model";
+import { StatusBadge } from "@/components/list/StatusBadge";
 
 interface MaintenanceRecord {
   id: string;
@@ -22,6 +23,17 @@ interface MaintenanceRecord {
   created_by_name?: string;
   created_time: string;
 }
+
+const STATUS_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
+  open: { bg: "#fef3c7", text: "#78350f", dot: "#f59e0b" },
+  completed: { bg: "#d1fae5", text: "#065f46", dot: "#10b981" },
+};
+
+const TYPE_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
+  preventive: { bg: "#dbeafe", text: "#1e40af", dot: "#3b82f6" },
+  corrective: { bg: "#fef3c7", text: "#78350f", dot: "#f59e0b" },
+  inspection: { bg: "#f3e8ff", text: "#6b21a8", dot: "#a855f7" },
+};
 
 const formatDate = (dateStr: string | undefined) => {
   if (!dateStr) return "—";
@@ -47,7 +59,7 @@ function exportToCsv(records: MaintenanceRecord[]) {
     r.created_time ?? "",
   ]);
   const csv = [headers.join(","), ...rows.map((r) => r.map((c) => `"${c.replace(/"/g, '""')}"`).join(","))].join("\n");
-  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -113,12 +125,15 @@ export const ReportPage: FC = () => {
           <span className="stat-value">{hasActiveFilters ? filteredData.length : totalFromApi}</span>
           <span className="stat-label">{t("modules.reports.maintenance.total_logs")}</span>
         </div>
-        {MAINTENANCE_TYPES.map((type) => (
-          <div key={type.value} className="stat-item" style={{ borderLeftColor: "#3b82f6" }}>
-            <span className="stat-value" style={{ color: "#3b82f6" }}>{typeCounts[type.value] ?? 0}</span>
-            <span className="stat-label">{type.label}</span>
-          </div>
-        ))}
+        {MAINTENANCE_TYPES.map((type) => {
+          const color = TYPE_COLORS[type.value] ?? { bg: "#e5e7eb", text: "#374151", dot: "#6b7280" };
+          return (
+            <div key={type.value} className="stat-item" style={{ borderLeftColor: color.dot }}>
+              <span className="stat-value" style={{ color: color.dot }}>{typeCounts[type.value] ?? 0}</span>
+              <span className="stat-label">{type.label}</span>
+            </div>
+          );
+        })}
         <div className="stat-item" style={{ borderLeftColor: "#10b981" }}>
           <span className="stat-value" style={{ color: "#10b981" }}>{formatCurrency(totalCost)}</span>
           <span className="stat-label">{t("modules.reports.maintenance.total_cost")}</span>
@@ -139,12 +154,14 @@ export const ReportPage: FC = () => {
             className={`status-chip ${selectedStatus === "open" ? "active" : ""}`}
             onClick={() => setSelectedStatus("open")}
           >
+            <span className="status-chip__dot" style={{ background: STATUS_COLORS.open.dot }} />
             <span className="status-chip__label">{t("modules.reports.maintenance.open")}</span>
           </button>
           <button
             className={`status-chip ${selectedStatus === "completed" ? "active" : ""}`}
             onClick={() => setSelectedStatus("completed")}
           >
+            <span className="status-chip__dot" style={{ background: STATUS_COLORS.completed.dot }} />
             <span className="status-chip__label">{t("modules.reports.maintenance.completed")}</span>
           </button>
         </div>
@@ -160,16 +177,20 @@ export const ReportPage: FC = () => {
           >
             <span className="status-chip__label">{t("modules.reports.maintenance.filter_type_all")}</span>
           </button>
-          {MAINTENANCE_TYPES.map((type) => (
-            <button
-              key={type.value}
-              className={`status-chip ${selectedType === type.value ? "active" : ""}`}
-              onClick={() => setSelectedType(type.value)}
-            >
-              <span className="status-chip__label">{type.label}</span>
-              <span className="status-chip__count">{typeCounts[type.value] ?? 0}</span>
-            </button>
-          ))}
+          {MAINTENANCE_TYPES.map((type) => {
+            const color = TYPE_COLORS[type.value] ?? { bg: "#e5e7eb", text: "#374151", dot: "#6b7280" };
+            return (
+              <button
+                key={type.value}
+                className={`status-chip ${selectedType === type.value ? "active" : ""}`}
+                onClick={() => setSelectedType(type.value)}
+              >
+                <span className="status-chip__dot" style={{ background: color.dot }} />
+                <span className="status-chip__label">{type.label}</span>
+                <span className="status-chip__count">{typeCounts[type.value] ?? 0}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -221,16 +242,9 @@ export const ReportPage: FC = () => {
       </div>
 
       {/* Table */}
-      <div className="report-table-wrap">
-        {filteredData.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-state__icon">
-              <i className="bi bi-inbox fs-1" style={{ color: "#d1d5db" }}></i>
-            </div>
-            <p className="empty-state__text">{t("modules.reports.maintenance.empty")}</p>
-          </div>
-        ) : (
-          <table className="report-table">
+      <div className="module-table-container">
+        <div className="table-responsive">
+          <table className="table table-hover align-middle">
             <thead>
               <tr>
                 <th>Asset Code</th>
@@ -245,32 +259,49 @@ export const ReportPage: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((r) => {
-                const typeMeta = MAINTENANCE_TYPES.find((t) => t.value === r.type);
-                return (
-                  <tr key={r.id}>
-                    <td className="font-mono text-xs">{r.asset_code ?? "—"}</td>
-                    <td>{r.asset_name ?? "—"}</td>
-                    <td><span className="report-status" style={{ background: "#dbeafe", color: "#1e40af" }}>{typeMeta?.label ?? r.type}</span></td>
-                    <td>
-                      <span className="report-status" style={{
-                        background: r.status === "completed" ? "#d1fae5" : "#fef3c7",
-                        color: r.status === "completed" ? "#065f46" : "#78350f",
-                      }}>
-                        {r.status === "completed" ? t("modules.reports.maintenance.completed") : t("modules.reports.maintenance.open")}
-                      </span>
-                    </td>
-                    <td>{formatDate(r.date_performed)}</td>
-                    <td>{r.performed_by_name ?? "—"}</td>
-                    <td className="text-right">{formatCurrency(r.cost)}</td>
-                    <td>{formatDate(r.next_maintenance_date)}</td>
-                    <td>{formatDate(r.created_time)}</td>
-                  </tr>
-                );
-              })}
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan={9} className="text-center py-4 text-muted">
+                    {t("modules.reports.maintenance.empty")}
+                  </td>
+                </tr>
+              ) : (
+                filteredData.map((r) => {
+                  const typeMeta = MAINTENANCE_TYPES.find((mt) => mt.value === r.type);
+                  const typeColor = TYPE_COLORS[r.type] ?? { bg: "#e5e7eb", text: "#374151", dot: "#6b7280" };
+                  const statusColor = STATUS_COLORS[r.status] ?? STATUS_COLORS.open;
+                  return (
+                    <tr key={r.id}>
+                      <td className="fw-semibold font-mono text-xs">{r.asset_code ?? "—"}</td>
+                      <td>{r.asset_name ?? "—"}</td>
+                      <td>
+                        <StatusBadge
+                          label={typeMeta?.label ?? r.type}
+                          bgColor={typeColor.bg}
+                          textColor={typeColor.text}
+                          dotColor={typeColor.dot}
+                        />
+                      </td>
+                      <td>
+                        <StatusBadge
+                          label={r.status === "completed" ? t("modules.reports.maintenance.completed") : t("modules.reports.maintenance.open")}
+                          bgColor={statusColor.bg}
+                          textColor={statusColor.text}
+                          dotColor={statusColor.dot}
+                        />
+                      </td>
+                      <td>{formatDate(r.date_performed)}</td>
+                      <td>{r.performed_by_name ?? "—"}</td>
+                      <td className="text-right">{formatCurrency(r.cost)}</td>
+                      <td>{formatDate(r.next_maintenance_date)}</td>
+                      <td>{formatDate(r.created_time)}</td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
-        )}
+        </div>
       </div>
     </div>
   );
