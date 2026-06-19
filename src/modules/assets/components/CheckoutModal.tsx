@@ -39,9 +39,9 @@ export const CheckoutModal: FC<CheckoutModalProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
 
-  const { data: usersData } = useFindAll<{ id: number; first_name: string; last_name: string; username: string }>("users", "users");
+  const { data: usersData } = useFindAll<{ id: string; name: string }>("options/users", "options/users");
   const users = usersData?.result ?? [];
-  const userOptions = users.map((u) => ({ value: String(u.id), label: `${u.first_name} ${u.last_name}`.trim() }));
+  const userOptions = users.map((u) => ({ value: u.id, label: u.name }));
 
   // Reset form when modal opens
   useEffect(() => {
