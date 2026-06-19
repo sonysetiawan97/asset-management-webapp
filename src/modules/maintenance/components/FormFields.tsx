@@ -60,6 +60,7 @@ export const FormFields = ({ readOnly = false, control }: FormFieldsProps) => {
             label={t("modules.maintenance.create.form.performed_by")}
             placeholder={t("modules.maintenance.create.form.performed_by_placeholder")}
             readOnly={readOnly}
+            required={true}
           />
         </div>
         <div className="col-12">
